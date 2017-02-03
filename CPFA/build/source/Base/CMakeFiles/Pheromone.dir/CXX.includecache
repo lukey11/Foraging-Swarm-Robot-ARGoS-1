@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Pheromone.cpp
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Pheromone.cpp
 Pheromone.h
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Pheromone.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Pheromone.h
 
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Pheromone.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Pheromone.h
 argos3/core/utility/math/vector2.h
 -
 

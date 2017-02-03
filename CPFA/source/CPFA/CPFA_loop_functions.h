@@ -70,7 +70,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		void setScore(double s);
 
 		argos::CRandom::CRNG* RNG;
-        size_t NumDistributedFood; //qilu 11/10/2016
+                size_t NumDistributedFood;
 		size_t MaxSimTime;
 		size_t ResourceDensityDelay;
 		size_t RandomSeed;
@@ -88,11 +88,10 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t ClusterWidthX;
 		size_t ClusterLengthY;
 		size_t PowerRank;
-       // size_t PowerLawCopies; //qilu 09/26/2016
         size_t ArenaWidth;
-        size_t SimTime; //qilu 09/13/2016
-        Real curr_time_in_minutes; //qilu 09/13/2016
-        Real last_time_in_minutes; //qilu 09/13/2016
+        size_t SimTime; 
+        Real curr_time_in_minutes; 
+        Real last_time_in_minutes; 
   
 		/* CPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
@@ -114,32 +113,28 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		/* list variables for food & pheromones */
 		std::vector<argos::CVector2> FoodList;
 		std::vector<argos::CColor>   FoodColoringList;
-                map<string, argos::CVector2> FidelityList; //qilu 09/08/2016
-		std::vector<Pheromone>   PheromoneList; //qilu 09/08/2016
+                map<string, argos::CVector2> FidelityList; 
+		std::vector<Pheromone>   PheromoneList; 
 		std::vector<argos::CRay3>    TargetRayList;
 		argos::CRange<argos::Real>   ForageRangeX;
 		argos::CRange<argos::Real>   ForageRangeY;
   
-        Real   CollisionTime;//qilu 09/26
-        size_t currCollisionTime; //qilu 10/30
-        size_t lastCollisionTime; //qilu 10/30
-        size_t lastNumCollectedFood; //qilu 08/19
-        size_t currNumCollectedFood; //qilu 08/19
+        Real   CollisionTime;
+        size_t currCollisionTime; 
+        size_t lastCollisionTime; 
+        size_t lastNumCollectedFood;
+        size_t currNumCollectedFood;
         size_t Num_robots;
       
-        vector<size_t>			ForageList; //qilu 09/13
+        vector<size_t>			ForageList;
 		argos::CVector2 NestPosition;
-  //std::vector<argos::CVector2> NestPositions; //qilu 07/26/2016
 	private:
 
 		/* private helper functions */
 		void RandomFoodDistribution();
 		void ClusterFoodDistribution();
 		void PowerLawFoodDistribution();
-  //bool IsOutOfArena(argos::CVector2 p);
-	//	bool IsOutOfArena(argos::CVector2 p, argos::Real radius);
   bool IsOutOfBounds(argos::CVector2 p, size_t length, size_t width);
-  //bool IsOutOfBounds(argos::CVector2 p, argos::Real radius); //qilu 07/26/2016 for nest
 		bool IsCollidingWithNest(argos::CVector2 p);
 		bool IsCollidingWithFood(argos::CVector2 p);
 		double score;

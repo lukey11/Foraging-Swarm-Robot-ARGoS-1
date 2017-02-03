@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Nest.cpp
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Nest.cpp
 Nest.h
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Nest.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Nest.h
 
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Nest.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Nest.h
 map
 -
 argos3/core/utility/math/vector2.h
@@ -18,9 +18,9 @@ argos3/core/utility/math/vector2.h
 argos3/core/utility/logging/argos_log.h
 -
 Pheromone.h
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Pheromone.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Pheromone.h
 
-/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/Base/Pheromone.h
+/home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/Base/Pheromone.h
 argos3/core/utility/math/vector2.h
 -
 

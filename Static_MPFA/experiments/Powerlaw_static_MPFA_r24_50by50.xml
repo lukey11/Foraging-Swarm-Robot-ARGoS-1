@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="0" />
-    <experiment length="36000"
+    <experiment length="6000"
                 ticks_per_second="32"
 		random_seed="0"/>
   </framework>
@@ -65,7 +65,7 @@
 		    />
 
          <settings
-	     MaxSimTimeInSeconds = "36000"
+	     MaxSimTimeInSeconds = "6000"
 	     MaxSimCounter = "1"
 	     VariableFoodPlacement = "0"
 	     OutputData = "0"
@@ -78,8 +78,6 @@
 	     NumberOfClusters = "6"
 	     ClusterWidthX = "8"
 	     ClusterLengthY = "8"
-	     PowerRank = "3"
-             PowerLawCopies="8"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"

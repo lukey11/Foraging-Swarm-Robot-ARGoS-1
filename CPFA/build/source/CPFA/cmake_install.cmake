@@ -1,4 +1,4 @@
-# Install script for directory: /home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source/CPFA
+# Install script for directory: /home/lukey15/Research/MPFA_repo/MPFA/CPFA/source/CPFA
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

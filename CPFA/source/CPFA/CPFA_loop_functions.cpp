@@ -75,7 +75,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
 	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
- argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
+        argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
 	argos::GetNodeAttribute(settings_node, "ArenaWidth", ArenaWidth);
 
@@ -231,7 +231,6 @@ void CPFA_loop_functions::PostExperiment() {
         Real total_travel_time=0;
         Real total_search_time=0;
         ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
-        //travelSearchTimeDataOutput<<"Traveling time, Searching time"<<endl;
         
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
@@ -438,7 +437,6 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 		powerLawLength /= 2;
 		clusterSides.push_back(powerLawLength);
 	}
-   // for(size_t c=0; c< PowerLawCopies; c++){
     /*Wayne: Modified to break from loops if food count reached.
      Provides support for unequal clusters and odd food numbers.
      Necessary for DustUp and Jumble Distribution changes. */
@@ -474,8 +472,6 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
             if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
 			}
 		}
-	//}
-    //}
 	FoodItemCount = foodPlaced;
 }
 

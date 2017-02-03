@@ -65,7 +65,7 @@
 		    />
 
          <settings
-	     MaxSimTimeInSeconds = "36000"
+	     MaxSimTimeInSeconds = "6000"
 	     MaxSimCounter = "1"
 	     VariableFoodPlacement = "0"
 	     OutputData = "0"
@@ -78,8 +78,6 @@
 	     NumberOfClusters = "6"
 	     ClusterWidthX = "8"
 	     ClusterLengthY = "8"
-	     PowerRank = "4"
-             PowerLawCopies="2"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"

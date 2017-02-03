@@ -14,7 +14,6 @@ CPFA_controller::CPFA_controller() :
 	LoopFunctions(NULL),
 	survey_count(0),
 	isUsingPheromone(0),
-    //SiteFidelityPosition(1000, 1000), //qilu 09/07/2016
  searchingTime(0),
  travelingTime(0),
 startTime(0),
@@ -45,7 +44,6 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	
 	FoodDistanceTolerance *= FoodDistanceTolerance;
 	SetIsHeadingToNest(true);
-    //SetTarget(argos::CVector2(0,0));
 	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
 
@@ -116,14 +114,11 @@ void CPFA_controller::Reset() {
     collisionDelay = 0;
     
   	LoopFunctions->CollisionTime=0; //qilu 09/26/2016
-	   //LoopFunctions->currCollisionTime =0; //qilu 09/26/2016
-    //LoopFunctions->lastCollisionTime =0; //qilu 09/26/2016
     
     
     /* Set LED color */
     /* m_pcLEDs->SetAllColors(CColor::BLACK); //qilu 09/04 */
     SetTarget(LoopFunctions->NestPosition); //qilu 09/08
-    //SiteFidelityPosition = CVector2(0.0, 0.0);
     updateFidelity = false;
     TrailToShare.clear();
     TrailToFollow.clear();
@@ -185,8 +180,6 @@ void CPFA_controller::SetLoopFunctions(CPFA_loop_functions* lf) {
 	LoopFunctions = lf;
 
 	// Initialize the SiteFidelityPosition
-	//SiteFidelityPosition = LoopFunctions->NestPosition;
-    //SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 	// Create the output file here because it needs LoopFunctions
 		
@@ -339,12 +332,12 @@ void CPFA_controller::Searching() {
              SetIsHeadingToNest(true);
              SetTarget(LoopFunctions->NestPosition);
              isGivingUpSearch = true;
-	     LoopFunctions->FidelityList.erase(controllerID); //09/07/2016
-             isUsingSiteFidelity = false; //qilu 09/07/2016
-             updateFidelity = false; //qilu 09/07/2016
+	     LoopFunctions->FidelityList.erase(controllerID);
+             isUsingSiteFidelity = false; 
+             updateFidelity = false; 
              CPFA_state = RETURNING;
-             searchingTime+=SimulationTick()-startTime;//qilu 10/22
-             startTime = SimulationTick();//qilu 10/22
+             searchingTime+=SimulationTick()-startTime;
+             startTime = SimulationTick();
 
              /*
              ofstream log_output_stream;
@@ -399,7 +392,7 @@ void CPFA_controller::Searching() {
                   argos::Real     isd         = LoopFunctions->RateOfInformedSearchDecay;
                   argos::Real     correlation = GetExponentialDecay((2.0 * twoPi) - LoopFunctions->UninformedSearchVariation.GetValue(), t, isd);
                   argos::Real     rand = RNG->Gaussian(correlation + LoopFunctions->UninformedSearchVariation.GetValue());                  //argos::CRadians rotation(GetBound(rand, -pi, pi));
-                  argos::CRadians rotation(GetBound(rand, -pi, pi));//qilu 09/24/2016
+                  argos::CRadians rotation(GetBound(rand, -pi, pi));
                   argos::CRadians angle1(rotation);
                   argos::CRadians angle2(GetHeading());
                   argos::CRadians turn_angle(angle2 + angle1);
@@ -482,7 +475,6 @@ void CPFA_controller::Surveying() {
 void CPFA_controller::Returning() {
  //LOG<<"Returning..."<<endl;
 	//SetHoldingFood();
-	//SetTarget(LoopFunctions->NestPosition);
 
 	// Are we there yet? (To the nest, that is.)
 	if(IsInTheNest()) {
@@ -598,8 +590,8 @@ void CPFA_controller::SetHoldingFood() {
 	        	             isHoldingFood = true;
 		                     CPFA_state = SURVEYING;
 	        	             j = i + 1;
-                                     searchingTime+=SimulationTick()-startTime;//qilu 10/22
-                                     startTime = SimulationTick();//qilu 10/22
+                                     searchingTime+=SimulationTick()-startTime;
+                                     startTime = SimulationTick();
                                      break;
 			             } else {
                       //Return this unfound-food position to the list
@@ -676,7 +668,7 @@ void CPFA_controller::SetLocalResourceDensity() {
     isUsingSiteFidelity = true;
     updateFidelity = true; 
     TrailToShare.push_back(SiteFidelityPosition);
-    LoopFunctions->FidelityList[controllerID] = SiteFidelityPosition; //qilu 09/07/2016
+    LoopFunctions->FidelityList[controllerID] = SiteFidelityPosition;
     /* Delay for 4 seconds (simulate iAnts scannning rotation). */
 	//  Wait(4); // This function is broken. It causes the rover to move in the wrong direction after finishing its local resource density test 
 
@@ -704,7 +696,7 @@ void CPFA_controller::SetFidelityList(argos::CVector2 newFidelity) {
 	/* Update the global fidelity list. */
 	//LoopFunctions->FidelityList = newFidelityList;
 
- LoopFunctions->FidelityList[controllerID] = newFidelity; //qilu 09/08/2016
+ LoopFunctions->FidelityList[controllerID] = newFidelity;
 	/* Add the robot's new fidelity position to the global fidelity list. */
 	//LoopFunctions->FidelityList.push_back(newFidelity);
  
@@ -723,7 +715,7 @@ void CPFA_controller::SetFidelityList() {
 
 	/* Remove this robot's old fidelity position from the fidelity list. */
 	/* Update the global fidelity list. */
- LoopFunctions->FidelityList.erase(controllerID); //qilu 09/08/2016
+ LoopFunctions->FidelityList.erase(controllerID);
 }
 
 /*****
@@ -735,9 +727,8 @@ bool CPFA_controller::SetTargetPheromone() {
 	argos::Real maxStrength = 0.0, randomWeight = 0.0;
 	bool isPheromoneSet = false;
 
- if(LoopFunctions->PheromoneList.size()==0) return isPheromoneSet; //qilu 09/08/2016 the case of no pheromone.
+ if(LoopFunctions->PheromoneList.size()==0) return isPheromoneSet; //the case of no pheromone.
 	/* update the pheromone list and remove inactive pheromones */
-	// LoopFunctions->UpdatePheromoneList();
 
 	/* default target = nest; in case we have 0 active pheromones */
 	SetIsHeadingToNest(true);

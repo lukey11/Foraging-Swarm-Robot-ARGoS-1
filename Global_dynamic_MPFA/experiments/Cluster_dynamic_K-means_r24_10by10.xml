@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="0" />
-    <experiment length="36000"
+    <experiment length="6000"
                 ticks_per_second="32"
 		random_seed="0"/>
   </framework>
@@ -78,8 +78,6 @@
 	     NumberOfClusters = "6"
 	     ClusterWidthX = "8"
 	     ClusterLengthY = "8"
-	     PowerRank = "4"
-	     PowerLawCopies="1"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"

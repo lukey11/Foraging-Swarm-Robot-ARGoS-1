@@ -1,4 +1,4 @@
-# Install script for directory: /home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/source
+# Install script for directory: /home/lukey15/Research/MPFA_repo/MPFA/CPFA/source
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/build/source/Base/cmake_install.cmake")
-  include("/home/lukey15/Research/iAnt-repo/Experiments_code/CPFA-ARGoS/build/source/CPFA/cmake_install.cmake")
+  include("/home/lukey15/Research/MPFA_repo/MPFA/CPFA/build/source/Base/cmake_install.cmake")
+  include("/home/lukey15/Research/MPFA_repo/MPFA/CPFA/build/source/CPFA/cmake_install.cmake")
 
 endif()
 
