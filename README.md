@@ -2,6 +2,17 @@
 
 ARGoS (Autonomous Robots Go Swarming) is a multi-physics robot simulator. CPFA-ARGoS and MPFA-ARGoS is an extension to ARGoS that implements the central-place foraging and multiple-place foraging algorithm (CPFA and MPFA) and provides a mechanism for performing experiments with iAnts.
 
+CPFA: The central-place foraging algorithm
+
+Dynamic_MPFA: The MPFA with dynamic depots. Depots moves based on the discovered local information.
+
+Static_MPFA: The MPFA with static depots. Depots are distributed uniformly and do not move. 
+
+Global_dynamic_MPFA: The MPFA with dynamic depots. We assume the locations of all resources are known. Depots moves based on the locations of resources in the arena. They always move to the center of the locations of closest resources. 
+
+Global_static_MPFA: The MPFA with static depots. We assume the locations of all resources are known. Depots are distributed to the center of the locations of closest resources and will not move in the whole process of foraging. 
+
+
 Quick Start Installation Guide
 
 The CPFA and MPFA system have two components: the CPFA and MPFA logic controllers that implement the CPFA and MPFA algorithm in the ARGoS robot simulator, and the Genetic Algorithm that evolves the parameters that the algorithms use. You can run the algorithm on ARGoS using OS X or Linux (see installation instructions below). 
