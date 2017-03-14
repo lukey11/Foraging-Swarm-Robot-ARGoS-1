@@ -531,6 +531,43 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 	std::vector<size_t> clusterSides;
 	argos::CVector2     placementPosition;
 
+    //-----Wayne: Dertermine PowerRank and food per PowerRank group
+    size_t priorPowerRank = 0;
+    size_t power4 = 0;
+    size_t FoodCount = 0;
+    size_t diffFoodCount = 0;
+    size_t singleClusterCount = 0;
+    size_t otherClusterCount = 0;
+    size_t modDiff = 0;
+    
+    //Wayne: priorPowerRank is determined by what power of 4
+    //plus a multiple of power4 increases the food count passed required count
+    //this is how powerlaw works to divide up food into groups
+    //the number of groups is the powerrank
+    while (FoodCount < FoodItemCount){
+        priorPowerRank++;
+        power4 = pow (4.0, priorPowerRank);
+        FoodCount = power4 + priorPowerRank * power4;
+    }
+    
+    //Wayne: Actual powerRank is prior + 1
+    PowerRank = priorPowerRank + 1;
+    
+    //Wayne: Equalizes out the amount of food in each group, with the 1 cluster group taking the
+    //largest loss if not equal, when the powerrank is not a perfect fit with the amount of food.
+    diffFoodCount = FoodCount - FoodItemCount;
+    modDiff = diffFoodCount % PowerRank;
+    
+    if (FoodItemCount % PowerRank == 0){
+        singleClusterCount = FoodItemCount / PowerRank;
+        otherClusterCount = singleClusterCount;
+    }
+    else {
+        otherClusterCount = FoodItemCount / PowerRank + 1;
+        singleClusterCount = otherClusterCount - modDiff;
+    }
+    //-----Wayne: End of PowerRank and food per PowerRank group
+    
 	for(size_t i = 0; i < PowerRank; i++) {
 		powerLawClusters.push_back(powerLawLength * powerLawLength);
 		powerLawLength *= 2;
@@ -540,7 +577,6 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 		powerLawLength /= 2;
 		clusterSides.push_back(powerLawLength);
 	}
-    for(size_t c=0; c< PowerLawCopies; c++){
 	for(size_t h = 0; h < powerLawClusters.size(); h++) {
 		for(size_t i = 0; i < powerLawClusters[h]; i++) {
 			placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
@@ -555,20 +591,23 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 				}
 			}
 
+            trialCount = 0;
 			for(size_t j = 0; j < clusterSides[h]; j++) {
 				for(size_t k = 0; k < clusterSides[h]; k++) {
 					foodPlaced++;
 					FoodList.push_back(placementPosition);
 					FoodColoringList.push_back(argos::CColor::BLACK);
 					placementPosition.SetX(placementPosition.GetX() + foodOffset);
+                    if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
 				}
 
 				placementPosition.SetX(placementPosition.GetX() - (clusterSides[h] * foodOffset));
 				placementPosition.SetY(placementPosition.GetY() + foodOffset);
+                if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
+			}
+            if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
 			}
 		}
-	}
-}
 	FoodItemCount = foodPlaced;
 }
 
