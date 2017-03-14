@@ -88,8 +88,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
 		size_t ClusterLengthY;
-		size_t PowerRank;
-	    size_t PowerLawCopies; //qilu 09/26/2016
+                size_t PowerRank;
         size_t ArenaWidth;
         size_t SimTime; //qilu 09/13/2016
         Real curr_time_in_minutes; //qilu 09/13/2016

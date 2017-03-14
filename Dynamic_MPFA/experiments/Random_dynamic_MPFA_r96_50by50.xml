@@ -84,8 +84,7 @@
       NestPosition_0="12.5, 12.5" 
       NestPosition_1="12.5, -12.5" 
       NestPosition_2="-12.5, 12.5" 
-      NestPosition_3="-12.5, -12.5"
-      ArenaWidth = "50"/>
+      NestPosition_3="-12.5, -12.5"/>
 
   </loop_functions>
 

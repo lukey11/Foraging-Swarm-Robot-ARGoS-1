@@ -23,7 +23,6 @@ CPFA_loop_functions::CPFA_loop_functions() :
 	ClusterWidthX(8),
 	ClusterLengthY(8),
 	PowerRank(4),
-        PowerLawCopies(1),
 	ProbabilityOfSwitchingToSearching(0.0),
 	ProbabilityOfReturningToNest(0.0),
 	UninformedSearchVariation(0.0),
@@ -76,11 +75,8 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "NumberOfClusters", NumberOfClusters);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
 	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
-	argos::GetNodeAttribute(settings_node, "PowerRank", PowerRank);
-        argos::GetNodeAttribute(settings_node, "PowerLawCopies", PowerLawCopies);
         argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius); argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius); //qilu 09/12/2016
         argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
-	argos::GetNodeAttribute(settings_node, "ArenaWidth", ArenaWidth);//qilu 11/06/2016
  argos::GetNodeAttribute(settings_node, "NestPosition_0", NestPosition);
  Nest nest0= Nest(NestPosition); //qilu 09/06
  nest0.SetNestIdx(0);
@@ -122,17 +118,12 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 
 	FoodRadiusSquared = FoodRadius*FoodRadius;
         //Number of distributed foods
-        if (FoodDistribution == 0){
-            NumDistributedFood = FoodItemCount; 
-        }
-        else if (FoodDistribution == 1){
-            NumDistributedFood = ClusterWidthX*ClusterLengthY*NumberOfClusters;
-        }
-        else{
-            for(size_t i=0; i<PowerRank; i++)
-		NumDistributedFood += pow(4, PowerRank-1);
-	    NumDistributedFood *= PowerLawCopies;     
-        }      
+    if (FoodDistribution == 1){
+        NumDistributedFood = ClusterWidthX*ClusterLengthY*NumberOfClusters;
+    }
+    else{
+        NumDistributedFood = FoodItemCount;  
+    }
 
  
 	// calculate the forage range and compensate for the robot's radius of 0.085m
@@ -142,6 +133,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	ForageRangeX.Set(-rangeX, rangeX);
 	ForageRangeY.Set(-rangeY, rangeY);
 
+    ArenaWidth = ArenaSize[0];
 	   // Send a pointer to this loop functions object to each controller.
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
