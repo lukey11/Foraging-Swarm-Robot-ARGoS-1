@@ -14,10 +14,11 @@ CPFA_controller::CPFA_controller() :
 	LoopFunctions(NULL),
 	survey_count(0),
 	isUsingPheromone(0),
- searchingTime(0),
- travelingTime(0),
-startTime(0),
- updateFidelity(false)
+        SiteFidelityPosition(0, 0),
+        searchingTime(0),
+        travelingTime(0),
+        startTime(0),
+        updateFidelity(false)
 {
 }
 
@@ -46,8 +47,7 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	SetIsHeadingToNest(true);
 	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
-
- controllerID= GetId();//qilu 07/26/2016
+        controllerID= GetId();
 }
 
 void CPFA_controller::ControlStep() {
@@ -531,7 +531,6 @@ void CPFA_controller::Returning() {
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
                 
-		    //log_output_stream.close();
     }
 	// Take a small step towards the nest so we don't overshoot by too much is we miss it
 	else {
@@ -696,7 +695,7 @@ void CPFA_controller::SetFidelityList(argos::CVector2 newFidelity) {
 	/* Update the global fidelity list. */
 	//LoopFunctions->FidelityList = newFidelityList;
 
- LoopFunctions->FidelityList[controllerID] = newFidelity;
+        LoopFunctions->FidelityList[controllerID] = newFidelity;
 	/* Add the robot's new fidelity position to the global fidelity list. */
 	//LoopFunctions->FidelityList.push_back(newFidelity);
  
@@ -715,7 +714,7 @@ void CPFA_controller::SetFidelityList() {
 
 	/* Remove this robot's old fidelity position from the fidelity list. */
 	/* Update the global fidelity list. */
- LoopFunctions->FidelityList.erase(controllerID);
+        LoopFunctions->FidelityList.erase(controllerID);
 }
 
 /*****

@@ -65,7 +65,7 @@
 		    />
 
          <settings
-	     MaxSimTimeInSeconds = "3600"
+	     MaxSimTimeInSeconds = "900"
 	     MaxSimCounter = "1"
 	     VariableFoodPlacement = "0"
 	     OutputData = "0"

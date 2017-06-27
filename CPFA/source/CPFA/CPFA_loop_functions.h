@@ -88,10 +88,10 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t ClusterWidthX;
 		size_t ClusterLengthY;
 		size_t PowerRank;
-        size_t ArenaWidth;
-        size_t SimTime; 
-        Real curr_time_in_minutes; 
-        Real last_time_in_minutes; 
+                size_t ArenaWidth;
+                size_t SimTime; 
+                Real curr_time_in_minutes; 
+                Real last_time_in_minutes; 
   
 		/* CPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
@@ -119,14 +119,14 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		argos::CRange<argos::Real>   ForageRangeX;
 		argos::CRange<argos::Real>   ForageRangeY;
   
-        Real   CollisionTime;
-        size_t currCollisionTime; 
-        size_t lastCollisionTime; 
-        size_t lastNumCollectedFood;
-        size_t currNumCollectedFood;
-        size_t Num_robots;
+                Real   CollisionTime;
+                size_t currCollisionTime; 
+                size_t lastCollisionTime; 
+                size_t lastNumCollectedFood;
+                size_t currNumCollectedFood;
+                size_t Num_robots;
       
-        vector<size_t>			ForageList;
+                vector<size_t>		ForageList;
 		argos::CVector2 NestPosition;
 	private:
 
@@ -134,7 +134,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		void RandomFoodDistribution();
 		void ClusterFoodDistribution();
 		void PowerLawFoodDistribution();
-  bool IsOutOfBounds(argos::CVector2 p, size_t length, size_t width);
+                bool IsOutOfBounds(argos::CVector2 p, size_t length, size_t width);
 		bool IsCollidingWithNest(argos::CVector2 p);
 		bool IsCollidingWithFood(argos::CVector2 p);
 		double score;

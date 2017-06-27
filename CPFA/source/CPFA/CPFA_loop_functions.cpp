@@ -57,11 +57,12 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(CPFA_node, "PrintFinalScore",                   PrintFinalScore);
 
 	UninformedSearchVariation = ToRadians(USV_InDegrees);
+	MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
+	
 	argos::TConfigurationNode settings_node = argos::GetNode(node, "settings");
-
+	
 	argos::GetNodeAttribute(settings_node, "MaxSimTimeInSeconds", MaxSimTime);
 
-	MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
 
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
@@ -96,7 +97,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	ForageRangeX.Set(-rangeX, rangeX);
 	ForageRangeY.Set(-rangeY, rangeY);
 
-    ArenaWidth = ArenaSize[0];
+        ArenaWidth = ArenaSize[0];
 	   // Send a pointer to this loop functions object to each controller.
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
@@ -168,9 +169,9 @@ void CPFA_loop_functions::PreStep() {
 	   }
  
     if(FoodList.size() == 0) {
-		FidelityList.clear();
-		PheromoneList.clear();
-        TargetRayList.clear(); 
+	FidelityList.clear();
+	PheromoneList.clear();
+        TargetRayList.clear();
     }
 }
 
@@ -185,7 +186,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 		isFinished = true;
 	}
     //set to collected 88% food and then stop
-    if(score >= NumDistributedFood*0.88){
+    if(score >= NumDistributedFood*1.0){
 		isFinished = true;
 		}
          

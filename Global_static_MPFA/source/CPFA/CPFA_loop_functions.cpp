@@ -194,6 +194,7 @@ void CPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
+  score = 0.0;
    
     FoodList.clear();
     FoodColoringList.clear();
@@ -279,7 +280,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 	}
         
         //set to collected 88% food and then stop
-        if(score >= NumDistributedFood*0.8){
+        if(score >= NumDistributedFood*1.0){
 		isFinished = true;
 	}
 
@@ -593,6 +594,8 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 					foodPlaced++;
 					FoodList.push_back(placementPosition);
 					FoodColoringList.push_back(argos::CColor::BLACK);
+					FoodClusterIDs.push_back(0);
+		            FoodDistances.push_back(10000);
 					placementPosition.SetX(placementPosition.GetX() + foodOffset);
                     if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
 				}

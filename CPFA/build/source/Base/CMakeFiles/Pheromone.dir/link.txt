@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -std=c++0x -O3 -DNDEBUG  -shared -Wl,-soname,libPheromone.so -o libPheromone.so CMakeFiles/Pheromone.dir/Pheromone.cpp.o  -L/usr/local/lib/argos3  -L/home/lukey15/Research/MPFA_repo/MPFA/CPFA/build 

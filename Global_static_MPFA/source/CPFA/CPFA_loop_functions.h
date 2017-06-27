@@ -93,7 +93,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
         size_t SimTime; //qilu 09/13/2016
         Real curr_time_in_minutes; //qilu 09/13/2016
         Real last_time_in_minutes; //qilu 09/13/2016
-        int Nest_travel_time_in_ticks;
+        //int Nest_travel_time_in_ticks;
         size_t Num_robots;
         
         Real CollisionTime;//qilu 09/26

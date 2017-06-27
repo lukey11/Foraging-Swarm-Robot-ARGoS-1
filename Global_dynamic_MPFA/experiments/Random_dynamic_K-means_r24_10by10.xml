@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="0" />
-    <experiment length="6000"
+    <experiment length="900"
                 ticks_per_second="32"
 		random_seed="0"/>
   </framework>
@@ -65,7 +65,7 @@
 		    />
 
          <settings
-	     MaxSimTimeInSeconds = "6000"
+	     MaxSimTimeInSeconds = "900"
 	     MaxSimCounter = "1"
 	     VariableFoodPlacement = "0"
 	     OutputData = "0"
@@ -84,8 +84,7 @@
       NestPosition_0="2.5, 2.5" 
       NestPosition_1="2.5, -2.5" 
       NestPosition_2="-2.5, 2.5" 
-      NestPosition_3="-2.5, -2.5"
-      />
+      NestPosition_3="-2.5, -2.5"/>
 
   </loop_functions>
 

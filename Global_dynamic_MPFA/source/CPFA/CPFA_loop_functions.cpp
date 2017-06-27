@@ -119,11 +119,10 @@ Cylinders.push_back(cCyl4);
 	FoodRadiusSquared = FoodRadius*FoodRadius;
 
         //Number of distributed foods
-    if (FoodDistribution == 1){
+    if (FoodDistribution == 1)
         NumDistributedFood = ClusterWidthX*ClusterLengthY*NumberOfClusters;
-    }
     else
-        NumDistributedFood = FoodItemCount; 
+        NumDistributedFood = FoodItemCount;
 
 	// calculate the forage range and compensate for the robot's radius of 0.085m
 	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
@@ -196,9 +195,12 @@ void CPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
+    score = 0.0;
    
     FoodList.clear();
     FoodColoringList.clear();
+    FoodClusterIDs.clear();
+    FoodDistances.clear();
    
     TargetRayList.clear();
     
@@ -241,7 +243,19 @@ void CPFA_loop_functions::PreStep() {
             MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(newLocation.GetX(),newLocation.GetY(),0), CQuaternion());
             Nest_travel_time_in_ticks++;
          }
+	 //If a nest is not accessed in 2 minutes, it will move randomly
+         if (curr_time_in_minutes - Nests[i].visited_time_point_in_minute >=2){
+             Nests[i].NewLocation.Set(Nests[i].GetLocation().GetX()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)), Nests[i].GetLocation().GetY()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)));
+             while(IsOutOfArena(Nests[i].NewLocation, NestRadius)) 
+                 Nests[i].NewLocation.Set(Nests[i].GetLocation().GetX()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)), Nests[i].GetLocation().GetY()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)));
+             
+             Nests[i].visited_time_point_in_minute = curr_time_in_minutes;
+          }
     }
+
+    if(GetSpace().GetSimulationClock()<360 || GetSpace().GetSimulationClock() % 360 ==0){
+		for(size_t i=0; i<Nests.size(); i++) MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(Nests[i].GetLocation().GetX(), Nests[i].GetLocation().GetY(),0), CQuaternion());
+		}
     
 	UpdatePheromoneList();
 
@@ -273,7 +287,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 	}
         
         //set to collected 88% food and then stop
-        if(score >= NumDistributedFood*0.8){
+        if(score >= NumDistributedFood*1.0){
 		isFinished = true;
 	}
 
@@ -465,6 +479,8 @@ void CPFA_loop_functions::GaussianFoodDistribution() {
 void CPFA_loop_functions::ClusterFoodDistribution() {
     FoodList.clear();
     FoodColoringList.clear();
+    FoodClusterIDs.clear();
+    FoodDistances.clear();
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
 	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterLengthY;
 	size_t          foodPlaced = 0;
@@ -512,6 +528,8 @@ void CPFA_loop_functions::ClusterFoodDistribution() {
 void CPFA_loop_functions::PowerLawFoodDistribution() {
     FoodList.clear();
     FoodColoringList.clear();
+    FoodClusterIDs.clear();
+    FoodDistances.clear();
     argos::Real foodOffset     = 3.0 * FoodRadius;
 	size_t      foodPlaced     = 0;
 	size_t      powerLawLength = 1;

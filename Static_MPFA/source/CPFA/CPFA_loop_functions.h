@@ -93,6 +93,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
   size_t SimTime; //qilu 09/13/2016
   Real curr_time_in_minutes; //qilu 09/13/2016
   Real last_time_in_minutes; //qilu 09/13/2016
+        size_t Num_robots;
   
 		/* CPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
@@ -134,7 +135,6 @@ class CPFA_loop_functions : public argos::CLoopFunctions
         size_t lastCollisionTime; //qilu 10/30
         size_t lastNumCollectedFood; //qilu 08/19
         size_t currNumCollectedFood; //qilu 08/19
-    size_t Num_robots;
       
   std::vector<Nest> Nests; //qilu 09/06
   vector<size_t>			ForageList; //qilu 09/13

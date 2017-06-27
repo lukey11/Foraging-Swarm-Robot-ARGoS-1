@@ -76,7 +76,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
 	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
- argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius); //qilu 09/12/2016
+ argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
  argos::GetNodeAttribute(settings_node, "NestPosition_0", NestPosition);
  Nest nest0= Nest(NestPosition); //qilu 09/06
@@ -192,6 +192,7 @@ void CPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
+  score = 0.0;
    
     FoodList.clear();
     FoodColoringList.clear();
@@ -206,9 +207,9 @@ void CPFA_loop_functions::Reset() {
       }
     
     argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
-    argos::CSpace::TMapPerType::iterator it;
    
-    for(it = footbots.begin(); it != footbots.end(); it++) {
+    Num_robots = footbots.size();
+    for(argos::CSpace::TMapPerType::iterator it = footbots.begin(); it != footbots.end(); it++) {
         argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
         BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
         CPFA_controller& c2 = dynamic_cast<CPFA_controller&>(c);
@@ -274,7 +275,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 		isFinished = true;
 	}
         //set to collected 88% food and then stop
-        if(score >= NumDistributedFood*0.8){
+        if(score >= NumDistributedFood*1.0){
 		isFinished = true;
 		}  
 
@@ -417,6 +418,7 @@ void CPFA_loop_functions::SetFoodDistribution() {
 
 void CPFA_loop_functions::RandomFoodDistribution() {
 	FoodList.clear();
+    FoodColoringList.clear();
 
 	argos::CVector2 placementPosition;
 
@@ -434,6 +436,7 @@ void CPFA_loop_functions::RandomFoodDistribution() {
 
 void CPFA_loop_functions::GaussianFoodDistribution() {
  FoodList.clear();
+ FoodColoringList.clear();
  argos::CVector2 centerPosition;
  argos::CVector2 placementPosition;
  
@@ -457,6 +460,7 @@ void CPFA_loop_functions::GaussianFoodDistribution() {
  
 void CPFA_loop_functions::ClusterFoodDistribution() {
 FoodList.clear();
+    FoodColoringList.clear();
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
 	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterLengthY;
 	size_t          foodPlaced = 0;
@@ -501,6 +505,7 @@ FoodList.clear();
 
 void CPFA_loop_functions::PowerLawFoodDistribution() {
  FoodList.clear();
+	FoodColoringList.clear();
 	argos::Real foodOffset     = 3.0 * FoodRadius;
 	size_t      foodPlaced     = 0;
 	size_t      powerLawLength = 1;

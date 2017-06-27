@@ -75,8 +75,9 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "NumberOfClusters", NumberOfClusters);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
 	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
-        argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius); argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius); //qilu 09/12/2016
-        argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
+        argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius); 
+        argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
+	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
  argos::GetNodeAttribute(settings_node, "NestPosition_0", NestPosition);
  Nest nest0= Nest(NestPosition); //qilu 09/06
  nest0.SetNestIdx(0);
@@ -163,6 +164,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
      
  
     SetFoodDistribution();
+    for(size_t i=0; i<Nests.size(); i++) MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(Nests[i].GetLocation().GetX(), Nests[i].GetLocation().GetY(),0), CQuaternion());
      ForageList.clear(); //qilu 09/13/2016
  last_time_in_minutes=0; //qilu 09/13/2016
  Nest_travel_time_in_ticks=0;
@@ -191,6 +193,7 @@ void CPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
+  score = 0.0;
    
     FoodList.clear();
     FoodColoringList.clear();
@@ -205,9 +208,9 @@ void CPFA_loop_functions::Reset() {
       }
     
     argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
-    argos::CSpace::TMapPerType::iterator it;
    
-    for(it = footbots.begin(); it != footbots.end(); it++) {
+    Num_robots = footbots.size();
+    for(argos::CSpace::TMapPerType::iterator it = footbots.begin(); it != footbots.end(); it++) {
         argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
         BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
         CPFA_controller& c2 = dynamic_cast<CPFA_controller&>(c);
@@ -283,7 +286,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 	}
 
         //set to collected 88% food and then stop
-        if(score >= NumDistributedFood*0.8){
+        if(score >= NumDistributedFood*1.0){
 		isFinished = true;
 	}
 
@@ -433,8 +436,7 @@ void CPFA_loop_functions::SetFoodDistribution() {
 
 void CPFA_loop_functions::RandomFoodDistribution() {
 	FoodList.clear();
-    FoodColoringList.clear();
-
+        FoodColoringList.clear();
 	argos::CVector2 placementPosition;
 
 	for(size_t i = 0; i < FoodItemCount; i++) {
@@ -606,8 +608,8 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
                 if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
 			}
             if (foodPlaced == singleClusterCount + h * otherClusterCount) break;
-			}
-		}
+	}
+}
 	FoodItemCount = foodPlaced;
 }
 
