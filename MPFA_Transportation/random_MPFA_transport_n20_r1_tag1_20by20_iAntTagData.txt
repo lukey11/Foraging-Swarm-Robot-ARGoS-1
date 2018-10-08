@@ -1,2 +1,0 @@
-tags_collected, collisions_in_seconds, time_in_minutes, random_seed
-0, 0, 1.87604, 346427
