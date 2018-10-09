@@ -94,6 +94,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 			argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
 			Nests.push_back(Nest(NestPosition));
         	Nests[i].SetRegionFlag(1);
+        	
 		}
 		else if(argos::NodeAttributeExists(settings_node, PosStrDepot))
 	    {
@@ -103,6 +104,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 		}
         
         Nests[i].SetNestIdx(i);
+        Nests[i].SetRadius(i);
         //cylId = "cyl"+to_string(i);
         //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
     }
@@ -269,12 +271,10 @@ void MPFA_loop_functions::PreStep() {
 	}*/
 
 	UpdatePheromoneList();
-
-    if(GetSpace().GetSimulationClock() > ResourceDensityDelay)
+    if(GetSpace().GetSimulationClock() > ResourceDensityDelay) //update the sensed targets color to be black.
         for(size_t i = 0; i < FoodColoringList.size(); i++)
-            FoodColoringList[i] = argos::CColor::BLACK;
-  	   
- 
+            FoodColoringList[i] = argos::CColor::BLACK; 	
+  	
     if(FoodList.size() == 0) {
         for(size_t i=0; i<Nests.size(); i++){
             Nests[i].PheromoneList.clear();//qilu 09/11/16
@@ -347,7 +347,7 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
          
-        string header = type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        string header = "results/"+type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
         
         Real total_travel_time=0;
         Real total_search_time=0;
@@ -491,8 +491,10 @@ void MPFA_loop_functions::GaussianFoodDistribution() {
  }
  
 void MPFA_loop_functions::ClusterFoodDistribution() {
-FoodList.clear();
+    FoodList.clear();
     FoodColoringList.clear();
+	assert(FoodItemCount = NumberOfClusters*ClusterWidthX*ClusterWidthY);
+	
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
 	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterLengthY;
 	size_t          foodPlaced = 0;

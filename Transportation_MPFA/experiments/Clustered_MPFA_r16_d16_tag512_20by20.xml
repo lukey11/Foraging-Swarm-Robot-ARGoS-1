@@ -74,7 +74,7 @@
 	     DrawIDs = "1"
 	     DrawTrails = "0"
 	     DrawTargetRays = "1"
-	     FoodDistribution = "0"
+	     FoodDistribution = "1"
 	     FoodItemCount = "512"
 	     PowerlawFoodUnitCount = "512"
 	     NumberOfClusters = "8"
