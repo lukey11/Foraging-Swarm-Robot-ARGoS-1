@@ -24,6 +24,7 @@
     visited_time_point_in_minute=0;
     nest_idx=-1;
     travel_flag =0;
+    NestRadius = 0.25;
 }
 
 /*****
@@ -32,6 +33,8 @@
 /*****
  * Return the nest's location.
  *****/
+ 
+ 
 CVector2 Nest::GetLocation() {
     return nestLocation;
 }
