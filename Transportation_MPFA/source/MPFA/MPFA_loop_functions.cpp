@@ -104,7 +104,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 		}
         
         Nests[i].SetNestIdx(i);
-        Nests[i].SetRadius(i);
+        //Nests[i].SetRadius(i);
         //cylId = "cyl"+to_string(i);
         //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
     }
