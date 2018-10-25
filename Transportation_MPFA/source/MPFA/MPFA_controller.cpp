@@ -129,7 +129,7 @@ void MPFA_controller::ControlStep() {
 }
 
 void MPFA_controller::Reset() {
-    num_targets_collected =0;
+    total_targets_collected =0;
     isHoldingFood   = false;
     isInformed      = false;
     SearchTime      = 0;
@@ -330,7 +330,13 @@ void MPFA_controller::Delivering(){
           placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.1), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.1));
         }
         TargetNest->FoodList.push_back(placementPosition);
-        TargetNest->num_collected_tags++;
+        if(TargetNest->GetNestIdx() == 0) //center nest
+        {
+			total_targets_collected++;
+            //ClosestNest->num_collected_tags++;
+	        LoopFunctions->currNumCollectedFood++; 
+		}
+        //TargetNest->num_collected_tags++;
         SetIsHeadingToNest(true);
 	    //argos::CVector3 p = GetStartPosition();
 	    //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
@@ -343,7 +349,7 @@ void MPFA_controller::Delivering(){
 void MPFA_controller::Idling()
 {
 	//argos::LOG<<"Idling ..."<<endl;
-	if(ClosestNest == NULL){
+	/*if(ClosestNest == NULL){
 		SetClosestNest();
 	}
 	if(ClosestNest->FoodList.size() > 0){
@@ -353,7 +359,7 @@ void MPFA_controller::Idling()
 		SetIsHeadingToNest(true);
 	    SetTarget(TargetNest->GetLocation());
 	    MPFA_state = DEPOT_DELIVERING;	        
-	}	
+	}*/	
 }
 
 
@@ -621,9 +627,6 @@ void MPFA_controller::Returning() {
      
           ClosestNest->FoodList.push_back(placementPosition);
           //Update the location of the nest qilu 09/10
-          num_targets_collected++;
-          ClosestNest->num_collected_tags++;
-	  LoopFunctions->currNumCollectedFood++; 
           //ClosestNest->UpdateNestLocation();
          
           //Update the collected resources in the nest after updating the location of the nest
@@ -641,7 +644,7 @@ void MPFA_controller::Returning() {
     
           for(size_t i = 0; i < LoopFunctions->FoodList.size(); i++) {
               if((ClosestNest->GetLocation() - LoopFunctions->FoodList[i]).SquareLength() < pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)) {
-                  num_targets_collected++;
+                  total_targets_collected++;
               }
               else{
                   newFoodList.push_back(LoopFunctions->FoodList[i]);
@@ -653,13 +656,13 @@ void MPFA_controller::Returning() {
           */
           
           // Record that a target has been retrieved
-          /*num_targets_collected =0;
+          /*total_targets_collected =0;
           for(size_t n=0; n<LoopFunctions->Nests.size(); n++){
            //LOG<<"FoodList "<<n<<" size ="<<LoopFunctions->Nests[n].FoodList.size()<<endl;
-              num_targets_collected += LoopFunctions->Nests[n].FoodList.size();
+              total_targets_collected += LoopFunctions->Nests[n].FoodList.size();
           }*/
       
-          LoopFunctions->setScore(num_targets_collected);
+          LoopFunctions->setScore(total_targets_collected);
 
           if(poissonCDF_pLayRate > r1 && updateFidelity) {
 		TrailToShare.push_back(ClosestNest->GetLocation()); //qilu 07/26/2016

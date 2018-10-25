@@ -185,8 +185,25 @@ void MPFA_qt_user_functions::DrawTargetRays() {
 void MPFA_qt_user_functions::DrawBranches() {
 	std::vector<argos::CRay3>    RayList0;
     std::vector<argos::CRay3>    RayList1;
+    CRay3 targetRay;
+    int level = log(loopFunctions.getNumberOfDepots())/log(4); 
     
-    CRay3 targetRay = CRay3(CVector3(7.5, 7.5, 0.01), CVector3(5.0, 5.0, 0.01));
+    if(level == 1){
+		targetRay = CRay3(CVector3(2.5, 2.5, 0.01), CVector3(0, 0, 0.01));
+		RayList1.push_back(targetRay);
+		
+		targetRay = CRay3(CVector3(2.5, -2.5, 0.01), CVector3(0, 0, 0.01));
+		RayList1.push_back(targetRay);
+		
+		targetRay = CRay3(CVector3(-2.5, 2.5, 0.01), CVector3(0, 0, 0.01));
+		RayList1.push_back(targetRay);
+		
+		targetRay = CRay3(CVector3(-2.5, -2.5, 0.01), CVector3(0, 0, 0.01));
+		RayList1.push_back(targetRay);	
+		}
+    else if(level == 2){
+    //1st level
+    targetRay = CRay3(CVector3(7.5, 7.5, 0.01), CVector3(5.0, 5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
 	targetRay = CRay3(CVector3(2.7, 2.4, 0.01), CVector3(5.0, 5.0, 0.01));
@@ -198,7 +215,7 @@ void MPFA_qt_user_functions::DrawBranches() {
 	targetRay = CRay3(CVector3(2.5, 7.5, 0.01), CVector3(5.0, 5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
-	//
+	
 	targetRay = CRay3(CVector3(2.7, -2.4, 0.01), CVector3(5.0, -5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
@@ -211,7 +228,7 @@ void MPFA_qt_user_functions::DrawBranches() {
 	targetRay = CRay3(CVector3(7.5, -7.5, 0.01), CVector3(5.0, -5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
-	//
+	
 	targetRay = CRay3(CVector3(-2.7, 2.4, 0.01), CVector3(-5.0, 5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
@@ -224,7 +241,7 @@ void MPFA_qt_user_functions::DrawBranches() {
 	targetRay = CRay3(CVector3(-7.5, 7.5, 0.01), CVector3(-5.0, 5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
-	//
+	
 	targetRay = CRay3(CVector3(-2.7, -2.4, 0.01), CVector3(-5.0, -5.0, 0.01));
 	RayList0.push_back(targetRay);
 	
@@ -250,7 +267,7 @@ void MPFA_qt_user_functions::DrawBranches() {
 	
 	targetRay = CRay3(CVector3(-5, -5, 0.01), CVector3(0, 0, 0.01));
 	RayList1.push_back(targetRay);
-	
+    }
 	
 	
 	

@@ -11,7 +11,7 @@
 using namespace std;
 using namespace argos;
 
-static unsigned int num_targets_collected = 0;
+static unsigned int total_targets_collected = 0;
 
 class MPFA_loop_functions;
 

@@ -27,6 +27,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		void PostStep();
 		bool IsExperimentFinished();
 		void PostExperiment();
+		
 		argos::CColor GetFloorColor(const argos::CVector2 &c_pos_on_floor);
 
 		// GA Functions
@@ -56,6 +57,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		std::vector<argos::CColor>   TargetRayColorList;
 
 		unsigned int getNumberOfRobots();
+		unsigned int getNumberOfDepots();
 		double getProbabilityOfSwitchingToSearching();
 		double getProbabilityOfReturningToNest();
 		double getUninformedSearchVariation();

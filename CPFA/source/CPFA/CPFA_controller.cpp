@@ -485,17 +485,26 @@ void CPFA_controller::Returning() {
 	    argos::Real r1 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 	    argos::Real r2 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 	    if (isHoldingFood) {        
-	          num_targets_collected++;
-	          LoopFunctions->currNumCollectedFood++;
-	          LoopFunctions->setScore(num_targets_collected);
-	          if(poissonCDF_pLayRate > r1 && updateFidelity) {
-		            TrailToShare.push_back(LoopFunctions->NestPosition); //qilu 07/26/2016
-	                argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
-			        Pheromone sharedPheromone(SiteFidelityPosition, TrailToShare, timeInSeconds, LoopFunctions->RateOfPheromoneDecay, ResourceDensity);
-	                LoopFunctions->PheromoneList.push_back(sharedPheromone);
-	                sharedPheromone.Deactivate(); // make sure this won't get re-added later...
-	          }
-	          TrailToShare.clear();  
+          //drop off the food and display in the nest 
+          argos::CVector2 placementPosition;
+          placementPosition.Set(LoopFunctions->NestPosition.GetX()+RNG->Gaussian(0.1, 0), LoopFunctions->NestPosition.GetY()+RNG->Gaussian(0.1, 0));
+          
+          while((placementPosition-LoopFunctions->NestPosition).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
+              placementPosition.Set(LoopFunctions->NestPosition.GetX()+RNG->Gaussian(0.1, 0), LoopFunctions->NestPosition.GetY()+RNG->Gaussian(0.1, 0));
+     
+          LoopFunctions->FoodList.push_back(placementPosition);
+          //Update the location of the nest qilu 09/10
+          num_targets_collected++;
+		  LoopFunctions->currNumCollectedFood++;
+          LoopFunctions->setScore(num_targets_collected);
+          if(poissonCDF_pLayRate > r1 && updateFidelity) {
+	            TrailToShare.push_back(LoopFunctions->NestPosition); //qilu 07/26/2016
+                argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
+		        Pheromone sharedPheromone(SiteFidelityPosition, TrailToShare, timeInSeconds, LoopFunctions->RateOfPheromoneDecay, ResourceDensity);
+                LoopFunctions->PheromoneList.push_back(sharedPheromone);
+                sharedPheromone.Deactivate(); // make sure this won't get re-added later...
+          }
+          TrailToShare.clear();  
 	    }
 
 	    // Determine probabilistically whether to use site fidelity, pheromone
@@ -591,6 +600,16 @@ void CPFA_controller::SetHoldingFood() {
 	        	             j = i + 1;
                                      searchingTime+=SimulationTick()-startTime;
                                      startTime = SimulationTick();
+				   //drop off the food and display in the nest 
+			         argos::CVector2 placementPosition;
+			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
+			          
+			         while((placementPosition-LoopFunctions->NestPosition).SquareLength()<=pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
+			         }
+			         newFoodList.push_back(placementPosition);
+					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+					 //end
                                      break;
 			             } else {
                       //Return this unfound-food position to the list

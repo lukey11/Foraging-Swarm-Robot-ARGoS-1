@@ -104,7 +104,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 		}
         
         Nests[i].SetNestIdx(i);
-        Nests[i].SetRadius(i);
+        //Nests[i].SetRadius(i);
         //cylId = "cyl"+to_string(i);
         //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
     }
@@ -347,7 +347,7 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
          
-        string header = "results/"+type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        string header = "./results/"+type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
         
         Real total_travel_time=0;
         Real total_search_time=0;
@@ -390,9 +390,17 @@ void MPFA_loop_functions::PostExperiment() {
         dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
-        ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
-        if(ForageList.size()!=0) forageDataOutput<<"Forage: "<< ForageList[0];
-        for(size_t i=1; i< ForageList.size(); i++) forageDataOutput<<", "<<ForageList[i];
+        /*ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
+        forageDataOutput<<"Cubes in center per min:";
+        
+        for(size_t i=0; i< ForageList.size(); i++)
+        {
+			forageDataOutput << " " << ForageList[i];
+			}
+        forageDataOutput<<"\n";
+        */
+        //forageDataOutput<<"Cubes in nests:";
+        for(size_t i=0; i< Nests.size(); i++) forageDataOutput<<Nests[i].FoodList.size()<<" ";
         forageDataOutput<<"\n";
         forageDataOutput.close();
         
@@ -794,6 +802,12 @@ bool MPFA_loop_functions::IsCollidingWithFood(argos::CVector2 p) {
 unsigned int MPFA_loop_functions::getNumberOfRobots() {
 	return GetSpace().GetEntitiesByType("foot-bot").size();
 }
+
+unsigned int MPFA_loop_functions::getNumberOfDepots() {
+	return Nests.size();
+}
+
+
 
 double MPFA_loop_functions::getProbabilityOfSwitchingToSearching() {
 	return ProbabilityOfSwitchingToSearching;

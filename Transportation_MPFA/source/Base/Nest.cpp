@@ -20,7 +20,7 @@
     DensityOnFidelity.clear(); //qilu 09/11/2016
     FoodList.clear(); //qilu 09/07/2016
     NewLocation = location; //qilu 09/19/2016
-    num_collected_tags=0;
+    //num_collected_tags=0;
     visited_time_point_in_minute=0;
     nest_idx=-1;
     travel_flag =0;
@@ -77,7 +77,7 @@ size_t Nest:: GetNestIdx(){
  } 
 
 size_t Nest:: GetCollectedTagNum(){
-     return num_collected_tags;
+     return FoodList.size();
  } 
  
 int Nest:: GetTravelFlag(){
