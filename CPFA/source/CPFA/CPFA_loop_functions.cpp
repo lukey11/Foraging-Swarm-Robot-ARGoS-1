@@ -57,12 +57,13 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(CPFA_node, "PrintFinalScore",                   PrintFinalScore);
 
 	UninformedSearchVariation = ToRadians(USV_InDegrees);
-	MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
+	//MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
 	
 	argos::TConfigurationNode settings_node = argos::GetNode(node, "settings");
 	
 	argos::GetNodeAttribute(settings_node, "MaxSimTimeInSeconds", MaxSimTime);
 
+	MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
 
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
@@ -320,7 +321,7 @@ void CPFA_loop_functions::SetFoodDistribution() {
 
 void CPFA_loop_functions::RandomFoodDistribution() {
 	FoodList.clear();
-
+        FoodColoringList.clear();
 	argos::CVector2 placementPosition;
 
 	for(size_t i = 0; i < FoodItemCount; i++) {
@@ -382,6 +383,7 @@ void CPFA_loop_functions::ClusterFoodDistribution() {
 
 void CPFA_loop_functions::PowerLawFoodDistribution() {
  FoodList.clear();
+    FoodColoringList.clear();
 	argos::Real foodOffset     = 3.0 * FoodRadius;
 	size_t      foodPlaced     = 0;
 	size_t      powerLawLength = 1;

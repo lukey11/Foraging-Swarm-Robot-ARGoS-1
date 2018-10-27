@@ -183,12 +183,38 @@ void MPFA_qt_user_functions::DrawTargetRays() {
 	//}
 }
 void MPFA_qt_user_functions::DrawBranches() {
-	std::vector<argos::CRay3>    RayList0;
-    std::vector<argos::CRay3>    RayList1;
+	std::vector<vector<argos::CRay3>>    RayList;
+    std::vector<argos::CRay3>    tempList;
     CRay3 targetRay;
-    int level = log(loopFunctions.getNumberOfDepots())/log(4); 
-    
-    if(level == 1){
+    size_t count=0, prev_level=0;
+    size_t level, pidx; 
+    Real x, y, px, py;
+    for (size_t i=1; i< loopFunctions.Nests.size(); i++)
+    { 
+		level = log(i-count)/log(4);
+		pidx = loopFunctions.Nests[i].GetParentNestIdx();
+	    x = loopFunctions.Nests[i].GetLocation().GetX(); 
+        y = loopFunctions.Nests[i].GetLocation().GetY();
+        
+        px = loopFunctions.Nests[pidx].GetLocation().GetX();
+        py = loopFunctions.Nests[pidx].GetLocation().GetY();
+		targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
+		tempList.push_back(targetRay);
+		if(level > prev_level)
+		{
+			RayList.push_back(tempList);
+			tempList.clear();
+			prev_level++;
+			count = i; 
+			}
+		
+		}
+	  if(tempList.size() > 0)
+	  {
+		  RayList.push_back(tempList);
+	  tempList.clear();
+		  } 	
+   /* if(level == 1){
 		targetRay = CRay3(CVector3(2.5, 2.5, 0.01), CVector3(0, 0, 0.01));
 		RayList1.push_back(targetRay);
 		
@@ -267,19 +293,22 @@ void MPFA_qt_user_functions::DrawBranches() {
 	
 	targetRay = CRay3(CVector3(-5, -5, 0.01), CVector3(0, 0, 0.01));
 	RayList1.push_back(targetRay);
-    }
+    } */
 	
 	
 	
 	std::vector<argos::CColor>        TrailColor;
+    TrailColor.push_back(CColor::GREEN);
     TrailColor.push_back(CColor::RED);
     TrailColor.push_back(CColor::BLUE);
+    TrailColor.push_back(CColor::ORANGE);
     
-	for(size_t j = 0; j < RayList0.size(); j++) {
-		DrawRay(RayList0[j], TrailColor[0], 2.0);
-	}
-	for(size_t j = 0; j < RayList1.size(); j++) {
-		DrawRay(RayList1[j], TrailColor[1], 4.0);
+    
+	for(size_t i = 0; i < RayList.size(); i++) {
+		for(size_t j= 0; j<RayList[i].size(); j++){
+		    DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
+			}
+		
 	}
 }
 

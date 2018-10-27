@@ -37,6 +37,8 @@ void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
 		//			     entity.GetId().c_str()); // text
 		
+			DrawText(CVector3(0.0, 0.0, 0.3),   // position
+            entity.GetId().c_str()); // text
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -48,7 +50,7 @@ void CPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFood();
 	DrawFidelity();
 	DrawPheromones();
-	//DrawNest();
+	DrawNest();
 
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
@@ -82,14 +84,14 @@ void CPFA_qt_user_functions::DrawFood() {
 		DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, loopFunctions.FoodColoringList[i]);
 	}
  
-	 //draw food in nests
+	/* //draw food in nests
 	 for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
 	   for (size_t j=0; j< loopFunctions.Nests[i].FoodList.size(); j++){
 	        x = loopFunctions.Nests[i].FoodList[j].GetX();
 	        y = loopFunctions.Nests[i].FoodList[j].GetY();
 	        DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
 	     }
-	  } 
+	  }*/ 
 }
 
 void CPFA_qt_user_functions::DrawFidelity() {

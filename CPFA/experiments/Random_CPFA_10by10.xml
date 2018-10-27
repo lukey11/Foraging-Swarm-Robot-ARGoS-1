@@ -20,6 +20,7 @@
                      library="build/source/CPFA/libCPFA_controller">
       <actuators>
         <differential_steering implementation = "default"/>
+        <leds                  implementation="default" medium="leds" /> 
       </actuators>
 
       <sensors>

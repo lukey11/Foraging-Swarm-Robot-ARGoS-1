@@ -104,6 +104,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 		}
         
         Nests[i].SetNestIdx(i);
+        Nests[i].SetParentNestIdx_with_backtrack(i);
         //Nests[i].SetRadius(i);
         //cylId = "cyl"+to_string(i);
         //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
@@ -390,8 +391,8 @@ void MPFA_loop_functions::PostExperiment() {
         dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
-        /*ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
-        forageDataOutput<<"Cubes in center per min:";
+        ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
+        /*forageDataOutput<<"Cubes in center per min:";
         
         for(size_t i=0; i< ForageList.size(); i++)
         {

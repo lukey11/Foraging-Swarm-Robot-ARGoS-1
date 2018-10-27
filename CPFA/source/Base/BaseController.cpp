@@ -34,7 +34,8 @@ BaseController::BaseController() :
 	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
 	ForageRangeX.Set(-rangeX, rangeX);
 	ForageRangeY.Set(-rangeY, rangeY);
-	GoStraightAngleRangeInDegrees.Set(-37.5, 37.5);
+	//GoStraightAngleRangeInDegrees.Set(-37.5, 37.5);//does not work when collides with walls
+	GoStraightAngleRangeInDegrees.Set(-80, 80);
 }
 
 argos::CRadians BaseController::GetHeading() {
@@ -325,7 +326,7 @@ bool BaseController::CollisionDetection() {
 			//argos::LOG << collisionAngle << std::endl << collisionVector << std::endl << std::endl;
 			SetRightTurn(collisionAngle); //qilu 09/24/2016
 		}
-		Real randomNumber = RNG->Uniform(CRange<Real>(0.0, 1.0));
+		Real randomNumber = RNG->Uniform(CRange<Real>(0.5, 1.0));
         collisionDelay = SimulationTick() + (size_t)(randomNumber*SimulationTicksPerSecond());//qilu 10/26/2016
 	}
 

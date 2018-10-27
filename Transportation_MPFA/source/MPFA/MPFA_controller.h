@@ -99,7 +99,7 @@ class MPFA_controller : public BaseController {
 		void Idling();
 		void DepotReturning();
 		
-		void SetDeliveringDestination();
+		//void SetDeliveringDestination();
 
 		/* MPFA helper functions */
 		void SetRandomSearchLocation();

@@ -114,7 +114,6 @@ void MPFA_controller::ControlStep() {
 	// Add line so we can draw the trail
 
 	CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
-	//CVector3 target3d(previous_position.GetX(), previous_position.GetY(), 0.00);
 	CVector3 target3d(GetTarget().GetX(), GetTarget().GetY(), 0.00);
 	CRay3 targetRay(target3d, position3d);
 	myTrail.push_back(targetRay);
@@ -310,10 +309,6 @@ SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 }
 
-void MPFA_controller::SetDeliveringDestination(){
-	int idx = (ClosestNest->GetNestIdx()-1)/4;
-    TargetNest = &LoopFunctions->Nests[idx];
-	}
 
 
 
@@ -324,10 +319,10 @@ void MPFA_controller::Delivering(){
 		
 		//drop off the food and display in the nest 
         argos::CVector2 placementPosition;
-        placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.1), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.1));
+        placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
           
         while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
-          placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.1), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.1));
+          placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
         }
         TargetNest->FoodList.push_back(placementPosition);
         if(TargetNest->GetNestIdx() == 0) //center nest
@@ -349,17 +344,19 @@ void MPFA_controller::Delivering(){
 void MPFA_controller::Idling()
 {
 	//argos::LOG<<"Idling ..."<<endl;
-	/*if(ClosestNest == NULL){
+	if(ClosestNest == NULL){
 		SetClosestNest();
+		int parent_idx = ClosestNest->GetParentNestIdx();
+		TargetNest = &LoopFunctions->Nests[parent_idx];
 	}
 	if(ClosestNest->FoodList.size() > 0){
 		ClosestNest->FoodList.erase(ClosestNest->FoodList.begin());
 		isHoldingFood = true;
-		SetDeliveringDestination();
+		//SetDeliveringDestination();
 		SetIsHeadingToNest(true);
 	    SetTarget(TargetNest->GetLocation());
 	    MPFA_state = DEPOT_DELIVERING;	        
-	}*/	
+	}	
 }
 
 
@@ -376,6 +373,8 @@ void MPFA_controller::Departing()
     //LOG<<"Departing..."<<endl;
     if(ClosestNest == NULL){
 		SetClosestNest();
+		//SetDeliveringDestination();
+		
 	}
 	argos::Real distanceToTarget = (GetPosition() - GetTarget()).Length();
     argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
@@ -733,29 +732,21 @@ void MPFA_controller::SetRandomSearchLocation() {
 
 	/* north wall */
 	if(random_wall < 0.25) {
-		//x = RNG->Uniform(ForageRangeX);
-		//y = ForageRangeY.GetMax();
 		x = RNG->Uniform(RegionRangeX);
 		y = RegionRangeY.GetMax();
 	}
 	/* south wall */
 	else if(random_wall < 0.5) {
-		//x = RNG->Uniform(ForageRangeX);
-		//y = ForageRangeY.GetMin();
 		x = RNG->Uniform(RegionRangeX);
 		y = RegionRangeY.GetMin();
 	}
 	/* east wall */
 	else if(random_wall < 0.75) {
-		//x = ForageRangeX.GetMax();
-		//y = RNG->Uniform(ForageRangeY);
 		x = RegionRangeX.GetMax();
 		y = RNG->Uniform(RegionRangeY);
 	}
 	/* west wall */
 	else {
-		//x = ForageRangeX.GetMin();
-		//y = RNG->Uniform(ForageRangeY);
 		x = RegionRangeX.GetMin();
 		y = RNG->Uniform(RegionRangeY);
 	}

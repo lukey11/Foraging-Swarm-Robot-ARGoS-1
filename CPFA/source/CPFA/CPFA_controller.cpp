@@ -14,10 +14,11 @@ CPFA_controller::CPFA_controller() :
 	LoopFunctions(NULL),
 	survey_count(0),
 	isUsingPheromone(0),
-        SiteFidelityPosition(0, 0),
+    SiteFidelityPosition(1000, 1000), 
         searchingTime(0),
         travelingTime(0),
         startTime(0),
+    m_pcLEDs(NULL),
         updateFidelity(false)
 {
 }
@@ -48,6 +49,9 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
         controllerID= GetId();
+    m_pcLEDs   = GetActuator<CCI_LEDsActuator>("leds");
+    controllerID= GetId();//qilu 07/26/2016
+		m_pcLEDs->SetAllColors(CColor::GREEN);
 }
 
 void CPFA_controller::ControlStep() {
@@ -390,9 +394,12 @@ void CPFA_controller::Searching() {
                   argos::Real     twoPi       = (argos::CRadians::TWO_PI).GetValue();
                   argos::Real     pi          = (argos::CRadians::PI).GetValue();
                   argos::Real     isd         = LoopFunctions->RateOfInformedSearchDecay;
-                  argos::Real     correlation = GetExponentialDecay((2.0 * twoPi) - LoopFunctions->UninformedSearchVariation.GetValue(), t, isd);
-                  argos::Real     rand = RNG->Gaussian(correlation + LoopFunctions->UninformedSearchVariation.GetValue());                  //argos::CRadians rotation(GetBound(rand, -pi, pi));
-                  argos::CRadians rotation(GetBound(rand, -pi, pi));
+	                  /*argos::Real     correlation = GetExponentialDecay((2.0 * twoPi) - LoopFunctions->UninformedSearchVariation.GetValue(), t, isd);
+	                  argos::Real     rand = RNG->Gaussian(correlation + LoopFunctions->UninformedSearchVariation.GetValue());
+	                       */ //qilu 09/24/2016
+	                  Real correlation = GetExponentialDecay(rand, t, isd);
+	                  //argos::CRadians rotation(GetBound(rand, -pi, pi));
+	                  argos::CRadians rotation(GetBound(correlation, -pi, pi));//qilu 09/24/2016
                   argos::CRadians angle1(rotation);
                   argos::CRadians angle2(GetHeading());
                   argos::CRadians turn_angle(angle2 + angle1);
@@ -492,7 +499,7 @@ void CPFA_controller::Returning() {
           while((placementPosition-LoopFunctions->NestPosition).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
               placementPosition.Set(LoopFunctions->NestPosition.GetX()+RNG->Gaussian(0.1, 0), LoopFunctions->NestPosition.GetY()+RNG->Gaussian(0.1, 0));
      
-          LoopFunctions->FoodList.push_back(placementPosition);
+          //LoopFunctions->FoodList.push_back(placementPosition);
           //Update the location of the nest qilu 09/10
           num_targets_collected++;
 		  LoopFunctions->currNumCollectedFood++;
@@ -789,14 +796,16 @@ bool CPFA_controller::SetTargetPheromone() {
 /*****
  * Calculate and return the exponential decay of "value."
  *****/
-argos::Real CPFA_controller::GetExponentialDecay(argos::Real value, argos::Real time, argos::Real lambda) {
+argos::Real CPFA_controller::GetExponentialDecay(argos::Real w, argos::Real time, argos::Real lambda) {
 	/* convert time into units of haLoopFunctions-seconds from simulation frames */
 	//time = time / (LoopFunctions->TicksPerSecond / 2.0);
 
 	//LOG << "time: " << time << endl;
 	//LOG << "correlation: " << (value * exp(-lambda * time)) << endl << endl;
 
-	return (value * std::exp(-lambda * time));
+	//return (value * std::exp(-lambda * time));
+    Real     twoPi       = (CRadians::TWO_PI).GetValue();
+    return w + (twoPi-w)* exp(-lambda * time);
 }
 
 /*****

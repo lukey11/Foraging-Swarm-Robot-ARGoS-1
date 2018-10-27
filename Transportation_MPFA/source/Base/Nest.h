@@ -33,15 +33,20 @@ class Nest {
         /* constructor function */
 		
 		      /* public helper functions */
-        CVector2		GetLocation();
-        CVector2     GetDepartLocation();
+        CVector2	GetLocation();
+        CVector2    GetDepartLocation();
         void		SetLocation();
         void		SetDepartLocation(CVector2 location);
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
         void     UpdateNestLocation(); //qilu 09/10/2016
         void  SetNestIdx(size_t idx);
+        void SetParentNestIdx_with_backtrack(size_t idx);
+        void SetParentNestIdx_without_backtrack(size_t idx);
+        void SetLevel(size_t idx);
         void SetRegionFlag(int flag);
         size_t  GetNestIdx();
+        size_t  GetParentNestIdx();
+        size_t GetLevel();
         int GetRegionFlag();
         size_t GetCollectedTagNum();
         int GetTravelFlag();
@@ -51,6 +56,8 @@ class Nest {
 	    CVector2 departLocation;
         CVector2 nestLocation;
         size_t  nest_idx;
+        size_t parent_nest_idx;
+        size_t level;
         
 };
 

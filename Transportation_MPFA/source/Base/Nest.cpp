@@ -23,6 +23,8 @@
     //num_collected_tags=0;
     visited_time_point_in_minute=0;
     nest_idx=-1;
+    parent_nest_idx = -1;
+    level = -1;
     travel_flag =0;
     NestRadius = 0.25;
 }
@@ -60,6 +62,22 @@ void Nest:: SetNestIdx(size_t idx){
      nest_idx = idx;
  }
  
+void Nest:: SetLevel(size_t idx){
+     level = log(idx)/log(4);
+}
+ 
+void Nest::SetParentNestIdx_with_backtrack(size_t idx)
+{
+	parent_nest_idx = (idx-1)/4;
+    
+	}
+ 
+void Nest::SetParentNestIdx_without_backtrack(size_t idx)
+{
+	parent_nest_idx = (idx-1)/4;
+    
+	}
+ 
 void Nest:: SetRegionFlag(int flag){
 	region_flag = flag;
 	
@@ -71,10 +89,20 @@ int Nest:: GetRegionFlag(){
 	}
         
         
-
+size_t Nest:: GetLevel()
+{
+	return level;
+	}
+        
+        
 size_t Nest:: GetNestIdx(){
      return nest_idx;
  } 
+
+size_t Nest:: GetParentNestIdx()
+{
+	return parent_nest_idx;
+	}
 
 size_t Nest:: GetCollectedTagNum(){
      return FoodList.size();
