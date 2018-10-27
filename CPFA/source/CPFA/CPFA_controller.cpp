@@ -499,7 +499,7 @@ void CPFA_controller::Returning() {
           while((placementPosition-LoopFunctions->NestPosition).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
               placementPosition.Set(LoopFunctions->NestPosition.GetX()+RNG->Gaussian(0.1, 0), LoopFunctions->NestPosition.GetY()+RNG->Gaussian(0.1, 0));
      
-          //LoopFunctions->FoodList.push_back(placementPosition);
+          LoopFunctions->CollectedFoodList.push_back(placementPosition);
           //Update the location of the nest qilu 09/10
           num_targets_collected++;
 		  LoopFunctions->currNumCollectedFood++;
@@ -607,11 +607,11 @@ void CPFA_controller::SetHoldingFood() {
 	        	             j = i + 1;
                                      searchingTime+=SimulationTick()-startTime;
                                      startTime = SimulationTick();
-				   //drop off the food and display in the nest 
+				   //distribute a new food 
 			         argos::CVector2 placementPosition;
 			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
 			          
-			         while((placementPosition-LoopFunctions->NestPosition).SquareLength()<=pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+			         while(LoopFunctions->IsOutOfBounds(placementPosition, 1, 1)){
 			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
 			         }
 			         newFoodList.push_back(placementPosition);

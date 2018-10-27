@@ -19,6 +19,7 @@ CPFA_loop_functions::CPFA_loop_functions() :
 	DrawTargetRays(1),
 	FoodDistribution(2),
 	FoodItemCount(256),
+	PowerlawFoodUnitCount(256),
 	NumberOfClusters(4),
 	ClusterWidthX(8),
 	ClusterLengthY(8),
@@ -131,6 +132,7 @@ void CPFA_loop_functions::Reset() {
   score = 0.0;
    
     FoodList.clear();
+    CollectedFoodList.clear();
     FoodColoringList.clear();
 	PheromoneList.clear();
 	FidelityList.clear();
@@ -228,7 +230,7 @@ void CPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
         
-        string header = type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        string header = "./results/"+ type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
         
         Real total_travel_time=0;
         Real total_search_time=0;
@@ -477,8 +479,6 @@ void CPFA_loop_functions::PowerLawFoodDistribution() {
 		}
 	FoodItemCount = foodPlaced;
 }
-
- 
  
 bool CPFA_loop_functions::IsOutOfBounds(argos::CVector2 p, size_t length, size_t width) {
 	argos::CVector2 placementPosition = p;

@@ -71,7 +71,7 @@ void CPFA_qt_user_functions::DrawNest() {
 	CVector3 nest_3d(x_coordinate, y_coordinate, elevation);
 
 	/* Draw the nest on the arena. */
-	DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
+	DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::RED);
 }
 
 void CPFA_qt_user_functions::DrawFood() {
@@ -84,14 +84,13 @@ void CPFA_qt_user_functions::DrawFood() {
 		DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, loopFunctions.FoodColoringList[i]);
 	}
  
-	/* //draw food in nests
-	 for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
-	   for (size_t j=0; j< loopFunctions.Nests[i].FoodList.size(); j++){
-	        x = loopFunctions.Nests[i].FoodList[j].GetX();
-	        y = loopFunctions.Nests[i].FoodList[j].GetY();
+	 //draw food in nests
+	 for (size_t i=0; i< loopFunctions.CollectedFoodList.size(); i++)
+	 { 
+	        x = loopFunctions.CollectedFoodList[i].GetX();
+	        y = loopFunctions.CollectedFoodList[i].GetY();
 	        DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
-	     }
-	  }*/ 
+	  } 
 }
 
 void CPFA_qt_user_functions::DrawFidelity() {

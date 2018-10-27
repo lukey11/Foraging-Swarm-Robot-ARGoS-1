@@ -783,12 +783,11 @@ void MPFA_controller::SetHoldingFood() {
 	               j = i + 1;
 				   searchingTime+=SimulationTick()-startTime;//qilu 10/22
 				   startTime = SimulationTick();//qilu 10/22
-				   
-				   //drop off the food and display in the nest 
+				   //distribute a new food 
 			         argos::CVector2 placementPosition;
 			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
 			          
-			         while((placementPosition-ClosestNest->GetLocation()).SquareLength()<=pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+			         while(LoopFunctions->IsOutOfBounds(placementPosition, 1, 1)){
 			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
 			         }
 			         newFoodList.push_back(placementPosition);

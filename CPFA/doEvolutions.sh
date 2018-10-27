@@ -1,10 +1,8 @@
 mkdir -p launch
-echo "Create the folder -launch-"
 logfilename="${1##*/}_$(date +%F_%H:%M:%S,%N)"
 
-nohup ./$1 $2 $3 $4 >>launch/${logfilename}_stdout.log 2>> launch/${logfilename}_stderr.log &
+nohup mpirun -n $1 -machinefile $2 run_10_1type_ga.py Test_Random_MPFA_r2_d1_tag64_5by5.xml>>launch/${logfilename}_stdout.log 2>> launch/${logfilename}_stderr.log &
 
-echo "DONE"
 
-#Command example: ./currentscript.sh run_2_3types_ga.sh Cluster_4nests.xml Powerlaw_4nests.xml Random_4nests.xml
+#Command example: ./currentscript.sh numberHost*slots moses_cluster
 

@@ -38,8 +38,8 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	NestElevation(0.01),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
-	score(0),
         NumDistributedFood(0),
+	score(0),
 	PrintFinalScore(0)
 {}
 
