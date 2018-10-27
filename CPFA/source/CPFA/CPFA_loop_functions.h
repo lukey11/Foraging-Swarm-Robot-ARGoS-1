@@ -84,6 +84,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t DrawTargetRays;
 		size_t FoodDistribution;
 		size_t FoodItemCount;
+		size_t PowerlawFoodUnitCount;
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
 		size_t ClusterLengthY;

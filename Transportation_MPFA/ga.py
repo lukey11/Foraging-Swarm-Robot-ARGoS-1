@@ -277,7 +277,7 @@ if __name__ == "__main__":
     elites = 1
     mut_rate = 0.05
     robots = 24  #robots = 16
-    tags=384 #qilu 03/26 for naming the output directory 
+    tags=64 #qilu 03/26 for naming the output directory 
     
     system = "linux"
     length = 600#720 # 12 minutes, length is in second. default length = 3600
