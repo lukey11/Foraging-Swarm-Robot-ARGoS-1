@@ -183,7 +183,7 @@ void MPFA_qt_user_functions::DrawTargetRays() {
 	//}
 }
 void MPFA_qt_user_functions::DrawBranches() {
-	std::vector<vector<argos::CRay3>>    RayList;
+	std::vector<vector<argos::CRay3> >    RayList;
     std::vector<argos::CRay3>    tempList;
     CRay3 targetRay;
     size_t count=0, prev_level=0;
