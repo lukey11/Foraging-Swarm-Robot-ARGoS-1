@@ -124,28 +124,6 @@
     
    <!--Distribute foraging robots -->   
 
-<!--        <distribute>
-            <position max="3, 3, 0.0" method="uniform" min="2, 2, 0.0"/>
-            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-            <entity max_trials="100" quantity="2">
-                <foot-bot id="F5"><controller config="MPFA"/></foot-bot>
-            </entity>
-        </distribute>
-        <distribute>
-            <position max="3, -2, 0.0" method="uniform" min="2, -3, 0.0"/>
-            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-            <entity max_trials="100" quantity="2">
-                <foot-bot id="F6"><controller config="MPFA"/></foot-bot>
-            </entity>
-        </distribute> 
-      
-             <distribute>
-        <position max="-1.0, 4.0, 0.0" method="uniform" min="-2.0, 3.0, 0.0"/>
-        <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-        <entity max_trials="100" quantity="2">
-        <foot-bot id="D9"><controller config="MPFA"/></foot-bot>
-        </entity>
-    </distribute> -->
     <distribute>
       <position method="grid"
                 center="-2.0, 2.5, 0.0"
