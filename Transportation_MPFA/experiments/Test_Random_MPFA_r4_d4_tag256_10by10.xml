@@ -55,13 +55,13 @@
                   label   = "MPFA_loop_functions">
 
     <!-- evolvable parameters -->
-        <MPFA       ProbabilityOfSwitchingToSearching = "0.862018953444"
-                    ProbabilityOfReturningToNest      = "0.0688369218936"
-                    UninformedSearchVariation         = "2.80214009862"
-                    RateOfInformedSearchDecay         = "0.29857781164"
-                    RateOfSiteFidelity                = "16.8699397382"
-                    RateOfLayingPheromone             = "18.0791490976"
-                    RateOfPheromoneDecay              = "0.0585866594122"
+        <MPFA       ProbabilityOfSwitchingToSearching = "0.723128706375"
+                    ProbabilityOfReturningToNest      = "0.0147598869881"
+                    UninformedSearchVariation         = "2.81939731297"
+                    RateOfInformedSearchDecay         = "0.205799848158"
+                    RateOfSiteFidelity                = "14.1514206414"
+                    RateOfLayingPheromone             = "14.7027566005"
+                    RateOfPheromoneDecay              = "0.0245057227138"
 		    PrintFinalScore = "1"
 		    />
 
@@ -196,7 +196,7 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
+<!--
  <visualization>
 
 <qt-opengl>
@@ -207,5 +207,5 @@
     </qt-opengl>
 
   </visualization>
-
+-->
 </argos-configuration>

@@ -87,7 +87,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t FoodItemCount;
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
-		size_t ClusterLengthY;
+		size_t ClusterWidthY;
                 size_t PowerRank;
                 size_t ArenaWidth;
                 size_t SimTime;

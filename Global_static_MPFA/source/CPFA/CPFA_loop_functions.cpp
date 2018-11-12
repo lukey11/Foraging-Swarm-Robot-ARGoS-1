@@ -21,7 +21,7 @@ CPFA_loop_functions::CPFA_loop_functions() :
 	FoodItemCount(256),
 	NumberOfClusters(4),
 	ClusterWidthX(8),
-	ClusterLengthY(8),
+	ClusterWidthY(8),
 	PowerRank(4),
 	ProbabilityOfSwitchingToSearching(0.0),
 	ProbabilityOfReturningToNest(0.0),
@@ -74,7 +74,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "FoodItemCount", FoodItemCount);
 	argos::GetNodeAttribute(settings_node, "NumberOfClusters", NumberOfClusters);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
-	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
+	argos::GetNodeAttribute(settings_node, "ClusterWidthY", ClusterWidthY);
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
         argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius); //qilu 09/12/2016
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
@@ -120,7 +120,7 @@ Cylinders.push_back(cCyl4);
 
         //Number of distributed foods
     if (FoodDistribution == 1){
-        NumDistributedFood = ClusterWidthX*ClusterLengthY*NumberOfClusters;
+        NumDistributedFood = ClusterWidthX*ClusterWidthY*NumberOfClusters;
     }
     else
         NumDistributedFood = FoodItemCount; 
@@ -473,7 +473,7 @@ void CPFA_loop_functions::ClusterFoodDistribution() {
     FoodList.clear();
     FoodColoringList.clear();
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
-	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterLengthY;
+	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterWidthY;
 	size_t          foodPlaced = 0;
 	argos::CVector2 placementPosition;
 
@@ -482,11 +482,11 @@ void CPFA_loop_functions::ClusterFoodDistribution() {
 	for(size_t i = 0; i < NumberOfClusters; i++) {
 		placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 
-		while(IsOutOfBounds(placementPosition, ClusterLengthY, ClusterWidthX)) {
+		while(IsOutOfBounds(placementPosition, ClusterWidthY, ClusterWidthX)) {
 			placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 		}
 
-		for(size_t j = 0; j < ClusterLengthY; j++) {
+		for(size_t j = 0; j < ClusterWidthY; j++) {
 			for(size_t k = 0; k < ClusterWidthX; k++) {
 				foodPlaced++;
 				/*

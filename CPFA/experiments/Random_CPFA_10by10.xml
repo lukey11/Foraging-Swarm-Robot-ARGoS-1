@@ -55,13 +55,13 @@
                   label   = "CPFA_loop_functions">
 
     <!-- evolvable parameters -->
-        <CPFA       ProbabilityOfSwitchingToSearching = "0.878073599953"
-                    ProbabilityOfReturningToNest      = "0.000981171745813"
-                    UninformedSearchVariation         = "1.23210060385"
-                    RateOfInformedSearchDecay         = "0.527989613807"
-                    RateOfSiteFidelity                = "8.74013239164"
-                    RateOfLayingPheromone             = "15.4774614894"
-                    RateOfPheromoneDecay              = "0.0987146253963"
+        <CPFA       ProbabilityOfSwitchingToSearching = "0.723128706375"
+                    ProbabilityOfReturningToNest      = "0.0147598869881"
+                    UninformedSearchVariation         = "2.81939731297"
+                    RateOfInformedSearchDecay         = "0.205799848158"
+                    RateOfSiteFidelity                = "14.1514206414"
+                    RateOfLayingPheromone             = "14.7027566005"
+                    RateOfPheromoneDecay              = "0.0245057227138"
 		    PrintFinalScore = "1"
 		    />
 

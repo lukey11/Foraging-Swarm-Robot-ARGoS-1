@@ -24,7 +24,7 @@
       </actuators>
 
       <sensors>
-        <footbot_proximity    implementation = "default" show_rays = "true"/>
+        <footbot_proximity    implementation = "default" show_rays = "false"/>
 
 	<positioning          implementation = "default"
 					/>	
@@ -55,13 +55,13 @@
                   label   = "MPFA_loop_functions">
 
     <!-- evolvable parameters -->
-        <MPFA       ProbabilityOfSwitchingToSearching = "0.862018953444"
-                    ProbabilityOfReturningToNest      = "0.0688369218936"
-                    UninformedSearchVariation         = "2.80214009862"
-                    RateOfInformedSearchDecay         = "0.29857781164"
-                    RateOfSiteFidelity                = "16.8699397382"
-                    RateOfLayingPheromone             = "18.0791490976"
-                    RateOfPheromoneDecay              = "0.0585866594122"
+        <MPFA       ProbabilityOfSwitchingToSearching = "0.723128706375"
+                    ProbabilityOfReturningToNest      = "0.0147598869881"
+                    UninformedSearchVariation         = "2.81939731297"
+                    RateOfInformedSearchDecay         = "0.205799848158"
+                    RateOfSiteFidelity                = "14.1514206414"
+                    RateOfLayingPheromone             = "14.7027566005"
+                    RateOfPheromoneDecay              = "0.0245057227138"
 		    PrintFinalScore = "1"
 		    />
 
@@ -79,7 +79,7 @@
 	     PowerlawFoodUnitCount = "256"
 	     NumberOfClusters = "4"
 	     ClusterWidthX = "8"
-	     ClusterLengthY = "8"
+	     ClusterWidthY = "8"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"
@@ -105,8 +105,6 @@
       <body position="0,5,0" orientation="0,0,0" />
     </box> 
     
-    
-    
     <box id="wall_south" size="10,0.05,0.5" movable="false">
       <body position="0,-5,0" orientation="0,0,0" />
     </box>
@@ -115,70 +113,78 @@
       <body position="5,0,0" orientation="0,0,0" />
     </box>
     
-    
-    
-    
     <box id="wall_west" size="0.05,10,0.5" movable="false">
       <body position="-5,0,0" orientation="0,0,0" />
     </box>
     
     
-    
    <!--Distribute foraging robots -->   
-    <distribute>
-            <position max="2.7, 2.7, 0.0" method="uniform" min="2.3, 2.3, 0.0"/>
+   <!-- <distribute>
+            <position max="2.8, 2.8, 0.0" method="uniform" min="2.5, 2.5, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="2">
                 <foot-bot id="F0"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
+     -->
+        
+        <distribute>
+            <position max="2.5, 2.5, 0.0" method="uniform" min="2.2, 2.2, 0.0"/>
+            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+            <entity max_trials="100" quantity="2">
+                <foot-bot id="D0"><controller config="MPFA"/></foot-bot>
+            </entity>
+        </distribute>
+	
+    
     <distribute>
-            <position max="2.7, -2.3, 0.0" method="uniform" min="2.3, -2.7, 0.0"/>
+            <position max="2.8, -2.2, 0.0" method="uniform" min="2.5, -2.5, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="2">
                 <foot-bot id="F1"><controller config="MPFA"/></foot-bot>
             </entity>
-        </distribute>    
+        </distribute>   
+        
      <distribute>
-            <position max="-2.3, 2.7, 0.0" method="uniform" min="-2.7, 2.3, 0.0"/>
+            <position max="2.5, -2.5, 0.0" method="uniform" min="2.2, -2.8, 0.0"/>
+            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+            <entity max_trials="100" quantity="2">
+                <foot-bot id="D1"><controller config="MPFA"/></foot-bot>
+            </entity>
+        </distribute>
+	
+	 <distribute>
+            <position max="-2.2, 2.8, 0.0" method="uniform" min="-2.5, 2.5, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="2">
                 <foot-bot id="F2"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
+        
+        <distribute>
+            <position max="-2.5, 2.5, 0.0" method="uniform" min="-2.8, 2.2, 0.0"/>
+            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+            <entity max_trials="100" quantity="2">
+                <foot-bot id="D2"><controller config="MPFA"/></foot-bot>
+            </entity>
+        </distribute>
+        
+       <distribute>
+            <position max="-2.5, -2.5, 0.0" method="uniform" min="-2.8, -2.8, 0.0"/>
+            <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+            <entity max_trials="100" quantity="2">
+                <foot-bot id="D3"><controller config="MPFA"/></foot-bot>
+            </entity>
+        </distribute>
     <distribute>
-            <position max="-2.3, -2.3, 0.0" method="uniform" min="-2.7, -2.7, 0.0"/>
+            <position max="-2.2, -2.2, 0.0" method="uniform" min="-2.5, -2.5, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="2">
                 <foot-bot id="F3"><controller config="MPFA"/></foot-bot>
             </entity>
-        </distribute> 
-    <!-- distribute delivering robots -->
-     <!-- Place a foot-bot in the origin and bind it to the controller -->
-    
-   
-    
-    <!--<foot-bot id="D-" >
-      <body position="2.5, 2.5,0" orientation="45,0,0" />
-    <controller config="MPFA"/>
-    </foot-bot>
-    
-    
-    <foot-bot id="D1" >
-      <body position="2.5,-2.5,0" orientation="45,0,0" />
-    <controller config="MPFA"/>
-    </foot-bot>
-    
-    <foot-bot id="D2" >
-      <body position="-2.5, 2.5,0" orientation="45,0,0" />
-    <controller config="MPFA"/>
-    </foot-bot>
-   
-    <foot-bot id="D3" >
-      <body position="-2.5,-2.5,0" orientation="45,0,0" />
-    <controller config="MPFA"/>
-    </foot-bot>
-    -->
+        </distribute>        
+     -->
+          
   </arena> 
     
   <!-- ******************* -->
@@ -196,7 +202,7 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-<!--
+
  <visualization>
 
 <qt-opengl>
@@ -207,5 +213,5 @@
     </qt-opengl>
 
   </visualization>
--->
+
 </argos-configuration>
