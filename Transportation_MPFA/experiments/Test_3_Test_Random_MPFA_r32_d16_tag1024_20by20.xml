@@ -149,10 +149,10 @@
     <distribute>
       <position method="grid"
                 center="-2.0, 2.5, 0.0"
-                distances="0.2, 0.2, 0.0"
-                layout="2, 1, 1" />
+                distances="0.4, 0.4, 0.0"
+                layout="3, 1, 1" />
       <orientation method="constant" values="0.0, 0.0, 0.0" />
-      <entity quantity="2" max_trials="100">
+      <entity quantity="3" max_trials="100">
         <foot-bot id="D9">
           <controller config="MPFA"/>
         </foot-bot>
@@ -182,10 +182,10 @@
     <distribute>
       <position method="grid"
                 center="2.5, 2.0, 0.0"
-                distances="0.2, 0.2, 0.0"
-                layout="2, 1, 1" />
+                distances="0.4, 0.4, 0.0"
+                layout="3, 1, 1" />
       <orientation method="constant" values="0.0, 0.0, 0.0" />
-      <entity quantity="2" max_trials="100">
+      <entity quantity="3" max_trials="100">
         <foot-bot id="D10">
           <controller config="MPFA"/>
         </foot-bot>
@@ -208,10 +208,10 @@
      <distribute>
       <position method="grid"
                 center="2.5, -2.0, 0.0"
-                distances="0.2, 0.2, 0.0"
-                layout="2, 1, 1" />
+                distances="0.4, 0.4, 0.0"
+                layout="3, 1, 1" />
       <orientation method="constant" values="0.0, 0.0, 0.0" />
-      <entity quantity="2" max_trials="100">
+      <entity quantity="3" max_trials="100">
         <foot-bot id="D11">
           <controller config="MPFA"/>
         </foot-bot>
@@ -234,10 +234,10 @@
     <distribute>
       <position method="grid"
                 center="-2.5, -2.0, 0.0"
-                distances="0.2, 0.2, 0.0"
-                layout="2, 1, 1" />
+                distances="0.4, 0.4, 0.0"
+                layout="3, 1, 1" />
       <orientation method="constant" values="0.0, 0.0, 0.0" />
-      <entity quantity="2" max_trials="100">
+      <entity quantity="3" max_trials="100">
         <foot-bot id="D12">
           <controller config="MPFA"/>
         </foot-bot>
