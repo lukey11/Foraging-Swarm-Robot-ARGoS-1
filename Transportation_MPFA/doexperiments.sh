@@ -6,7 +6,7 @@
 #Generate Data for Random Distribution Stimulation
 #for _ in {1..3}; do python random_argos.py; done #command to run file n times
 python experiments.py
-open -a TextEdit  iAntTagData.txt #open data file
+#open -a TextEdit  iAntTagData.txt #open data file
 
 #mv iAntTagData.txt $1 #$1 let's you specify the name of the output file.
  

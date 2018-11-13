@@ -31,7 +31,7 @@ if __name__ == "__main__":
             for _ in range(run_count):
                 print "Run "+str(count)
                 count = count+1
-                output = subprocess.check_output(['argos3 -n -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)
+                output = subprocess.check_output(['argos3 -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)
                #elemnts = output.replace('\n', ',').split(',')
                #result.append(elemnts[-5])
             #for ele in result:

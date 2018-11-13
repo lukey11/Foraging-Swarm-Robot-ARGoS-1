@@ -65,20 +65,22 @@ void MPFA_qt_user_functions::DrawNest() {
 //	Real y_coordinate = loopFunctions.NestPosition.GetX();
 //DrawCylinder(CVector3(0, 0, 0.1), CQuaternion(), loopFunctions.NestRadius, 0.1, CColor::RED);
 //DrawCircle(CVector3(0, 0, 0.001), CQuaternion(), loopFunctions.NestRadius, CColor::RED);
+//DrawCircle(CVector3(0, 0, 0.001), CQuaternion(), loopFunctions.NestRadius, CColor::RED);
 Real x_coordinate, y_coordinate;
-for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
+for (size_t i=0; i< loopFunctions.Nests.size(); i++){
      
      x_coordinate = loopFunctions.Nests[i].GetLocation().GetX(); //qilu 07/05
      y_coordinate = loopFunctions.Nests[i].GetLocation().GetY();
-	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
+    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
 	    Real elevation = loopFunctions.NestElevation;
 
 	    // 3d cartesian coordinates of the nest
 	    CVector3 nest_3d(x_coordinate, y_coordinate, elevation);
 
-    	// Draw the nest on the arena.
-	    DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
-     //DrawCylinder(CVector3(x_coordinate, y_coordinate, 0.0), CQuaternion(), loopFunctions.NestRadius, 0.1, CColor::RED);
+    	// Draw the nest on the arena
+
+	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.05, CColor::GREEN);
     }
 }
 
