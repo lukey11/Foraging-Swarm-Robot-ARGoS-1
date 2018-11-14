@@ -80,7 +80,7 @@ for (size_t i=0; i< loopFunctions.Nests.size(); i++){
     	// Draw the nest on the arena
 
 	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
-     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.05, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.015, CColor::GREEN);
     }
 }
 

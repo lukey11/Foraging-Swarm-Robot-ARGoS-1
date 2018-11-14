@@ -242,8 +242,8 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
- <!-- <visualization>
+<!--
+<visualization>
 
 <qt-opengl>
       <camera>
