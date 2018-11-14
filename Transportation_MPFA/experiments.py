@@ -13,8 +13,8 @@ if __name__ == "__main__":
     #files1 = ['Test_Random_MPFA_r1_d1_tag64_5by5.xml', 'Test_Random_MPFA_r2_d1_tag64_5by5.xml', 'Test_Random_MPFA_r3_d1_tag64_5by5.xml']
     #files2 = ['Test_Random_MPFA_r4_d4_tag256_10by10.xml', 'Test_Random_MPFA_r8_d4_tag256_10by10.xml', 'Test_Random_MPFA_r12_d4_tag256_10by10.xml'] 
     #files3 = ['Test_Random_MPFA_r16_d16_tag1024_20by20.xml', 'Test_Random_MPFA_r32_d16_tag1024_20by20.xml', 'Test_Random_MPFA_r48_d16_tag1024_20by20.xml']
-    files1 = ['Random_MPFA_r8_d4_tag256_10by10.xml']
-    
+    #files1 = ['Random_MPFA_r8_d4_tag256_10by10.xml']
+    files1 = ['Random_MPFA_r32_d16_tag1024_20by20.xml']
 
     #allFiles = [files1 , files2, files3]
     #runs = [160,40,10]
