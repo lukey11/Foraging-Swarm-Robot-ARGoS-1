@@ -121,7 +121,7 @@
     
     
    <!--Distribute foraging robots --> 
-   <distribute>
+    <distribute>
       <position method="grid"
                 center="2.5, 2.5, 0.0"
                 distances="0.4, 0.4, 0.0"
@@ -242,7 +242,7 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-<!--
+
 <visualization>
 
 <qt-opengl>
@@ -253,5 +253,5 @@
     </qt-opengl>
 
   </visualization>
--->
+
 </argos-configuration>

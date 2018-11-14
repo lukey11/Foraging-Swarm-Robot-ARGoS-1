@@ -29,4 +29,4 @@ target_link_libraries(MPFA_loop_functions
                       argos3plugin_simulator_footbot
                       argos3plugin_simulator_genericrobot
                       argos3plugin_simulator_qtopengl
-                      ${ARGOS_QTOPENGL_LIBRARIES} ${GLUT_LIBRARY} ${OPENGL_LIBRARY})
+                      ${QT_LIBRARIES} ${GLUT_LIBRARY} ${OPENGL_LIBRARY})

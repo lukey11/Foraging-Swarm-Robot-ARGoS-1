@@ -79,7 +79,7 @@
 	     PowerlawFoodUnitCount = "64"
 	     NumberOfClusters = "1"
 	     ClusterWidthX = "8"
-	     ClusterLengthY = "8"
+	     ClusterWidthY = "8"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"
@@ -149,7 +149,7 @@
   <!-- ****************** -->
 
 
- <!-- <visualization>
+ <visualization>
 
 <qt-opengl>
       <camera>
@@ -159,5 +159,5 @@
     </qt-opengl>
 
   </visualization>
--->
+
 </argos-configuration>

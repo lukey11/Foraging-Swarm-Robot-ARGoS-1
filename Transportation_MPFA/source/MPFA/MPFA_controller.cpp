@@ -116,7 +116,7 @@ void MPFA_controller::ControlStep() {
 	CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
 	CVector3 target3d(GetTarget().GetX(), GetTarget().GetY(), 0.00);
 	CRay3 targetRay(target3d, position3d);
-	myTrail.push_back(targetRay);
+	//myTrail.push_back(targetRay);
 	LoopFunctions->TargetRayList.push_back(targetRay);
 	LoopFunctions->TargetRayColorList.push_back(TrailColor);
 
@@ -819,7 +819,8 @@ void MPFA_controller::SetHoldingFood() {
 	         SetLocalResourceDensity();
          
 	         
-			
+			LoopFunctions->FoodList.clear();
+			LoopFunctions->FoodColoringList.clear();
 	         LoopFunctions->FoodList = newFoodList;
 	         LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
       }
@@ -973,7 +974,7 @@ bool MPFA_controller::SetTargetPheromone() {
 			       /* We've chosen a pheromone! */
 			       SetIsHeadingToNest(false);
           SetTarget(ClosestNest->PheromoneList[i].GetLocation());
-          TrailToFollow = ClosestNest->PheromoneList[i].GetTrail();
+          //TrailToFollow = ClosestNest->PheromoneList[i].GetTrail();
           isPheromoneSet = true;
           /* If we pick a pheromone, break out of this loop. */
           break;

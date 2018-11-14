@@ -87,7 +87,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     for(int i=0; i<1024; i++)
     {
 	    PosStrRegionNest = "NestPosition_"+ to_string(i);
-	    PosStrDepot = "DepotPosition_"+ to_string(i);
+	    //PosStrDepot = "DepotPosition_"+ to_string(i);
 	    
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
@@ -96,18 +96,16 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         	Nests[i].SetRegionFlag(1);
         	
 		}
-		else if(argos::NodeAttributeExists(settings_node, PosStrDepot))
+		/*else if(argos::NodeAttributeExists(settings_node, PosStrDepot))
 	    {
 			argos::GetNodeAttribute(settings_node, PosStrDepot, NestPosition);
 			Nests.push_back(Nest(NestPosition));
         	Nests[i].SetRegionFlag(0);
-		}
+		}*/
         
         Nests[i].SetNestIdx(i);
         Nests[i].SetParentNestIdx_with_backtrack(i);
-        //Nests[i].SetRadius(i);
-        //cylId = "cyl"+to_string(i);
-        //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
+        
     }
     
     
@@ -435,6 +433,7 @@ void MPFA_loop_functions::UpdatePheromoneList() {
 			          new_p_list.push_back(Nests[n].PheromoneList[i]);
 		        }
       }
+      Nests[n].PheromoneList.clear();
      	Nests[n].PheromoneList = new_p_list;
       new_p_list.clear();//qilu 09/08/2016
  }
