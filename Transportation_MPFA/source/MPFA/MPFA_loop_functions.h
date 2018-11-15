@@ -35,7 +35,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		/* Configures the robot controller from the genome */
 		void ConfigureFromGenome(Real* pf_genome);
 		/* Calculates the performance of the robot in a trial */
-		Real Score();
+		int Score();
 	
 		/**
 		 * Returns the current trial.
@@ -58,6 +58,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 
 		unsigned int getNumberOfRobots();
 		unsigned int getNumberOfDepots();
+        void increaseNumDistributedFoodByOne();
 		double getProbabilityOfSwitchingToSearching();
 		double getProbabilityOfReturningToNest();
 		double getUninformedSearchVariation();
@@ -68,7 +69,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 
 	protected:
 
-		void setScore(double s);
+		void setScore(unsigned int s);
 
 		argos::CRandom::CRNG* RNG;
                 size_t NumDistributedFood; //qilu 11/10/2016
@@ -162,7 +163,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
   bool IsCollidingWithNest(argos::CVector2 p, argos::Real radius); //qilu 07/26/2016 for nest
   bool IsCollidingWithFood(argos::CVector2 p, argos::Real radius);//qilu 07/26/2016 for nest
   void CreateNest(argos::CVector2 position); //qilu 07/26/2016 
-		double score;
+		int score;
 		int PrintFinalScore;
 };
 

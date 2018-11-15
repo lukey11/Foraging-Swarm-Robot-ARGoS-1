@@ -27,7 +27,7 @@ class Nest {
         CVector2 NewLocation;
         size_t visited_time_point_in_minute;
         size_t travel_flag;
-        size_t region_flag;
+        //size_t region_flag;
         argos::Real NestRadius;
         
         /* constructor function */

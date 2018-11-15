@@ -447,7 +447,7 @@
   <!-- ****************** -->
 
 
- <!-- <visualization>
+  <visualization>
 
 <qt-opengl>
       <camera>
@@ -457,5 +457,5 @@
     </qt-opengl>
 
   </visualization>
-  -->
+  
 </argos-configuration>

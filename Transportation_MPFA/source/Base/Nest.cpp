@@ -78,7 +78,7 @@ void Nest::SetParentNestIdx_without_backtrack(size_t idx)
     
 	}
  
-void Nest:: SetRegionFlag(int flag){
+/*void Nest:: SetRegionFlag(int flag){
 	region_flag = flag;
 	
 	}
@@ -87,7 +87,7 @@ int Nest:: GetRegionFlag(){
 	
 	return region_flag;
 	}
-        
+  */
         
 size_t Nest:: GetLevel()
 {

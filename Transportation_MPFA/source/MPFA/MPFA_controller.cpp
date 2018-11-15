@@ -26,7 +26,7 @@ MPFA_controller::MPFA_controller() :
 }
 
 void MPFA_controller::Init(argos::TConfigurationNode &node) {
-	compassSensor   = GetSensor<argos::CCI_PositioningSensor>("positioning");
+    compassSensor   = GetSensor<argos::CCI_PositioningSensor>("positioning");
 	wheelActuator   = GetActuator<argos::CCI_DifferentialSteeringActuator>("differential_steering");
 	proximitySensor = GetSensor<argos::CCI_FootBotProximitySensor>("footbot_proximity");
 	argos::TConfigurationNode settings = argos::GetNode(node, "settings");
@@ -121,8 +121,7 @@ void MPFA_controller::ControlStep() {
 	LoopFunctions->TargetRayColorList.push_back(TrailColor);
 
 	previous_position = GetPosition();
-
-	//UpdateTargetRayList();
+    //UpdateTargetRayList();
 	MPFA();
 	Move();
 }
@@ -203,16 +202,6 @@ void MPFA_controller::MPFA() {
 }
 
 
-/*bool MPFA_controller::IsInStartLocation() {
-	argos::CVector3 p = GetStartPosition();
-	if ((GetPosition() - CVector2(p.GetX(), p.GetY())).SquareLength()<LoopFunctions->NestRadiusSquared) {
-            return true;
-        }
-  return false;
-}*/
-
-
-
 bool MPFA_controller::IsInTargetNest() {
 	    int factor =2;
 	    if(TargetNest->GetNestIdx() == 0){
@@ -227,13 +216,9 @@ bool MPFA_controller::IsInTargetNest() {
 
 
 bool MPFA_controller::IsInTheNest() {
-	//return ((GetPosition() - LoopFunctions->NestPosition).SquareLength()
-		//< LoopFunctions->NestRadiusSquared);
-  //for (size_t i=0; i<LoopFunctions->Nests.size(); i++) { //qilu 07/26/2016
-        if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
+  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
             return true;
         }
-  //}
   return false;
 }
 
@@ -625,41 +610,6 @@ void MPFA_controller::Returning() {
               placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
      
           ClosestNest->FoodList.push_back(placementPosition);
-          //Update the location of the nest qilu 09/10
-          //ClosestNest->UpdateNestLocation();
-         
-          //Update the collected resources in the nest after updating the location of the nest
-          /*for (size_t i=0; i<ClosestNest->FoodList.size(); i++) {
-             if((ClosestNest->FoodList[i] - ClosestNest->GetLocation()).SquareLength() > pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
-                 LoopFunctions->FoodList.push_back(ClosestNest->FoodList[i]);
-                 LoopFunctions->FoodColoringList.push_back(argos::CColor::BLACK);
-                 ClosestNest->FoodList.erase(ClosestNest->FoodList.begin()+i);
-             }
-          }*/
-       
-          //Update the food list and check whether there is some unknown resources have already been in the nest
-          /*std::vector<argos::CVector2> newFoodList;
-          std::vector<argos::CColor> newFoodColoringList;
-    
-          for(size_t i = 0; i < LoopFunctions->FoodList.size(); i++) {
-              if((ClosestNest->GetLocation() - LoopFunctions->FoodList[i]).SquareLength() < pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)) {
-                  total_targets_collected++;
-              }
-              else{
-                  newFoodList.push_back(LoopFunctions->FoodList[i]);
-                  newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
-              }
-          }
-          LoopFunctions->FoodList = newFoodList;
-          LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
-          */
-          
-          // Record that a target has been retrieved
-          /*total_targets_collected =0;
-          for(size_t n=0; n<LoopFunctions->Nests.size(); n++){
-           //LOG<<"FoodList "<<n<<" size ="<<LoopFunctions->Nests[n].FoodList.size()<<endl;
-              total_targets_collected += LoopFunctions->Nests[n].FoodList.size();
-          }*/
       
           LoopFunctions->setScore(total_targets_collected);
 
@@ -674,13 +624,7 @@ void MPFA_controller::Returning() {
           }
            TrailToShare.clear();
             }
-
-		    // Determine probabilistically whether to use site fidelity, pheromone
-		    // trails, or random search.
-		    //ofstream log_output_stream;
-		    //log_output_stream.open("MPFA_log.txt", ios::app);
-		    //log_output_stream << "At the nest." << endl;	    
-		 
+        
 		    // use site fidelity
 		    if(updateFidelity && poissonCDF_sFollowRate > r2) {
 			    //log_output_stream << "Using site fidelity" << endl;
@@ -702,27 +646,17 @@ void MPFA_controller::Returning() {
             isUsingSiteFidelity = false;
       }
 
-		    
-
-		    isGivingUpSearch = false;
-		    MPFA_state = DEPARTING; 
-        isHoldingFood = false; 
-		    travelingTime+=SimulationTick()-startTime;//qilu 10/22
-            startTime = SimulationTick();//qilu 10/22  
-      
-          
-      //ClosestNest.FoodList = LoopFunctions->UpdateCollectedFoodList(ClosestNest.FoodList);
-		    //log_output_stream.close();
+        isGivingUpSearch = false;
+        MPFA_state = DEPARTING;
+        isHoldingFood = false;
+        travelingTime+=SimulationTick()-startTime;//qilu 10/22
+        startTime = SimulationTick();//qilu 10/22
     }
 	// Take a small step towards the nest so we don't overshoot by too much is we miss it
 	else {
-		/*if(ClosestNest->GetTravelFlag()!= 0){
-			SetTarget(GetPosition()); 	   
-           }
-		else{*/
-		   SetIsHeadingToNest(true); // Turn off error for this
-           SetTarget(ClosestNest->GetLocation()); 	   
-           //}
+        SetIsHeadingToNest(true); // Turn off error for this
+        SetTarget(ClosestNest->GetLocation());
+        
 	}		
 }
 
@@ -792,6 +726,7 @@ void MPFA_controller::SetHoldingFood() {
 			         }
 			         newFoodList.push_back(placementPosition);
 					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+                    LoopFunctions->increaseNumDistributedFoodByOne(); //the total number of cubes in the arena should be updated. qilu 11/15/2018
 					 //end
 			 
 				   break;
