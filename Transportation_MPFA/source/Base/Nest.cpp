@@ -62,8 +62,8 @@ void Nest:: SetNestIdx(size_t idx){
      nest_idx = idx;
  }
  
-void Nest:: SetLevel(size_t idx){
-     level = log(idx)/log(4);
+void Nest:: SetLevel(size_t l){
+	level = l; 
 }
  
 void Nest::SetParentNestIdx_with_backtrack(size_t idx)
@@ -78,17 +78,17 @@ void Nest::SetParentNestIdx_without_backtrack(size_t idx)
     
 	}
  
-/*void Nest:: SetRegionFlag(int flag){
-	region_flag = flag;
+void Nest::SetDeliveryCapacity(size_t c)
+{
+    capacity = c;
 	
 	}
-	
-int Nest:: GetRegionFlag(){
-	
-	return region_flag;
-	}
-  */
-        
+     
+size_t Nest::GetDeliveryCapacity()
+{
+    return capacity;
+}
+	   
 size_t Nest:: GetLevel()
 {
 	return level;
@@ -114,48 +114,5 @@ int Nest:: GetTravelFlag(){
 
 void Nest:: SetTravelFlag(int flag){
 	travel_flag = flag;
-	}
-void Nest::UpdateNestLocation(){ //qilu 09/10/2016
-    CVector2 Sum_locations = CVector2(0.0, 0.0);
-    CVector2 placementPosition;
-    size_t Num_points = 0;
-    CVector2 offset;
-    //if(num_collected_tags >= 24){ //if full loaded, then travel to the center
-     if(num_collected_tags >= 1){ //if full loaded, then travel to the center
-       NewLocation = CVector2(0.0, 0.0);
-        departLocation = nestLocation;
-        travel_flag = 1;
-	 }
-	/* else{
-    for(size_t i =0; i<PheromoneList.size(); i++){
-        Sum_locations += PheromoneList[i].location * PheromoneList[i].ResourceDensity;
-        Num_points += PheromoneList[i].ResourceDensity;
-        }
-
-    for(map<string, size_t>::iterator it= DensityOnFidelity.begin(); it!=DensityOnFidelity.end(); ++it){
-        Sum_locations += FidelityList[it->first] * it->second;
-        Num_points += it->second;
-    }
-
-    NewLocation = Sum_locations / Num_points;
-    offset = (NewLocation - GetLocation()).Normalize();
-    NewLocation -= offset*0.25;
-     
-     //keep away from the site fidelity or pheromone waypoints
-    for(size_t i=0; i<PheromoneList.size(); i++){
-        if ((NewLocation-PheromoneList[i].location).SquareLength()<=0.25){
-            NewLocation -= offset*0.25;               
-         } 
-     }
-
-     for(map<string, argos::CVector2>::iterator it= FidelityList.begin(); it!=FidelityList.end(); ++it){
-        if ((NewLocation-it->second).SquareLength()<=0.25){
-            NewLocation -= offset*0.25;               
-         }
-    }
-}*/
-    /* if((GetLocation() - NewLocation).SquareLength() < 0.25){
-         NewLocation = GetLocation();//qilu 09/25/2016 Do not update to a new location if the new location is too close to current location
-     }*/
 }
         

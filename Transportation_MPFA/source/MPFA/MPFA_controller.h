@@ -38,8 +38,9 @@ class MPFA_controller : public BaseController {
   //void SetClosestDepot();
   
   size_t     GetSearchingTime();//qilu 09/26/2016
-  size_t      GetTravelingTime();//qilu 09/26/2016
-  string      GetStatus();//qilu 09/26/2016
+  size_t     GetTravelingTime();//qilu 09/26/2016
+  string     GetStatus();//qilu 09/26/2016
+  size_t     GetNumHeldFood();
   //void        AddTravelingTime(size_t remainderTime);//qilu 09/26/2016
   //void        AddSearchingTime(size_t remainderTime);//qilu 09/26/2016
   size_t      startTime;//qilu 09/26/2016
@@ -67,6 +68,7 @@ class MPFA_controller : public BaseController {
 
 		bool isInformed;
 		bool isHoldingFood;
+		size_t numHeldFood;
 		bool isUsingSiteFidelity;
 		bool isGivingUpSearch;
   

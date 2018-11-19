@@ -5,7 +5,6 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/simulator/entity/floor_entity.h>
 #include <source/MPFA/MPFA_controller.h>
-//#include <argos3/plugins/simulator/entities/cylinder_entity.h>
 
 using namespace argos;
 

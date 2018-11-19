@@ -15,7 +15,10 @@ void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 	MPFA_controller& c = dynamic_cast<MPFA_controller&>(entity.GetControllableEntity().GetController());
 
 	if(c.IsHoldingFood()) {
-		DrawCylinder(CVector3(0.0, 0.0, 0.3), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+		for(size_t i=0; i < c.GetNumHeldFood(); i++){
+		    //DrawCylinder(CVector3(0.0, 0.0, 0.3), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+		    DrawCylinder(CVector3(0.0, 0.0, 0.3+i*0.04), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+	    }
 	}
 
 	if(loopFunctions.DrawIDs == 1) {
@@ -80,7 +83,7 @@ for (size_t i=0; i< loopFunctions.Nests.size(); i++){
     	// Draw the nest on the arena
 
 	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
-     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.015, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
     }
 }
 
@@ -224,8 +227,7 @@ void MPFA_qt_user_functions::DrawBranches() {
     TrailColor.push_back(CColor::BLUE);
     TrailColor.push_back(CColor::ORANGE);
     
-    
-	for(size_t i = 0; i < RayList.size(); i++) {
+    for(size_t i = 0; i < RayList.size(); i++) {
 		for(size_t j= 0; j<RayList[i].size(); j++){
 		    DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
 			}

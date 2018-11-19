@@ -5,6 +5,7 @@ MPFA_controller::MPFA_controller() :
 	RNG(argos::CRandom::CreateRNG("argos")),
 	isInformed(false),
 	isHoldingFood(false),
+	numHeldFood(0),
 	isUsingSiteFidelity(false),
 	isGivingUpSearch(false),
 	ResourceDensity(0),
@@ -55,7 +56,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	
     m_pcLEDs   = GetActuator<CCI_LEDsActuator>("leds");
     controllerID= GetId();//qilu 07/26/2016
-    argos::LOG<< "controllerID ="<<controllerID<<std::endl;
+    //argos::LOG<< "controllerID ="<<controllerID<<std::endl;
     if(controllerID.compare(0, 1, "D")==0)
     { 
 		//argos::LOG<< "create a depot..."<<std::endl;
@@ -129,6 +130,7 @@ void MPFA_controller::ControlStep() {
 void MPFA_controller::Reset() {
     total_targets_collected =0;
     isHoldingFood   = false;
+    numHeldFood = 0;
     isInformed      = false;
     SearchTime      = 0;
     ResourceDensity = 0;
@@ -303,26 +305,33 @@ void MPFA_controller::Delivering(){
 		isHoldingFood = false;
 		
 		//drop off the food and display in the nest 
-        argos::CVector2 placementPosition;
-        placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+		argos::CVector2 placementPosition;
+        for(int i =0; i < numHeldFood; i++){
+            
+            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
           
-        while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
-          placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
-        }
-        TargetNest->FoodList.push_back(placementPosition);
-        if(TargetNest->GetNestIdx() == 0) //center nest
-        {
-			total_targets_collected++;
-            //ClosestNest->num_collected_tags++;
-	        LoopFunctions->currNumCollectedFood++; 
+            while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+            }
+            TargetNest->FoodList.push_back(placementPosition);
 		}
-        //TargetNest->num_collected_tags++;
-        SetIsHeadingToNest(true);
-	    //argos::CVector3 p = GetStartPosition();
-	    //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
-        SetTarget(ClosestNest->GetLocation());
-        MPFA_state = DEPOT_RETURNING;  
-    }
+            if(TargetNest->GetNestIdx() == 0) //center nest
+            {
+			    total_targets_collected += numHeldFood;
+                //ClosestNest->num_collected_tags++;
+                LoopFunctions->setScore(total_targets_collected);
+                LoopFunctions->currNumCollectedFood += numHeldFood;  
+		    }
+            
+            //TargetNest->num_collected_tags++;
+            SetIsHeadingToNest(true);
+	        //argos::CVector3 p = GetStartPosition();
+	        //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
+            SetTarget(ClosestNest->GetLocation());
+            MPFA_state = DEPOT_RETURNING;  
+            numHeldFood = 0;   
+        }
+	
 }
 
 
@@ -334,9 +343,14 @@ void MPFA_controller::Idling()
 		int parent_idx = ClosestNest->GetParentNestIdx();
 		TargetNest = &LoopFunctions->Nests[parent_idx];
 	}
-	if(ClosestNest->FoodList.size() > 0){
-		ClosestNest->FoodList.erase(ClosestNest->FoodList.begin());
+	//argos::LOG<< "food list size ="<<ClosestNest->FoodList.size()<<endl;
+	//argos::LOG<< "nest "<<ClosestNest->GetNestIdx()<<", capacity="<<ClosestNest->GetDeliveryCapacity()<<endl;
+	size_t numCollectedFood = ClosestNest->FoodList.size();
+	size_t packSize = ClosestNest->GetDeliveryCapacity(); 
+	if(numCollectedFood >= packSize){
+		ClosestNest->FoodList.erase(ClosestNest->FoodList.begin(), ClosestNest->FoodList.begin()+packSize);
 		isHoldingFood = true;
+		numHeldFood = packSize;
 		//SetDeliveringDestination();
 		SetIsHeadingToNest(true);
 	    SetTarget(TargetNest->GetLocation());
@@ -599,20 +613,20 @@ void MPFA_controller::Returning() {
 		    argos::Real poissonCDF_sFollowRate = GetPoissonCDF(ResourceDensity, LoopFunctions->RateOfSiteFidelity);
 		    argos::Real r1 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 		    argos::Real r2 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
-               ClosestNest->visited_time_point_in_minute = (argos::Real)(SimulationTick() / SimulationTicksPerSecond())/60;
-               if (isHoldingFood) { 
+            ClosestNest->visited_time_point_in_minute = (argos::Real)(SimulationTick() / SimulationTicksPerSecond())/60;
+            if (isHoldingFood) { 
 			       
           //drop off the food and display in the nest 
           argos::CVector2 placementPosition;
+          
           placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
           
           while((placementPosition-ClosestNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
               placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
      
           ClosestNest->FoodList.push_back(placementPosition);
-      
-          LoopFunctions->setScore(total_targets_collected);
-
+          	      
+	      //LoopFunctions->setScore(total_targets_collected);
           if(poissonCDF_pLayRate > r1 && updateFidelity) {
 		TrailToShare.push_back(ClosestNest->GetLocation()); //qilu 07/26/2016
                 argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
@@ -649,6 +663,7 @@ void MPFA_controller::Returning() {
         isGivingUpSearch = false;
         MPFA_state = DEPARTING;
         isHoldingFood = false;
+        numHeldFood = 0;
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
     }
@@ -692,6 +707,12 @@ void MPFA_controller::SetRandomSearchLocation() {
 	SetTarget(argos::CVector2(x, y));
 }
 
+
+size_t MPFA_controller::GetNumHeldFood(){
+	return numHeldFood;
+	
+	}
+
 /*****
  * Check if the iAnt is finding food. This is defined as the iAnt being within
  * the distance tolerance of the position of a food item. If the iAnt has found
@@ -711,6 +732,7 @@ void MPFA_controller::SetHoldingFood() {
 			    if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 	               // We found food! Calculate the nearby food density.
 	               isHoldingFood = true;
+	               numHeldFood = 1;
 	               MPFA_state = SURVEYING;
 	               //searchingTime+=SimulationTick()-startTime;//qilu 10/22
 				   //startTime = SimulationTick();//qilu 10/22

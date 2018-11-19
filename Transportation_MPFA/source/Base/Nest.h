@@ -27,7 +27,7 @@ class Nest {
         CVector2 NewLocation;
         size_t visited_time_point_in_minute;
         size_t travel_flag;
-        //size_t region_flag;
+        
         argos::Real NestRadius;
         
         /* constructor function */
@@ -38,12 +38,13 @@ class Nest {
         void		SetLocation();
         void		SetDepartLocation(CVector2 location);
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void     UpdateNestLocation(); //qilu 09/10/2016
         void  SetNestIdx(size_t idx);
         void SetParentNestIdx_with_backtrack(size_t idx);
         void SetParentNestIdx_without_backtrack(size_t idx);
         void SetLevel(size_t idx);
         void SetRegionFlag(int flag);
+        void SetDeliveryCapacity(size_t c);
+        size_t GetDeliveryCapacity();
         size_t  GetNestIdx();
         size_t  GetParentNestIdx();
         size_t GetLevel();
@@ -58,6 +59,7 @@ class Nest {
         size_t  nest_idx;
         size_t parent_nest_idx;
         size_t level;
+        size_t capacity;
         
 };
 
