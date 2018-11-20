@@ -24,10 +24,10 @@ if __name__ == "__main__":
 	startTime =time.time()
 	
 	for _ in range(run_count):
-		print "Run "+str(count)
-		singleRun_StartTime =  time.time()
-		count = count+1
-		output = subprocess.check_output(['argos3 -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)
+	    print "Run "+str(count)
+	    singleRun_StartTime =  time.time()
+	    count = count+1
+	    output = subprocess.check_output(['argos3 -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)
 	    singleRun_EndTime = time.time()
 	    print 'This run takes '+str((singleRun_EndTime-singleRun_StartTime)/60.0)+' minutes...' 
 	endTime = time.time()

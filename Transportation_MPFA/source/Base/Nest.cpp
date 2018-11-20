@@ -68,9 +68,13 @@ void Nest:: SetLevel(size_t l){
  
 void Nest::SetParentNestIdx_with_backtrack(size_t idx)
 {
-	parent_nest_idx = (idx-1)/4;
-    
-	}
+    if (idx == 0) {
+        parent_nest_idx = 0;
+    }
+    else{
+	    parent_nest_idx = (idx-1)/4;
+    }
+}
  
 void Nest::SetParentNestIdx_no_backtrack(vector<Nest*> parents)
 {
