@@ -276,11 +276,14 @@ void MPFA_loop_functions::PostExperiment() {
        
                   
     if (PrintFinalScore == 1) {
-	 string type="";
+	 string type="", backtrack="";
          if (FoodDistribution == 0) type = "random";
         else if (FoodDistribution == 1) type = "cluster";
         else type = "powerlaw";
-
+         if(!BacktrackDelivery) backtrack = "no_backtrack";
+         else  backtrack = "with_backtrack";
+         
+         
          ostringstream num_tag_str;         
          num_tag_str << FoodItemCount;
 	 
@@ -294,7 +297,7 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
          
-        string header = "./results/"+type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         
