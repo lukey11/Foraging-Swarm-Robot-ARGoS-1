@@ -72,11 +72,19 @@ void Nest::SetParentNestIdx_with_backtrack(size_t idx)
     
 	}
  
-void Nest::SetParentNestIdx_without_backtrack(size_t idx)
+void Nest::SetParentNestIdx_no_backtrack(vector<Nest*> parents)
 {
-	parent_nest_idx = (idx-1)/4;
-    
-	}
+    Nest* curr_parent = parents[0];
+    Real curr_squared_distance = (GetLocation() - curr_parent->GetLocation()).SquareLength();
+    Real distance;
+    for(int i =1; i < parents.size(); i++){
+        distance = (GetLocation() - parents[i]->GetLocation()).SquareLength(); 
+        if (distance - curr_squared_distance <=4){
+            curr_squared_distance = distance;
+            parent_nest_idx = parents[i]->GetNestIdx();
+        } 
+    }
+}
  
 void Nest::SetDeliveryCapacity(size_t c)
 {

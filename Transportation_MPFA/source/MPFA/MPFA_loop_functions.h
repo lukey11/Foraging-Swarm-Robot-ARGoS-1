@@ -97,6 +97,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
                 Real last_time_in_minutes;
                 int Nest_travel_time_in_ticks;
                 size_t Num_robots;
+                size_t BacktrackDelivery;
   
 		/* MPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;

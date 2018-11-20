@@ -343,11 +343,11 @@ void MPFA_controller::Idling()
 		int parent_idx = ClosestNest->GetParentNestIdx();
 		TargetNest = &LoopFunctions->Nests[parent_idx];
 	}
-	//argos::LOG<< "food list size ="<<ClosestNest->FoodList.size()<<endl;
-	//argos::LOG<< "nest "<<ClosestNest->GetNestIdx()<<", capacity="<<ClosestNest->GetDeliveryCapacity()<<endl;
+	
 	size_t numCollectedFood = ClosestNest->FoodList.size();
 	size_t packSize = ClosestNest->GetDeliveryCapacity(); 
-	if(numCollectedFood >= packSize){
+	//argos::LOG<< "packSize ="<<packSize<<endl;
+    if(numCollectedFood >= packSize){
 		ClosestNest->FoodList.erase(ClosestNest->FoodList.begin(), ClosestNest->FoodList.begin()+packSize);
 		isHoldingFood = true;
 		numHeldFood = packSize;

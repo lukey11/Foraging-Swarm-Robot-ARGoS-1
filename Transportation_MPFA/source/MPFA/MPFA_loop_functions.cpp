@@ -36,6 +36,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	NestRadius(0.25),
 	NestRadiusSquared(0.0625),
 	NestElevation(0.01),
+    BacktrackDelivery(1),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
         NumDistributedFood(0),
@@ -80,6 +81,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
 	argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
+    argos::GetNodeAttribute(settings_node, "BacktrackDelivery", BacktrackDelivery);
+    
     
     string PosStrRegionNest;
     size_t numNestsInPreviousLevels =0, level=-1; 
@@ -113,17 +116,35 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	         //argos::LOG<<"level="<<level+1<<endl;	       
 	       }
            Nests[i].SetParentNestIdx_with_backtrack(i);	
-        }
-    }
+           
+           if(!BacktrackDelivery){
+               size_t parent_id = Nests[i].GetParentNestIdx();    
+               vector<Nest*> parentNests;
+               parentNests.push_back(&Nests[parent_id]);
+               while (parent_id != 0){
+                   parent_id = Nests[parent_id].GetParentNestIdx();
+                   parentNests.push_back(&Nests[parent_id]);
+                   }//end while  
+               Nests[i].SetParentNestIdx_no_backtrack(parentNests); 
+           }//end if
+         }// end if
+     }//end for
+     
     //set capacity for delivery robots
-    size_t revLevel =0;
+    size_t revLevel =0, numBranch =0;
+    if(BacktrackDelivery){
+        numBranch = 4;
+    }
+    else{
+        numBranch = 3;
+    }
+    
     for(int i=0; i < Nests.size(); i++)
     {
-		revLevel = level+1 - Nests[i].GetLevel();
-		//Nests[i].SetDeliveryCapacity(pow(2, revLevel)*pow(4, revLevel));
-		Nests[i].SetDeliveryCapacity(pow(2, revLevel+1)*pow(4, revLevel));
-		}
-		
+        revLevel = level+1 - Nests[i].GetLevel();
+        Nests[i].SetDeliveryCapacity(pow(2, revLevel+1)*pow(numBranch, revLevel));
+    }
+            
 		
     NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
