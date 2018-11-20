@@ -57,6 +57,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		std::vector<argos::CColor>   TargetRayColorList;
 
 		unsigned int getNumberOfRobots();
+        void increaseNumDistributedFoodByOne();
 		double getProbabilityOfSwitchingToSearching();
 		double getProbabilityOfReturningToNest();
 		double getUninformedSearchVariation();
@@ -87,7 +88,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t PowerlawFoodUnitCount;
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
-		size_t ClusterLengthY;
+		size_t ClusterWidthY;
 		size_t PowerRank;
                 size_t ArenaWidth;
                 size_t SimTime; 

@@ -2,7 +2,7 @@
 #include <assert.h> 
 MPFA_loop_functions::MPFA_loop_functions() :
 	RNG(argos::CRandom::CreateRNG("argos")),
-        SimTime(0), //qilu 09/13/2016
+        SimTime(0),
 	MaxSimTime(3600 * GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick()),
         CollisionTime(0), 
         lastNumCollectedFood(0),
@@ -238,7 +238,6 @@ bool MPFA_loop_functions::IsExperimentFinished() {
 	if(isFinished == true && MaxSimCounter > 1) {
 		size_t newSimCounter = SimCounter + 1;
 		size_t newMaxSimCounter = MaxSimCounter - 1;
-
 		PostExperiment();
 		Reset();
 
@@ -310,7 +309,9 @@ void MPFA_loop_functions::PostExperiment() {
             dataOutput << "tags_collected, collisions_in_seconds, time_in_minutes, random_seed\n";
         }
     
-        dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        //dataOutput <<data.CollisionTime/16.0<<", "<< time_in_minutes << ", " << data.RandomSeed << endl;
+        //dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        dataOutput << Score() << ", "<<CollisionTime/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
         ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);

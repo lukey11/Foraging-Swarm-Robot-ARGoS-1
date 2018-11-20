@@ -616,6 +616,7 @@ void CPFA_controller::SetHoldingFood() {
 			         }
 			         newFoodList.push_back(placementPosition);
 					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+                    LoopFunctions->increaseNumDistributedFoodByOne(); //the total number of cubes in the arena should be updated. qilu 11/15/2018
 					 //end
                                      break;
 			             } else {

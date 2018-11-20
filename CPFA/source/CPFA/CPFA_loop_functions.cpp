@@ -74,6 +74,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "DrawTargetRays", DrawTargetRays);
 	argos::GetNodeAttribute(settings_node, "FoodDistribution", FoodDistribution);
 	argos::GetNodeAttribute(settings_node, "FoodItemCount", FoodItemCount);
+	argos::GetNodeAttribute(settings_node, "PowerlawFoodUnitCount", PowerlawFoodUnitCount);
 	argos::GetNodeAttribute(settings_node, "NumberOfClusters", NumberOfClusters);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthY", ClusterWidthY);
@@ -198,7 +199,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 	if(isFinished == true && MaxSimCounter > 1) {
 		size_t newSimCounter = SimCounter + 1;
 		size_t newMaxSimCounter = MaxSimCounter - 1;
-
+        argos::LOG<< "time out..."<<endl; 
 		PostExperiment();
 		Reset();
 
@@ -222,7 +223,7 @@ void CPFA_loop_functions::PostExperiment() {
         else type = "powerlaw";
             
         ostringstream num_tag_str;
-        num_tag_str << NumDistributedFood; 
+        num_tag_str << FoodItemCount; 
               
         ostringstream num_robots_str;
         num_robots_str <<  Num_robots;
@@ -231,13 +232,14 @@ void CPFA_loop_functions::PostExperiment() {
         arena_width_str << ArenaWidth;
         
         string header = "./results/"+ type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
-        
-        Real total_travel_time=0;
+       
+        unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
+       
+        /* Real total_travel_time=0;
         Real total_search_time=0;
         ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
         
         
-        unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
          
         for(argos::CSpace::TMapPerType::iterator it = footbots.begin(); it != footbots.end(); it++) {
@@ -256,7 +258,7 @@ void CPFA_loop_functions::PostExperiment() {
             }         
         }
         travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
-        travelSearchTimeDataOutput.close();    
+        travelSearchTimeDataOutput.close();  */  
              
         ofstream dataOutput( (header+ "iAntTagData.txt").c_str(), ios::app);
         // output to file
@@ -265,7 +267,8 @@ void CPFA_loop_functions::PostExperiment() {
         }
     
         //dataOutput <<data.CollisionTime/16.0<<", "<< time_in_minutes << ", " << data.RandomSeed << endl;
-        dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        //dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        dataOutput << Score() << ", "<<CollisionTime/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
         ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
@@ -578,13 +581,18 @@ void CPFA_loop_functions::SetTrial(unsigned int v) {
 
 void CPFA_loop_functions::setScore(double s) {
 	score = s;
-	if (score >= FoodItemCount) {
+    
+	if (score >= NumDistributedFood) {
 		PostExperiment();
 	}
 }
 
 double CPFA_loop_functions::Score() {	
 	return score;
+}
+
+void CPFA_loop_functions::increaseNumDistributedFoodByOne(){
+    NumDistributedFood++;
 }
 
 void CPFA_loop_functions::ConfigureFromGenome(Real* g)
