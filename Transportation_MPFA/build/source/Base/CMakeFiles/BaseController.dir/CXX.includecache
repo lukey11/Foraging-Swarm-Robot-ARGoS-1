@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lukey15/Research/MPFA_repo/MPFA_ARGoS/Transportation_MPFA/build/source/Base/BaseController_automoc.cpp
+
+/home/lukey15/Research/MPFA_repo/MPFA_ARGoS/Transportation_MPFA/source/Base/BaseController.cpp
+BaseController.h
+/home/lukey15/Research/MPFA_repo/MPFA_ARGoS/Transportation_MPFA/source/Base/BaseController.h
+random
+-
+
+/home/lukey15/Research/MPFA_repo/MPFA_ARGoS/Transportation_MPFA/source/Base/BaseController.h
+argos3/core/utility/logging/argos_log.h
+-
+argos3/core/control_interface/ci_controller.h
+-
+argos3/plugins/robots/generic/control_interface/ci_positioning_sensor.h
+-
+argos3/plugins/robots/generic/control_interface/ci_differential_steering_actuator.h
+-
+argos3/plugins/robots/foot-bot/control_interface/ci_footbot_proximity_sensor.h
+-
+argos3/core/simulator/loop_functions.h
+-
+cmath
+-
+stack
+-
+
