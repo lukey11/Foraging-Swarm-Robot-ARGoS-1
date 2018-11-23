@@ -40,7 +40,7 @@ class Nest {
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
         void  SetNestIdx(size_t idx);
         void SetParentNestIdx_with_backtrack(size_t idx);
-        void SetParentNestIdx_without_backtrack(size_t idx);
+        void SetParentNestIdx_no_backtrack(vector<Nest *> parents);
         void SetLevel(size_t idx);
         void SetRegionFlag(int flag);
         void SetDeliveryCapacity(size_t c);

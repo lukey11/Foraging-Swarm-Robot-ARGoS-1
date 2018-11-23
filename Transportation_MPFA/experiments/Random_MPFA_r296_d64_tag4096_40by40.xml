@@ -83,6 +83,8 @@
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.001"
+         BacktrackDelivery ="0"
+         
       	NestPosition_0="0.0, 0.0"
 	   
 	    NestPosition_1="10, 10.0"
@@ -92,7 +94,7 @@
 		
 		
 		
-		NestPosition_5="15.0, 15"
+		NestPosition_5="15.0, 15.0"
 		NestPosition_6="15.0, 5"
 		NestPosition_7="5.0, 15"
 		NestPosition_8="5.4, 4.6"
@@ -119,63 +121,63 @@
 		NestPosition_21="17.5, 17.5"
 		NestPosition_22="17.5, 12.5"
 		NestPosition_23="12.5, 17.5"
-		NestPosition_24="12.9, 12.1"
+		NestPosition_24="12.9, 12.3"
 		
 		NestPosition_25="17.5, 7.5"
 		NestPosition_26="17.5, 2.5"
-		NestPosition_27="12.9, 7.9"
+		NestPosition_27="12.9, 7.6"
 		NestPosition_28="12.5, 2.5"
 		
 		NestPosition_29="7.5, 17.5"
-		NestPosition_30="7.9, 12.9"
+		NestPosition_30="7.9, 12.6"
 		NestPosition_31="2.5, 17.5"
 		NestPosition_32="2.5, 12.5"
 		
-		NestPosition_33="7.9, 6.7"
+		NestPosition_33="7.6, 6.9"
 		NestPosition_34="7.5, 2.5"
-		NestPosition_35="2.5, 7.5"
-		NestPosition_36="2.9, 2.1"
+		NestPosition_35="2.7, 7.3"
+		NestPosition_36="3.1, 2.1"
 		
 		
 		
-		NestPosition_37="17.5, -2.5"
+		NestPosition_37="17.5, -2.2"
 		NestPosition_38="17.5, -7.5"
-		NestPosition_39="12.5, -2.5"
-		NestPosition_40="12.9, -7.9"
+		NestPosition_39="12.7, -2.5"
+		NestPosition_40="13.1, -7.7"
 		
 		NestPosition_41="17.5, -12.5"
 		NestPosition_42="17.5, -17.5"
-		NestPosition_43="12.9, -12.1"
+		NestPosition_43="13.1, -12.3"
 		NestPosition_44="12.5, -17.5"
 					
 		NestPosition_45="7.5, -2.5"
-		NestPosition_46="7.9, -6.7"
-		NestPosition_47="2.9, -2.1"
-		NestPosition_48="2.5, -7.5"
+		NestPosition_46="7.5, -6.7"
+		NestPosition_47="3.1, -2.1"
+		NestPosition_48="2.7, -7.3"
 	
 		NestPosition_49="7.9, -12.9"
 		NestPosition_50="7.5, -17.5"
 		NestPosition_51="2.5, -12.5"
-		NestPosition_52="2.5, -17.5"
+		NestPosition_52="2.5, -17.3"
 		
 		
 		
 		NestPosition_53="-2.5, 17.5"
-		NestPosition_54="-2.5, 12.5"
-		NestPosition_55="-7.5, 17.5"
-		NestPosition_56="-7.1, 12.1"
+		NestPosition_54="-2.5, 12.7"
+		NestPosition_55="-7.7, 17.5"
+		NestPosition_56="-7.5, 11.8"
 		
 		NestPosition_57="-2.5, 7.5"
-		NestPosition_58="-2.1, 2.9"
-		NestPosition_59="-6.7, 7.9"
+		NestPosition_58="-2.3, 3.3"
+		NestPosition_59="-7.5, 8.1"
 		NestPosition_60="-7.5, 2.5"
 		
 		NestPosition_61="-12.5, 17.5"
-		NestPosition_62="-12.1, 12.9"
+		NestPosition_62="-12.5, 13.1"
 		NestPosition_63="-17.5, 17.5"
 		NestPosition_64="-17.5, 12.5"
 		
-		NestPosition_65="-12.1, 7.1"
+		NestPosition_65="-12.5, 7.0"
 		NestPosition_66="-12.5, 2.5"
 		NestPosition_67="-17.5, 7.5"
 		NestPosition_68="-17.1, 2.9"
@@ -234,7 +236,8 @@
     
     
    <!--Distribute foraging robots -->   
-     <distribute>
+
+<distribute>
 <position method="grid"
 center="10.0, 10.0, 0.0"
 distances="0.4, 0.4, 0.0"
@@ -2036,7 +2039,6 @@ layout="2, 1, 1" />
 </foot-bot>
 </entity>
 </distribute>
-
   
   </arena> 
     
@@ -2055,8 +2057,8 @@ layout="2, 1, 1" />
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
- <!-- <visualization>
+<!--
+  <visualization>
 
 <qt-opengl>
       <camera>

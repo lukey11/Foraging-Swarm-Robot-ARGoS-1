@@ -83,7 +83,9 @@
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.001"
-      
+         BacktrackDelivery ="0"
+         
+         
       NestPosition_0="0.0, 0.0"
       NestPosition_1="5.0, 5.0"
       NestPosition_2="5,-5" 
@@ -93,17 +95,20 @@
       NestPosition_5="7.5, 7.5" 
       NestPosition_6="7.5, 2.5" 
       NestPosition_7="2.5, 7.5" 
-      NestPosition_8="2.7, 2.4" 
+      NestPosition_8="2.7, 2.2" 
+      
+      
       NestPosition_9="7.5, -2.5" 
       NestPosition_10="7.5, -7.5"
-      
-      NestPosition_11="2.7, -2.4" 
+      NestPosition_11="2.7, -2.2" 
       NestPosition_12="2.5, -7.5"
+      
       NestPosition_13="-2.5, 7.5" 
-      NestPosition_14="-2.7, 2.4" 
+      NestPosition_14="-2.7, 2.2" 
       NestPosition_15="-7.5, 7.5" 
       NestPosition_16="-7.5, 2.5" 
-      NestPosition_17="-2.7, -2.4" 
+      
+      NestPosition_17="-2.7, -2.2" 
       NestPosition_18="-2.5, -7.5"
       NestPosition_19="-7.5, -2.5" 
       NestPosition_20="-7.5, -7.5"
@@ -652,8 +657,8 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
-<!--  <visualization>
+<!--
+  <visualization>
 
 <qt-opengl>
       <camera>
