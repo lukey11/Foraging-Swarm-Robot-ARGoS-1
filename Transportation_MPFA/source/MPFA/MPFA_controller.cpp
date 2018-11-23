@@ -215,7 +215,12 @@ void MPFA_controller::MPFA() {
 
 
 bool MPFA_controller::IsInTargetNest() {
-        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<2*LoopFunctions->NestRadiusSquared) {
+	    int factor =2;
+	    if(TargetNest->GetNestIdx() == 0){
+			factor = 4;
+			}
+			
+        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<factor*LoopFunctions->NestRadiusSquared) {
             return true;
         }
   return false;
@@ -226,7 +231,7 @@ bool MPFA_controller::IsInTheNest() {
 	//return ((GetPosition() - LoopFunctions->NestPosition).SquareLength()
 		//< LoopFunctions->NestRadiusSquared);
   //for (size_t i=0; i<LoopFunctions->Nests.size(); i++) { //qilu 07/26/2016
-        if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<2*LoopFunctions->NestRadiusSquared) {
+        if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
             return true;
         }
   //}
@@ -434,113 +439,112 @@ void MPFA_controller::Searching() {
 	}
 	// When not carrying food, calculate movement.
 	if(IsHoldingFood() == false) {
-		   argos::CVector2 distance = GetPosition() - GetTarget();
-		   argos::Real     random   = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
+		 argos::CVector2 distance = GetPosition() - GetTarget();
+		 argos::Real     random   = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
      
-     // If we reached our target search location, set a new one. The 
-     // new search location calculation is different based on whether
-     // we are currently using informed or uninformed search.
-     if(distance.SquareLength() < TargetDistanceTolerance) {
-         // randomly give up searching
-         if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && random < LoopFunctions->ProbabilityOfReturningToNest) {
-             
-             //SetClosestNest();//qilu 07/26/2016
-             SetIsHeadingToNest(true);
-             //SetTarget(LoopFunctions->NestPosition);
-             SetTarget(ClosestNest->GetLocation());
-             isGivingUpSearch = true;
-             ClosestNest->FidelityList.erase(controllerID); //09/07/2016
-             ClosestNest->DensityOnFidelity.erase(controllerID); //09/11/2016
-             SiteFidelityPosition= CVector2(10000,10000); //09/07/2016
-             isUsingSiteFidelity = false; //qilu 09/07/2016
-             updateFidelity = false; //qilu 09/07/2016
-             MPFA_state = RETURNING;
-             searchingTime+=SimulationTick()-startTime;//qilu 10/22
-             startTime = SimulationTick();//qilu 10/22
-             /*
-             ofstream log_output_stream;
-             log_output_stream.open("giveup.txt", ios::app);
-             log_output_stream << "Give up: " << SimulationTick() / SimulationTicksPerSecond() << endl;
-             log_output_stream.close();
-             */
-             return; 
-         }
-         argos::Real USCV = LoopFunctions->UninformedSearchVariation.GetValue();
-         argos::Real rand = RNG->Gaussian(USCV);
-
-         // uninformed search
-         if(isInformed == false) {
-          argos::CRadians rotation(rand);
-          argos::CRadians angle1(rotation);
-          argos::CRadians angle2(GetHeading());
-          argos::CRadians turn_angle(angle1 + angle2);
-          argos::CVector2 turn_vector(SearchStepSize, turn_angle);
-      
-          //argos::LOG << "UNINFORMED SEARCH: rotation: " << angle1 << std::endl;
-          //argos::LOG << "UNINFORMED SEARCH: old heading: " << angle2 << std::endl;
-      
-          /*
-          ofstream log_output_stream;
-          log_output_stream.open("uninformed_angle1.log", ios::app);
-          log_output_stream << angle1.GetValue() << endl;
-          log_output_stream.close();
-      
-          log_output_stream.open("uninformed_angle2.log", ios::app);
-          log_output_stream << angle2.GetValue() << endl;
-          log_output_stream.close();
-      
-          log_output_stream.open("uninformed_turning_angle.log", ios::app);
-          log_output_stream << turn_angle.GetValue() << endl;
-          log_output_stream.close();
-          */
-          SetIsHeadingToNest(false);
-          SetTarget(turn_vector + GetPosition());
-         }
-         // informed search
-         else{
-          
-              SetIsHeadingToNest(false);
-              
-              if(IsAtTarget()) {
-                  size_t          t           = SearchTime++;
-                  argos::Real     twoPi       = (argos::CRadians::TWO_PI).GetValue();
-                  argos::Real     pi          = (argos::CRadians::PI).GetValue();
-                  argos::Real     isd         = LoopFunctions->RateOfInformedSearchDecay;
-                  /*argos::Real     correlation = GetExponentialDecay((2.0 * twoPi) - LoopFunctions->UninformedSearchVariation.GetValue(), t, isd);
-                  argos::Real     rand = RNG->Gaussian(correlation + LoopFunctions->UninformedSearchVariation.GetValue());
-                       */ //qilu 09/24/2016
-                  Real correlation = GetExponentialDecay(rand, t, isd);
-                  //argos::CRadians rotation(GetBound(rand, -pi, pi));
-                  argos::CRadians rotation(GetBound(correlation, -pi, pi));//qilu 09/24/2016
-                  argos::CRadians angle1(rotation);
-                  argos::CRadians angle2(GetHeading());
-                  argos::CRadians turn_angle(angle2 + angle1);
-                  argos::CVector2 turn_vector(SearchStepSize, turn_angle);
-          
-                  //argos::LOG << "INFORMED SEARCH: rotation: " << angle1 << std::endl;
-                  //argos::LOG << "INFORMED SEARCH: old heading: " << angle2 << std::endl;
-          
-                  /*
-                  ofstream log_output_stream;
-                  log_output_stream.open("informed_angle1.log", ios::app);
-                  log_output_stream << angle1.GetValue() << endl;
-                  log_output_stream.close();
-          
-                  log_output_stream.open("informed_angle2.log", ios::app);
-                  log_output_stream << angle2.GetValue() << endl;
-                  log_output_stream.close();
-          
-                  log_output_stream.open("informed_turning_angle.log", ios::app);
-                  log_output_stream << turn_angle.GetValue() << endl;
-                  log_output_stream.close();
-                  */
-                  SetTarget(turn_vector + GetPosition());
-              }
-         }
-		   }
-		   else {
+         // If we reached our target search location, set a new one. The 
+	     // new search location calculation is different based on whether
+	     // we are currently using informed or uninformed search.
+	     if(distance.SquareLength() < TargetDistanceTolerance) {
+	         // randomly give up searching
+	         if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && random < LoopFunctions->ProbabilityOfReturningToNest) {
+	             
+	             //SetClosestNest();//qilu 07/26/2016
+	             SetIsHeadingToNest(true);
+	             //SetTarget(LoopFunctions->NestPosition);
+	             SetTarget(ClosestNest->GetLocation());
+	             isGivingUpSearch = true;
+	             ClosestNest->FidelityList.erase(controllerID); //09/07/2016
+	             ClosestNest->DensityOnFidelity.erase(controllerID); //09/11/2016
+	             SiteFidelityPosition= CVector2(10000,10000); //09/07/2016
+	             isUsingSiteFidelity = false; //qilu 09/07/2016
+	             updateFidelity = false; //qilu 09/07/2016
+	             MPFA_state = RETURNING;
+	             searchingTime+=SimulationTick()-startTime;//qilu 10/22
+	             startTime = SimulationTick();//qilu 10/22
+	             /*
+	             ofstream log_output_stream;
+	             log_output_stream.open("giveup.txt", ios::app);
+	             log_output_stream << "Give up: " << SimulationTick() / SimulationTicksPerSecond() << endl;
+	             log_output_stream.close();
+	             */
+	             return; 
+	         }
+	         argos::Real USCV = LoopFunctions->UninformedSearchVariation.GetValue();
+	         argos::Real rand = RNG->Gaussian(USCV);
+	
+	         // uninformed search
+	         if(isInformed == false) {
+		          argos::CRadians rotation(rand);
+		          argos::CRadians angle1(rotation);
+		          argos::CRadians angle2(GetHeading());
+		          argos::CRadians turn_angle(angle1 + angle2);
+		          argos::CVector2 turn_vector(SearchStepSize, turn_angle);
+		      
+		          //argos::LOG << "UNINFORMED SEARCH: rotation: " << angle1 << std::endl;
+		          //argos::LOG << "UNINFORMED SEARCH: old heading: " << angle2 << std::endl;
+		      
+		          /*
+		          ofstream log_output_stream;
+		          log_output_stream.open("uninformed_angle1.log", ios::app);
+		          log_output_stream << angle1.GetValue() << endl;
+		          log_output_stream.close();
+		      
+		          log_output_stream.open("uninformed_angle2.log", ios::app);
+		          log_output_stream << angle2.GetValue() << endl;
+		          log_output_stream.close();
+		      
+		          log_output_stream.open("uninformed_turning_angle.log", ios::app);
+		          log_output_stream << turn_angle.GetValue() << endl;
+		          log_output_stream.close();
+		          */
+		          SetIsHeadingToNest(false);
+		          SetTarget(turn_vector + GetPosition());
+		     }
+	         // informed search
+	         else{
+	              SetIsHeadingToNest(false);
+	              
+	              if(IsAtTarget()) {
+	                  size_t          t           = SearchTime++;
+	                  argos::Real     twoPi       = (argos::CRadians::TWO_PI).GetValue();
+	                  argos::Real     pi          = (argos::CRadians::PI).GetValue();
+	                  argos::Real     isd         = LoopFunctions->RateOfInformedSearchDecay;
+	                  /*argos::Real     correlation = GetExponentialDecay((2.0 * twoPi) - LoopFunctions->UninformedSearchVariation.GetValue(), t, isd);
+	                  argos::Real     rand = RNG->Gaussian(correlation + LoopFunctions->UninformedSearchVariation.GetValue());
+	                       */ //qilu 09/24/2016
+	                  Real correlation = GetExponentialDecay(rand, t, isd);
+	                  //argos::CRadians rotation(GetBound(rand, -pi, pi));
+	                  argos::CRadians rotation(GetBound(correlation, -pi, pi));//qilu 09/24/2016
+	                  argos::CRadians angle1(rotation);
+	                  argos::CRadians angle2(GetHeading());
+	                  argos::CRadians turn_angle(angle2 + angle1);
+	                  argos::CVector2 turn_vector(SearchStepSize, turn_angle);
+	          
+	                  //argos::LOG << "INFORMED SEARCH: rotation: " << angle1 << std::endl;
+	                  //argos::LOG << "INFORMED SEARCH: old heading: " << angle2 << std::endl;
+	          
+	                  /*
+	                  ofstream log_output_stream;
+	                  log_output_stream.open("informed_angle1.log", ios::app);
+	                  log_output_stream << angle1.GetValue() << endl;
+	                  log_output_stream.close();
+	          
+	                  log_output_stream.open("informed_angle2.log", ios::app);
+	                  log_output_stream << angle2.GetValue() << endl;
+	                  log_output_stream.close();
+	          
+	                  log_output_stream.open("informed_turning_angle.log", ios::app);
+	                  log_output_stream << turn_angle.GetValue() << endl;
+	                  log_output_stream.close();
+	                  */
+	                  SetTarget(turn_vector + GetPosition());
+	              }
+             }
+		 }
+		 else {
 			      //argos::LOG << "SEARCH: Haven't reached destination. " << GetPosition() << "," << GetTarget() << std::endl;
-		   }
+		 }
 	}
 	else {
 		   //argos::LOG << "SEARCH: Carrying food." << std::endl;
@@ -770,46 +774,61 @@ void MPFA_controller::SetHoldingFood() {
 	if(IsHoldingFood() == false) {
 		// No, the iAnt isn't holding food. Check if we have found food at our
 		// current position and update the food list if we have.
-
-		    std::vector<argos::CVector2> newFoodList;
-		    std::vector<argos::CColor> newFoodColoringList;
-		    size_t i = 0, j = 0;
-      if(MPFA_state != RETURNING){
-		         for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
-			            if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
-				               // We found food! Calculate the nearby food density.
-				               isHoldingFood = true;
-				               MPFA_state = SURVEYING;
-				               //searchingTime+=SimulationTick()-startTime;//qilu 10/22
-                               //startTime = SimulationTick();//qilu 10/22
-             
-				               j = i + 1;
-                                     searchingTime+=SimulationTick()-startTime;//qilu 10/22
-                                     startTime = SimulationTick();//qilu 10/22
-                               break;
-			             } else {
-                      //Return this unfound-food position to the list
-                            newFoodList.push_back(LoopFunctions->FoodList[i]);
-                            newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
-                         }
-                 }
-      }
-      if(j>0){
-          for(; j < LoopFunctions->FoodList.size(); j++) {
-              newFoodList.push_back(LoopFunctions->FoodList[j]);
-              newFoodColoringList.push_back(LoopFunctions->FoodColoringList[j]);
-          }
-      }
+	
+	    std::vector<argos::CVector2> newFoodList;
+	    std::vector<argos::CColor> newFoodColoringList;
+	    size_t i = 0, j = 0;
+		if(MPFA_state != RETURNING){
+			for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
+			    if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
+	               // We found food! Calculate the nearby food density.
+	               isHoldingFood = true;
+	               MPFA_state = SURVEYING;
+	               //searchingTime+=SimulationTick()-startTime;//qilu 10/22
+				   //startTime = SimulationTick();//qilu 10/22
+	               j = i + 1;
+				   searchingTime+=SimulationTick()-startTime;//qilu 10/22
+				   startTime = SimulationTick();//qilu 10/22
+				   
+				   //drop off the food and display in the nest 
+			         argos::CVector2 placementPosition;
+			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
+			          
+			         while((placementPosition-ClosestNest->GetLocation()).SquareLength()<=pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
+			         }
+			         newFoodList.push_back(placementPosition);
+					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+					 //end
+			 
+				   break;
+				 } else {
+					//Return this unfound-food position to the list
+					newFoodList.push_back(LoopFunctions->FoodList[i]);
+					newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+				 }
+			}
+		}
+		if(j>0){
+			for(; j < LoopFunctions->FoodList.size(); j++) {
+			  newFoodList.push_back(LoopFunctions->FoodList[j]);
+			  newFoodColoringList.push_back(LoopFunctions->FoodColoringList[j]);
+			}
+		}
    
-      // We picked up food. Update the food list minus what we picked up.
-      if(IsHoldingFood()) {
-         //SetClosestNest();//qilu 07/26/2016
-         //SetIsHeadingToNest(true);
-         //SetTarget(LoopFunctions->NestPosition);
-         SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
-         LoopFunctions->FoodList = newFoodList;
-         LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
-         SetLocalResourceDensity();
+	    // We picked up food. Update the food list minus what we picked up.
+	    if(IsHoldingFood()) {
+	         //SetClosestNest();//qilu 07/26/2016
+	         //SetIsHeadingToNest(true);
+	         //SetTarget(LoopFunctions->NestPosition);
+	         SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
+	         
+	         SetLocalResourceDensity();
+         
+	         
+			
+	         LoopFunctions->FoodList = newFoodList;
+	         LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
       }
 	}
 		
