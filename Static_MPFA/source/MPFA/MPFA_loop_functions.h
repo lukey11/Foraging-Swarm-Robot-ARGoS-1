@@ -1,25 +1,25 @@
-#ifndef CPFA_LOOP_FUNCTIONS_H
-#define CPFA_LOOP_FUNCTIONS_H
+#ifndef MPFA_LOOP_FUNCTIONS_H
+#define MPFA_LOOP_FUNCTIONS_H
 
 #include <argos3/core/simulator/loop_functions.h>
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/simulator/entity/floor_entity.h>
-#include <source/CPFA/CPFA_controller.h>
+#include <source/MPFA/MPFA_controller.h>
 #include <argos3/plugins/simulator/entities/cylinder_entity.h>
 
 using namespace argos;
 
 static const size_t GENOME_SIZE = 7; // There are 7 parameters to evolve
 
-class CPFA_loop_functions : public argos::CLoopFunctions
+class MPFA_loop_functions : public argos::CLoopFunctions
 {
 
-	friend class CPFA_controller;
-	friend class CPFA_qt_user_functions;
+	friend class MPFA_controller;
+	friend class MPFA_qt_user_functions;
 
 	public:
 
-		CPFA_loop_functions();
+		MPFA_loop_functions();
 	   
 		void Init(argos::TConfigurationNode &t_tree);
 		void Reset();
@@ -34,7 +34,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		/* Configures the robot controller from the genome */
 		void ConfigureFromGenome(Real* pf_genome);
 		/* Calculates the performance of the robot in a trial */
-		Real Score();
+		int Score();
 	
 		/**
 		 * Returns the current trial.
@@ -48,7 +48,6 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		void SetTrial(UInt32 un_trial);
 	
 		/* public helper functions */
-        //vector<CVector2> UpdateCollectedFoodList(vector<CVector2> foodList); //qilu 09/12/2016
 		void UpdatePheromoneList();
 		void SetFoodDistribution();
 
@@ -57,6 +56,8 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		std::vector<argos::CColor>   TargetRayColorList;
 
 		unsigned int getNumberOfRobots();
+		unsigned int getNumberOfDepots();
+        void increaseNumDistributedFoodByOne();
 		double getProbabilityOfSwitchingToSearching();
 		double getProbabilityOfReturningToNest();
 		double getUninformedSearchVariation();
@@ -67,7 +68,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 
 	protected:
 
-		void setScore(double s);
+		void setScore(unsigned int s);
 
 		argos::CRandom::CRNG* RNG;
                 size_t NumDistributedFood; //qilu 11/10/2016
@@ -85,6 +86,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
 		size_t DrawTargetRays;
 		size_t FoodDistribution;
 		size_t FoodItemCount;
+		size_t PowerlawFoodUnitCount;
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
 		size_t ClusterWidthY;
@@ -93,9 +95,10 @@ class CPFA_loop_functions : public argos::CLoopFunctions
   size_t SimTime; //qilu 09/13/2016
   Real curr_time_in_minutes; //qilu 09/13/2016
   Real last_time_in_minutes; //qilu 09/13/2016
+                int Nest_travel_time_in_ticks;
         size_t Num_robots;
   
-		/* CPFA variables */
+		/* MPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
 		argos::Real ProbabilityOfReturningToNest;
 		argos::CRadians UninformedSearchVariation;
@@ -117,7 +120,6 @@ class CPFA_loop_functions : public argos::CLoopFunctions
   argos::Real NestPosition_2;
   argos::Real NestPosition_3;
   
-  vector<CCylinderEntity> Cylinders; //qilu 10/18/2016
 
 		/* list variables for food & pheromones */
 		std::vector<argos::CVector2> FoodList;
@@ -135,7 +137,7 @@ class CPFA_loop_functions : public argos::CLoopFunctions
         size_t lastCollisionTime; //qilu 10/30
         size_t lastNumCollectedFood; //qilu 08/19
         size_t currNumCollectedFood; //qilu 08/19
-      
+   
   std::vector<Nest> Nests; //qilu 09/06
   vector<size_t>			ForageList; //qilu 09/13
 		//argos::CVector2 NestPosition;
@@ -156,8 +158,8 @@ class CPFA_loop_functions : public argos::CLoopFunctions
   bool IsCollidingWithNest(argos::CVector2 p, argos::Real radius); //qilu 07/26/2016 for nest
   bool IsCollidingWithFood(argos::CVector2 p, argos::Real radius);//qilu 07/26/2016 for nest
   void CreateNest(argos::CVector2 position); //qilu 07/26/2016 
-		double score;
+		int score;
 		int PrintFinalScore;
 };
 
-#endif /* CPFA_LOOP_FUNCTIONS_H */
+#endif /* MPFA_LOOP_FUNCTIONS_H */

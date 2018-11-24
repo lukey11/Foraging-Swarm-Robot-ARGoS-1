@@ -16,8 +16,8 @@
   <!-- *************** -->
   <controllers>
 
-    <CPFA_controller id="CPFA"
-                     library="build/source/CPFA/libCPFA_controller">
+    <MPFA_controller id="MPFA"
+                     library="build/source/MPFA/libMPFA_controller">
       <actuators>
         <differential_steering implementation = "default"/>
       </actuators>
@@ -46,22 +46,22 @@
 		  ResultsDirectoryPath              = "results/"/>
       </params>
 
-    </CPFA_controller>
+    </MPFA_controller>
 
   </controllers>
 
-  <loop_functions library = "build/source/CPFA/libCPFA_loop_functions"
-                  label   = "CPFA_loop_functions">
+  <loop_functions library = "build/source/MPFA/libMPFA_loop_functions"
+                  label   = "MPFA_loop_functions">
 
     <!-- evolvable parameters -->
-        <CPFA       ProbabilityOfSwitchingToSearching = "0.818289073241"
-                    ProbabilityOfReturningToNest      = "0.00558243941542"
-                    UninformedSearchVariation         = "0.504998199523"
-                    RateOfInformedSearchDecay         = "0.259737415941"
-                    RateOfSiteFidelity                = "8.66762528512"
-                    RateOfLayingPheromone             = "16.8769246846"
-                    RateOfPheromoneDecay              = "0.0433545784483"
-		    PrintFinalScore = "1"
+        <MPFA       ProbabilityOfSwitchingToSearching = "0.504"
+                    ProbabilityOfReturningToNest      = "0.001"
+                    UninformedSearchVariation         = "7.0"
+                    RateOfInformedSearchDecay         = "0.28"
+                    RateOfSiteFidelity                = "4.27"
+                    RateOfLayingPheromone             = "1.75"
+                    RateOfPheromoneDecay              = "0.13"
+		    PrintFinalScore = "0"
 		    />
 
          <settings
@@ -73,19 +73,18 @@
 	     DrawIDs = "1"
 	     DrawTrails = "1"
 	     DrawTargetRays = "0"
-	     FoodDistribution = "0"
-	     FoodItemCount = "384"
+	     FoodDistribution = "2"
+	     FoodItemCount = "512"
 	     NumberOfClusters = "6"
 	     ClusterWidthX = "8"
-	     ClusterLengthY = "8"
+	     ClusterWidthY = "8"
 	     FoodRadius = "0.05"
 	     NestRadius = "0.25"
 	     NestElevation = "0.01"
       NestPosition_0="2.5, 2.5" 
       NestPosition_1="2.5, -2.5" 
       NestPosition_2="-2.5, 2.5" 
-      NestPosition_3="-2.5, -2.5"
-      />
+      NestPosition_3="-2.5, -2.5"/>
 
   </loop_functions>
 
@@ -103,8 +102,8 @@
                 layout="4, 6, 1" />
       <orientation method="constant" values="0.0, 0.0, 0.0" />
       <entity quantity="12" max_trials="100">
-        <foot-bot id="CPFA_">
-          <controller config="CPFA"/>
+        <foot-bot id="MPFA_">
+          <controller config="MPFA"/>
         </foot-bot>
       </entity>
     </distribute>
@@ -113,31 +112,32 @@
             <position max="3, 3.0, 0.0" method="uniform" min="2, 2, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="6">
-                <foot-bot id="CPFA_0"><controller config="CPFA"/></foot-bot>
+                <foot-bot id="MPFA_0"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
         <distribute>
             <position max="3, -2, 0.0" method="uniform" min="2, -3, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="6">
-                <foot-bot id="CPFA_1"><controller config="CPFA"/></foot-bot>
+                <foot-bot id="MPFA_1"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
         <distribute>
             <position max="-2, 3.0, 0.0" method="uniform" min="-3, 2, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="6">
-                <foot-bot id="CPFA_2"><controller config="CPFA"/></foot-bot>
+                <foot-bot id="MPFA_2"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
         <distribute>
             <position max="-2, -2, 0.0" method="uniform" min="-3, -3, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
             <entity max_trials="100" quantity="6">
-                <foot-bot id="CPFA_3"><controller config="CPFA"/></foot-bot>
+                <foot-bot id="MPFA_3"><controller config="MPFA"/></foot-bot>
             </entity>
         </distribute>
 
+     
      <cylinder id="cyl1" radius="0.15" height="0.1"
               movable="false" mass="2.5">
       <body position="2.5,2.5,0" orientation="45,0,0" />
@@ -182,7 +182,7 @@
       <camera>
         <placement idx="0" position="  0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
       </camera>
-      <user_functions label="CPFA_qt_user_functions"/>
+      <user_functions label="MPFA_qt_user_functions"/>
     </qt-opengl>
 
   </visualization>

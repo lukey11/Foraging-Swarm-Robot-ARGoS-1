@@ -1,21 +1,24 @@
-#include "CPFA_qt_user_functions.h"
+#include "MPFA_qt_user_functions.h"
 
 /*****
  * Constructor: In order for drawing functions in this class to be used by
  * ARGoS it must be registered using the RegisterUserFunction function.
  *****/
-CPFA_qt_user_functions::CPFA_qt_user_functions() :
-	loopFunctions(dynamic_cast<CPFA_loop_functions&>(CSimulator::GetInstance().GetLoopFunctions()))
+MPFA_qt_user_functions::MPFA_qt_user_functions() :
+	loopFunctions(dynamic_cast<MPFA_loop_functions&>(CSimulator::GetInstance().GetLoopFunctions()))
 {
-	RegisterUserFunction<CPFA_qt_user_functions, CFootBotEntity>(&CPFA_qt_user_functions::DrawOnRobot);
-	RegisterUserFunction<CPFA_qt_user_functions, CFloorEntity>(&CPFA_qt_user_functions::DrawOnArena);
+	RegisterUserFunction<MPFA_qt_user_functions, CFootBotEntity>(&MPFA_qt_user_functions::DrawOnRobot);
+	RegisterUserFunction<MPFA_qt_user_functions, CFloorEntity>(&MPFA_qt_user_functions::DrawOnArena);
 }
 
-void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
-	CPFA_controller& c = dynamic_cast<CPFA_controller&>(entity.GetControllableEntity().GetController());
+void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
+	MPFA_controller& c = dynamic_cast<MPFA_controller&>(entity.GetControllableEntity().GetController());
 
 	if(c.IsHoldingFood()) {
-		DrawCylinder(CVector3(0.0, 0.0, 0.3), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+		for(size_t i=0; i < c.GetNumHeldFood(); i++){
+		    //DrawCylinder(CVector3(0.0, 0.0, 0.3), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+		    DrawCylinder(CVector3(0.0, 0.0, 0.3+i*0.04), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+	    }
 	}
 
 	if(loopFunctions.DrawIDs == 1) {
@@ -37,6 +40,8 @@ void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
 		//			     entity.GetId().c_str()); // text
 		
+			DrawText(CVector3(0.0, 0.0, 0.3),   // position
+            entity.GetId().c_str()); // text
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -44,12 +49,12 @@ void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 	}
 }
  
-void CPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
+void MPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFood();
 	DrawFidelity();
 	DrawPheromones();
-	//DrawNest();
-
+	DrawNest();
+    DrawBranches();
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
 
@@ -57,7 +62,7 @@ void CPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
  * This function is called by the DrawOnArena(...) function. If the iAnt_data
  * object is not initialized this function should not be called.
  *****/
-void CPFA_qt_user_functions::DrawNest() {
+void MPFA_qt_user_functions::DrawNest() {
 	/* 2d cartesian coordinates of the nest */
 //	Real x_coordinate = loopFunctions.NestPosition.GetX();
 //	Real y_coordinate = loopFunctions.NestPosition.GetX();
@@ -66,19 +71,20 @@ for (size_t i=0; i< loopFunctions.Nests.size(); i++){
      
      x_coordinate = loopFunctions.Nests[i].GetLocation().GetX(); //qilu 07/05
      y_coordinate = loopFunctions.Nests[i].GetLocation().GetY();
-     /* required: leaving this 0.0 will draw the nest inside of the floor */
-	    //Real elevation = loopFunctions.NestElevation;
-
-	    /* 3d cartesian coordinates of the nest */
-	    //CVector3 nest_3d(x_coordinate, y_coordinate, elevation);
-
-    	/* Draw the nest on the arena. */
 	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
-     DrawCylinder(CVector3(x_coordinate, y_coordinate, 0.0), CQuaternion(), loopFunctions.NestRadius, 0.1, CColor::RED);
+	    Real elevation = loopFunctions.NestElevation;
+
+	    // 3d cartesian coordinates of the nest
+	    CVector3 nest_3d(x_coordinate, y_coordinate, elevation);
+
+    	// Draw the nest on the arena
+
+	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
     }
 }
 
-void CPFA_qt_user_functions::DrawFood() {
+void MPFA_qt_user_functions::DrawFood() {
 
 	Real x, y;
 
@@ -89,17 +95,17 @@ void CPFA_qt_user_functions::DrawFood() {
 	}
  
  //draw food in nests
- /*for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
+ for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
    for (size_t j=0; j< loopFunctions.Nests[i].FoodList.size(); j++){
         x = loopFunctions.Nests[i].FoodList[j].GetX();
         y = loopFunctions.Nests[i].FoodList[j].GetY();
-        DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::YELLOW);
+        DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
      }
-  } */
+  } 
   
 }
 
-void CPFA_qt_user_functions::DrawFidelity() {
+void MPFA_qt_user_functions::DrawFidelity() {
 
 	   Real x, y;
     for(size_t i=0; i< loopFunctions.Nests.size(); i++){
@@ -111,7 +117,7 @@ void CPFA_qt_user_functions::DrawFidelity() {
    }
 }
 
-void CPFA_qt_user_functions::DrawPheromones() {
+void MPFA_qt_user_functions::DrawPheromones() {
 
 	Real x, y, weight;
 	vector<CVector2> trail;
@@ -162,7 +168,7 @@ void CPFA_qt_user_functions::DrawPheromones() {
     }
 }
 
-void CPFA_qt_user_functions::DrawTargetRays() {
+void MPFA_qt_user_functions::DrawTargetRays() {
 	//size_t tick = loopFunctions.GetSpace().GetSimulationClock();
 	//size_t tock = loopFunctions.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick() / 8;
 
@@ -172,11 +178,30 @@ void CPFA_qt_user_functions::DrawTargetRays() {
 		for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) {
 			DrawRay(loopFunctions.TargetRayList[j], loopFunctions.TargetRayColorList[j]);
 		}
+		loopFunctions.TargetRayList.clear();
 	//}
+}    
+void MPFA_qt_user_functions::DrawBranches() {
+	std::vector<argos::CRay3>    RayList;
+    argos::CRay3 ray;
+    Real x, y, px, py;
+    for (size_t i=1; i< loopFunctions.Nests.size(); i++)
+    { 
+		x = loopFunctions.Nests[i].GetLocation().GetX(); 
+        y = loopFunctions.Nests[i].GetLocation().GetY();
+        
+        ray = CRay3(CVector3(x, y, 0.01), CVector3(0, 0, 0.01));
+		RayList.push_back(ray);
+	}	
+	argos::CColor TrailColor = CColor::BLUE;
+    
+    for(size_t i = 0; i < RayList.size(); i++) {
+		    DrawRay(RayList[i], TrailColor, 5.0);	
+	}
 }
 
 /*
-void CPFA_qt_user_functions::DrawTargetRays() {
+void MPFA_qt_user_functions::DrawTargetRays() {
 
 	CColor c = CColor::BLUE;
 
@@ -185,10 +210,10 @@ void CPFA_qt_user_functions::DrawTargetRays() {
 	}
 
 	//if(loopFunctions.SimTime % (loopFunctions.TicksPerSecond * 10) == 0) {
-		// comment out for DSA, uncomment for CPFA
+		// comment out for DSA, uncomment for MPFA
 		loopFunctions.TargetRayList.clear();
 	//}
 }
 */
 
-REGISTER_QTOPENGL_USER_FUNCTIONS(CPFA_qt_user_functions, "CPFA_qt_user_functions")
+REGISTER_QTOPENGL_USER_FUNCTIONS(MPFA_qt_user_functions, "MPFA_qt_user_functions")

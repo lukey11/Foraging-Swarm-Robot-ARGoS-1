@@ -1,23 +1,25 @@
-#ifndef CPFA_CONTROLLER_H
-#define CPFA_CONTROLLER_H
+#ifndef MPFA_CONTROLLER_H
+#define MPFA_CONTROLLER_H
 
 #include <source/Base/BaseController.h>
 #include <source/Base/Pheromone.h>
 #include <source/Base/Nest.h> //qilu 09/06
-#include <source/CPFA/CPFA_loop_functions.h>
+#include <source/MPFA/MPFA_loop_functions.h>
+/* Definition of the LEDs actuator */
+#include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 
 using namespace std;
 using namespace argos;
 
-static unsigned int num_targets_collected = 0;
+static unsigned int total_targets_collected = 0;
 
-class CPFA_loop_functions;
+class MPFA_loop_functions;
 
-class CPFA_controller : public BaseController {
+class MPFA_controller : public BaseController {
 
 	public:
 
-		CPFA_controller();
+		MPFA_controller();
 
 		// CCI_Controller inheritence functions
 		void Init(argos::TConfigurationNode &node);
@@ -27,15 +29,16 @@ class CPFA_controller : public BaseController {
 		bool IsHoldingFood();
 		bool IsUsingSiteFidelity();
 		bool IsInTheNest();
-
+        bool IsInTargetNest();
 		Real FoodDistanceTolerance;
 
-		void SetLoopFunctions(CPFA_loop_functions* lf);
+		void SetLoopFunctions(MPFA_loop_functions* lf);
   void SetClosestNest();//qilu 07/26/2016
   
   size_t     GetSearchingTime();//qilu 09/26/2016
   size_t      GetTravelingTime();//qilu 09/26/2016
   string      GetStatus();//qilu 09/26/2016
+  size_t     GetNumHeldFood();
   //void        AddTravelingTime(size_t remainderTime);//qilu 09/26/2016
   //void        AddSearchingTime(size_t remainderTime);//qilu 09/26/2016
   size_t      startTime;//qilu 09/26/2016
@@ -43,9 +46,10 @@ class CPFA_controller : public BaseController {
 
 	private:
   Nest* ClosestNest; //qilu 07/26/2016
+  Nest* TargetNest;
   string 			controllerID;//qilu 07/26/2016
 
-		CPFA_loop_functions* LoopFunctions;
+		MPFA_loop_functions* LoopFunctions;
 		argos::CRandom::CRNG* RNG;
 
 		/* pheromone trail variables */
@@ -62,6 +66,7 @@ class CPFA_controller : public BaseController {
 
 		bool isInformed;
 		bool isHoldingFood;
+		size_t numHeldFood;
 		bool isUsingSiteFidelity;
 		bool isGivingUpSearch;
   
@@ -73,22 +78,28 @@ class CPFA_controller : public BaseController {
   size_t           travelingTime;//qilu 09/26
         
   
-		/* iAnt CPFA state variable */
+		/* iAnt MPFA state variable */
 		enum MPFA_state {
 			DEPARTING = 0,
 			SEARCHING = 1,
 			RETURNING = 2,
-			SURVEYING = 3
+			SURVEYING = 3,
+			DEPOT_IDLING = 4,
+			DEPOT_DELIVERING = 5,
+			DEPOT_RETURNING = 6
 		} MPFA_state;
 
-		/* iAnt CPFA state functions */
-		void CPFA();
+		/* iAnt MPFA state functions */
+		void MPFA();
 		void Departing();
 		void Searching();
 		void Returning();
 		void Surveying();
+		void Delivering();
+		void Idling();
+		void DepotReturning();
 
-		/* CPFA helper functions */
+		/* MPFA helper functions */
 		void SetRandomSearchLocation();
 		void SetHoldingFood();
 		void SetLocalResourceDensity();
@@ -109,6 +120,8 @@ class CPFA_controller : public BaseController {
 		bool isUsingPheromone;
 
 		unsigned int survey_count;
+		/* Pointer to the LEDs actuator */
+        CCI_LEDsActuator* m_pcLEDs;
 };
 
-#endif /* CPFA_CONTROLLER_H */
+#endif /* MPFA_CONTROLLER_H */

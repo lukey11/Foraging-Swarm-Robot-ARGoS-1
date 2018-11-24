@@ -223,7 +223,6 @@ void MPFA_loop_functions::PreStep() {
         lastNumCollectedFood = currNumCollectedFood;
         last_time_in_minutes++;
     }
-    //CVector2 offset, newLocation;
 
     UpdatePheromoneList();
     if(GetSpace().GetSimulationClock() > ResourceDensityDelay) //update the sensed targets color to be black.
@@ -333,8 +332,6 @@ void MPFA_loop_functions::PostExperiment() {
             dataOutput << "tags_collected, collisions_in_seconds, time_in_minutes, random_seed\n";
         }
     
-        //dataOutput <<data.CollisionTime/16.0<<", "<< time_in_minutes << ", " << data.RandomSeed << endl;
-        //dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput << Score() << ", "<<CollisionTime/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     

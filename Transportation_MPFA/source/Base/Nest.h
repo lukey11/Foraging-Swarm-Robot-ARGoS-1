@@ -26,17 +26,15 @@ class Nest {
         size_t num_collected_tags;
         CVector2 NewLocation;
         size_t visited_time_point_in_minute;
-        size_t travel_flag;
         
-        argos::Real NestRadius;
+        //argos::Real NestRadius;
         
         /* constructor function */
 		
 		      /* public helper functions */
         CVector2	GetLocation();
-        CVector2    GetDepartLocation();
+       
         void		SetLocation();
-        void		SetDepartLocation(CVector2 location);
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
         void  SetNestIdx(size_t idx);
         void SetParentNestIdx_with_backtrack(size_t idx);
@@ -50,8 +48,6 @@ class Nest {
         size_t GetLevel();
         int GetRegionFlag();
         size_t GetCollectedTagNum();
-        int GetTravelFlag();
-        void SetTravelFlag(int flag);
 
 	private:
 	    CVector2 departLocation;

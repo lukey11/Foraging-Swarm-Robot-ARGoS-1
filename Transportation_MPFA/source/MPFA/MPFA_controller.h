@@ -30,12 +30,10 @@ class MPFA_controller : public BaseController {
 		bool IsUsingSiteFidelity();
 		bool IsInTheNest();
         bool IsInTargetNest();
-        //bool IsInStartLocation();
 		Real FoodDistanceTolerance;
 
 		void SetLoopFunctions(MPFA_loop_functions* lf);
   void SetClosestNest();//qilu 07/26/2016
-  //void SetClosestDepot();
   
   size_t     GetSearchingTime();//qilu 09/26/2016
   size_t     GetTravelingTime();//qilu 09/26/2016
@@ -88,7 +86,7 @@ class MPFA_controller : public BaseController {
 			SURVEYING = 3,
 			DEPOT_IDLING = 4,
 			DEPOT_DELIVERING = 5,
-			DEPOT_RETURNING = 6,
+			DEPOT_RETURNING = 6
 		} MPFA_state;
 
 		/* iAnt MPFA state functions */
@@ -101,7 +99,6 @@ class MPFA_controller : public BaseController {
 		void Idling();
 		void DepotReturning();
 		
-		//void SetDeliveringDestination();
 
 		/* MPFA helper functions */
 		void SetRandomSearchLocation();

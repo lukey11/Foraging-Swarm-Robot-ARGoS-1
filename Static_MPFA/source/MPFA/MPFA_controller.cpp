@@ -1,10 +1,11 @@
-#include "CPFA_controller.h"
+#include "MPFA_controller.h"
 #include <unistd.h>
 
-CPFA_controller::CPFA_controller() :
+MPFA_controller::MPFA_controller() :
 	RNG(argos::CRandom::CreateRNG("argos")),
 	isInformed(false),
 	isHoldingFood(false),
+	numHeldFood(0),
 	isUsingSiteFidelity(false),
 	isGivingUpSearch(false),
 	ResourceDensity(0),
@@ -13,17 +14,18 @@ CPFA_controller::CPFA_controller() :
 	MPFA_state(DEPARTING),
 	LoopFunctions(NULL),
  ClosestNest(NULL), //qilu 09/07
-	survey_count(0),
+    survey_count(0),
 	isUsingPheromone(0),
  SiteFidelityPosition(1000, 1000), //qilu 09/07/2016
  searchingTime(0),
  travelingTime(0),
 startTime(0),
+    m_pcLEDs(NULL),
  updateFidelity(false)
 {
 }
 
-void CPFA_controller::Init(argos::TConfigurationNode &node) {
+void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	compassSensor   = GetSensor<argos::CCI_PositioningSensor>("positioning");
 	wheelActuator   = GetActuator<argos::CCI_DifferentialSteeringActuator>("differential_steering");
 	proximitySensor = GetSensor<argos::CCI_FootBotProximitySensor>("footbot_proximity");
@@ -50,18 +52,33 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
 
+    m_pcLEDs   = GetActuator<CCI_LEDsActuator>("leds");
  controllerID= GetId();//qilu 07/26/2016
+    if(controllerID.compare(0, 1, "D")==0)
+    { 
+		//argos::LOG<< "create a depot..."<<std::endl;
+    
+		MPFA_state = DEPOT_IDLING;
+		/* Set LED color */
+        m_pcLEDs->SetAllColors(CColor::RED);
+        /* Set beacon color to all red to be visible for other robots */
+        //m_pcLEDs->SetSingleColor(12, CColor::RED);
+    }
+    else
+    {
+		m_pcLEDs->SetAllColors(CColor::GREEN);
+		}
 }
 
-void CPFA_controller::ControlStep() {
+void MPFA_controller::ControlStep() {
 	/*
 	ofstream log_output_stream;
-	log_output_stream.open("cpfa_log.txt", ios::app);
+	log_output_stream.open("MPFA_log.txt", ios::app);
 
 	// depart from nest after food drop off or simulation start
 	if (isHoldingFood) log_output_stream << "(Carrying) ";
 	
-	switch(CPFA_state)  {
+	switch(MPFA_state)  {
 		case DEPARTING:
 			if (isUsingSiteFidelity) {
 				log_output_stream << "DEPARTING (Fidelity): "
@@ -95,7 +112,7 @@ void CPFA_controller::ControlStep() {
 	// Add line so we can draw the trail
 
 	CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
-	CVector3 target3d(previous_position.GetX(), previous_position.GetY(), 0.00);
+	CVector3 target3d(GetTarget().GetX(), GetTarget().GetY(), 0.00);
 	CRay3 targetRay(target3d, position3d);
 	myTrail.push_back(targetRay);
 	LoopFunctions->TargetRayList.push_back(targetRay);
@@ -104,12 +121,15 @@ void CPFA_controller::ControlStep() {
 	previous_position = GetPosition();
 
 	//UpdateTargetRayList();
-	CPFA();
+	MPFA();
+    
 	Move();
 }
 
-void CPFA_controller::Reset() {
+void MPFA_controller::Reset() {
+    total_targets_collected =0;
  isHoldingFood   = false;
+    numHeldFood = 0;
     isInformed      = false;
     SearchTime      = 0;
     ResourceDensity = 0;
@@ -132,15 +152,15 @@ void CPFA_controller::Reset() {
     TrailToFollow.clear();
 }
 
-bool CPFA_controller::IsHoldingFood() {
+bool MPFA_controller::IsHoldingFood() {
 		return isHoldingFood;
 }
 
-bool CPFA_controller::IsUsingSiteFidelity() {
+bool MPFA_controller::IsUsingSiteFidelity() {
 		return isUsingSiteFidelity;
 }
 
-void CPFA_controller::CPFA() {
+void MPFA_controller::MPFA() {
 	
 	switch(MPFA_state) {
 		// depart from nest after food drop off or simulation start
@@ -168,21 +188,41 @@ void CPFA_controller::CPFA() {
 			SetIsHeadingToNest(false);
 			Surveying();
 			break;
+	    case DEPOT_IDLING:
+	    //argos::LOG<<"DEPOT_IDLING"<<endl;
+	        SetIsHeadingToNest(false);
+	        Idling();
+		    break;
+		case DEPOT_DELIVERING:
+    		SetIsHeadingToNest(true);
+		    Delivering();
+		    break;
+		
+		case DEPOT_RETURNING:
+		    SetIsHeadingToNest(true);
+		    DepotReturning();
+	        break;
 	}
 }
 
-bool CPFA_controller::IsInTheNest() {
-	//return ((GetPosition() - LoopFunctions->NestPosition).SquareLength()
-		//< LoopFunctions->NestRadiusSquared);
-  for (size_t i=0; i<LoopFunctions->Nests.size(); i++) { //qilu 07/26/2016
-        if ((GetPosition() - LoopFunctions->Nests[i].GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
+bool MPFA_controller::IsInTargetNest() {
+	    int factor =4;
+			
+        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<factor*LoopFunctions->NestRadiusSquared) {
             return true;
         }
-  }
   return false;
 }
 
-void CPFA_controller::SetLoopFunctions(CPFA_loop_functions* lf) {
+
+bool MPFA_controller::IsInTheNest() {
+  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
+            return true;
+        }
+  return false;
+}
+
+void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
 
 	// Initialize the SiteFidelityPosition
@@ -200,7 +240,7 @@ SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 	hostname[1023] = '\0';                    
 	gethostname(hostname, 1023);  
 
-	ss << "CPFA-"<<GIT_BRANCH<<"-"<<GIT_COMMIT_HASH<<"-"
+	ss << "MPFA-"<<GIT_BRANCH<<"-"<<GIT_COMMIT_HASH<<"-"
 		<< hostname << '-'
 		<< getpid() << '-'
 		<< (now->tm_year) << '-'
@@ -214,7 +254,7 @@ SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 		results_full_path = results_path+"/"+results_file_name;
 
 	// Only the first robot should do this:	 
-	if (GetId().compare("CPFA_0") == 0) {
+	if (GetId().compare("MPFA_0") == 0) {
 		/*
 		ofstream results_output_stream;
 		results_output_stream.open(results_full_path, ios::app);
@@ -254,15 +294,88 @@ SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 }
 
-void CPFA_controller::Departing()
+void MPFA_controller::Delivering(){
+	//argos::LOG<<"controllerID = "<<controllerID<<", Delivering ..."<<endl;
+	if(IsInTargetNest()) {
+		isHoldingFood = false;
+		
+		//drop off the food and display in the nest 
+		argos::CVector2 placementPosition;
+        for(int i =0; i < numHeldFood; i++){
+            
+            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+          
+            while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
+              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+            }
+            if(TargetNest->FoodList.size() <= 300 || TargetNest->GetNestIdx()!=0) //do not display targets more than 300 in the center nest. This is just for reducing the cost of memmory
+            {
+            TargetNest->FoodList.push_back(placementPosition);
+            }
+		}
+            if(TargetNest->GetNestIdx() == 0) //drop in the center nest
+            {
+			    total_targets_collected += numHeldFood;
+                //ClosestNest->num_collected_tags++;
+                LoopFunctions->setScore(total_targets_collected);
+                LoopFunctions->currNumCollectedFood += numHeldFood;  
+		    }
+            
+            //TargetNest->num_collected_tags++;
+            SetIsHeadingToNest(true);
+	        //argos::CVector3 p = GetStartPosition();
+	        //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
+            SetTarget(ClosestNest->GetLocation());
+            MPFA_state = DEPOT_RETURNING;  
+            numHeldFood = 0;   
+        }
+	
+}
+
+
+void MPFA_controller::Idling()
+{
+	//argos::LOG<<"Idling ..."<<endl;
+	if(ClosestNest == NULL){
+		SetClosestNest();
+		TargetNest = &LoopFunctions->Nests[0];
+	}
+	
+	size_t numCollectedFood = ClosestNest->FoodList.size();
+	size_t packSize = ClosestNest->GetDeliveryCapacity(); 
+	if(numCollectedFood >= packSize){
+		ClosestNest->FoodList.erase(ClosestNest->FoodList.begin(), ClosestNest->FoodList.begin()+packSize);
+		isHoldingFood = true;
+		numHeldFood = packSize;
+		SetIsHeadingToNest(true);
+	    SetTarget(TargetNest->GetLocation());
+	    MPFA_state = DEPOT_DELIVERING;	        
+	}	
+}
+
+
+
+void MPFA_controller::DepotReturning(){
+	if(IsInTheNest()) {
+		 MPFA_state = DEPOT_IDLING; 
+	}		
+}
+
+
+void MPFA_controller::Departing()
 {
     //LOG<<"Departing..."<<endl;
+    if(ClosestNest == NULL){
+		SetClosestNest();
+		//SetDeliveringDestination();
+		
+	}
     argos::Real distanceToTarget = (GetPosition() - GetTarget()).Length();
     argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 
 	    /*
 	    ofstream log_output_stream;
-	    log_output_stream.open("cpfa_log.txt", ios::app);
+	    log_output_stream.open("MPFA_log.txt", ios::app);
 	    log_output_stream << "Distance to target: " << distanceToTarget << endl;
 	    log_output_stream << "Current Position: " << GetPosition() << ", Target: " << GetTarget() << endl;
 	    log_output_stream.close();
@@ -299,7 +412,7 @@ void CPFA_controller::Departing()
      /* Are we informed? I.E. using site fidelity or pheromones. */	
      if(isInformed && distanceToTarget < TargetDistanceTolerance) {
           //ofstream log_output_stream;
-          //log_output_stream.open("cpfa_log.txt", ios::app);
+          //log_output_stream.open("MPFA_log.txt", ios::app);
           //log_output_stream << "Reached waypoint: " << SiteFidelityPosition << endl;
         
           SearchTime = 0;
@@ -318,7 +431,7 @@ void CPFA_controller::Departing()
 
 }
 
-void CPFA_controller::Searching() {
+void MPFA_controller::Searching() {
  //LOG<<"Searching..."<<endl;
 	// "scan" for food only every half of a second
 	if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
@@ -444,13 +557,13 @@ void CPFA_controller::Searching() {
 	// Food has been found, change state to RETURNING and go to the nest
 	//else {
 	//	SetTarget(LoopFunctions->NestPosition);
-	//	CPFA_state = RETURNING;
+	//	MPFA_state = RETURNING;
 	//}
 }
 
 // Cause the robot to rotate in place as if surveying the surrounding targets
 // Turns 36 times by 10 degrees
-void CPFA_controller::Surveying() {
+void MPFA_controller::Surveying() {
  //LOG<<"Surveying..."<<endl;
 	if (survey_count <= 4) { 
 		CRadians rotation(survey_count*3.14/2); // divide by 10 so the vecot is small and the linear motion is minimized
@@ -486,7 +599,7 @@ void CPFA_controller::Surveying() {
  * This state is triggered when a robot has found food or when it has given
  * up on searching and is returning to the nest.
  *****/
-void CPFA_controller::Returning() {
+void MPFA_controller::Returning() {
  //LOG<<"Returning..."<<endl;
 	//SetHoldingFood();
 	//SetTarget(LoopFunctions->NestPosition);
@@ -502,16 +615,27 @@ void CPFA_controller::Returning() {
 
         ClosestNest->visited_time_point_in_minute = (argos::Real)(SimulationTick() / SimulationTicksPerSecond())/60;
         if (isHoldingFood) { 
-	      num_targets_collected++;
-              ClosestNest->num_collected_tags++;
-              LoopFunctions->currNumCollectedFood++;
-              LoopFunctions->setScore(num_targets_collected);
+	      //num_targets_collected++;
+              //ClosestNest->num_collected_tags++;
+              //LoopFunctions->currNumCollectedFood++;
+              //LoopFunctions->setScore(num_targets_collected);
 
+          //drop off the food and display in the nest 
+          argos::CVector2 placementPosition;
+          
+          placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
+          
+          while((placementPosition-ClosestNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
+              placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
+     
+          ClosestNest->FoodList.push_back(placementPosition);
+          	      
               if(poissonCDF_pLayRate > r1 && updateFidelity) {
                   TrailToShare.push_back(ClosestNest->GetLocation()); //qilu 07/26/2016
                   argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
 	          Pheromone sharedPheromone(SiteFidelityPosition, TrailToShare, timeInSeconds, LoopFunctions->RateOfPheromoneDecay, ResourceDensity);
                   ClosestNest->PheromoneList.push_back(sharedPheromone);//qilu 09/08/2016
+                ClosestNest->DensityOnFidelity.erase(controllerID); //09/11/2016 if it creates a pheromone trail, the sensed density on site fidelity should be removed. Otherwise, there is a repeated information.
                   sharedPheromone.Deactivate(); // make sure this won't get re-added later...
               }
               TrailToShare.clear();
@@ -540,6 +664,7 @@ void CPFA_controller::Returning() {
 	isGivingUpSearch = false;
 	MPFA_state = DEPARTING;   
         isHoldingFood = false; 
+        numHeldFood = 0;
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
                 
@@ -549,46 +674,52 @@ void CPFA_controller::Returning() {
     // Take a small step towards the nest so we don't overshoot by too much is we miss it
     else {
 	  SetIsHeadingToNest(true); // Turn off error for this
-	   //SetTarget(LoopFunctions->NestPosition);
-           SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
+           SetTarget(ClosestNest->GetLocation());
 	}		
 }
 
-void CPFA_controller::SetRandomSearchLocation() {
+void MPFA_controller::SetRandomSearchLocation() {
 	argos::Real random_wall = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 	argos::Real x = 0.0, y = 0.0;
 
 	/* north wall */
 	if(random_wall < 0.25) {
-		x = RNG->Uniform(ForageRangeX);
-		y = ForageRangeY.GetMax();
+		x = RNG->Uniform(RegionRangeX);
+		y = RegionRangeY.GetMax();
 	}
 	/* south wall */
 	else if(random_wall < 0.5) {
-		x = RNG->Uniform(ForageRangeX);
-		y = ForageRangeY.GetMin();
+		x = RNG->Uniform(RegionRangeX);
+		y = RegionRangeY.GetMin();
 	}
 	/* east wall */
 	else if(random_wall < 0.75) {
-		x = ForageRangeX.GetMax();
-		y = RNG->Uniform(ForageRangeY);
+		x = RegionRangeX.GetMax();
+		y = RNG->Uniform(RegionRangeY);
 	}
 	/* west wall */
 	else {
-		x = ForageRangeX.GetMin();
-		y = RNG->Uniform(ForageRangeY);
+		x = RegionRangeX.GetMin();
+		y = RNG->Uniform(RegionRangeY);
 	}
+	//the global location is relative to the current location 	
+	x += GetPosition().GetX();
+	y += GetPosition().GetY();
 		
 	SetIsHeadingToNest(true); // Turn off error for this
 	SetTarget(argos::CVector2(x, y));
 }
 
+size_t MPFA_controller::GetNumHeldFood(){
+	return numHeldFood;
+	
+	}
 /*****
  * Check if the iAnt is finding food. This is defined as the iAnt being within
  * the distance tolerance of the position of a food item. If the iAnt has found
  * food then the appropriate boolean flags are triggered.
  *****/
-void CPFA_controller::SetHoldingFood() {
+void MPFA_controller::SetHoldingFood() {
 	// Is the iAnt already holding food?
 	if(IsHoldingFood() == false) {
 		// No, the iAnt isn't holding food. Check if we have found food at our
@@ -602,10 +733,23 @@ void CPFA_controller::SetHoldingFood() {
 			            if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 		          // We found food! Calculate the nearby food density.
 	        	             isHoldingFood = true;
+	               numHeldFood = 1;
 		                     MPFA_state = SURVEYING;
 	        	             j = i + 1;
                                      searchingTime+=SimulationTick()-startTime;//qilu 10/22
                                      startTime = SimulationTick();//qilu 10/22
+				   //distribute a new food 
+			         argos::CVector2 placementPosition;
+			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
+			          
+			         while(LoopFunctions->IsOutOfBounds(placementPosition, 1, 1)){
+			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
+			         }
+			         newFoodList.push_back(placementPosition);
+					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
+                    LoopFunctions->increaseNumDistributedFoodByOne(); //the total number of cubes in the arena should be updated. qilu 11/15/2018
+					 //end
+			 
                                      break;
 			             } else {
                       //Return this unfound-food position to the list
@@ -623,10 +767,13 @@ void CPFA_controller::SetHoldingFood() {
    
       // We picked up food. Update the food list minus what we picked up.
       if(IsHoldingFood()) {
-         SetClosestNest();//qilu 07/26/2016
-         SetIsHeadingToNest(true);
-         //SetTarget(LoopFunctions->NestPosition);
+         //SetClosestNest(); //it does not update the closest nest. It always returns to the original closest nest. 
+	 //SetIsHeadingToNest(true);
          SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
+         
+	         
+			LoopFunctions->FoodList.clear();
+			LoopFunctions->FoodColoringList.clear();
          LoopFunctions->FoodList = newFoodList;
          LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
          SetLocalResourceDensity();
@@ -661,7 +808,7 @@ void CPFA_controller::SetHoldingFood() {
  * produce the ideal result most of the time. This is especially true since
  * item detection is based on distance calculations with circles.
  *****/
-void CPFA_controller::SetLocalResourceDensity() {
+void MPFA_controller::SetLocalResourceDensity() {
 	argos::CVector2 distance;
 
 	// remember: the food we picked up is removed from the foodList before this function call
@@ -693,7 +840,7 @@ void CPFA_controller::SetLocalResourceDensity() {
 	//  Wait(4); // This function is broken. It causes the rover to move in the wrong direction after finishing its local resource density test 
 
 	//ofstream log_output_stream;
-	//log_output_stream.open("cpfa_log.txt", ios::app);
+	//log_output_stream.open("MPFA_log.txt", ios::app);
 	//log_output_stream << "(Survey): " << ResourceDensity << endl;
 	//log_output_stream << "SiteFidelityPosition: " << SiteFidelityPosition << endl;
 	//log_output_stream.close();
@@ -702,7 +849,7 @@ void CPFA_controller::SetLocalResourceDensity() {
 /*****
  * Update the global site fidelity list for graphics display and add a new fidelity position.
  *****/
-void CPFA_controller::SetFidelityList(argos::CVector2 newFidelity) {
+void MPFA_controller::SetFidelityList(argos::CVector2 newFidelity) {
 	std::vector<argos::CVector2> newFidelityList;
 
 	/* Remove this robot's old fidelity position from the fidelity list. */
@@ -731,7 +878,7 @@ ClosestNest->DensityOnFidelity[controllerID]= ResourceDensity; //09/11/2016
 /*****
  * Update the global site fidelity list for graphics display and remove the old fidelity position.
  *****/
-void CPFA_controller::SetFidelityList() {
+void MPFA_controller::SetFidelityList() {
 	std::vector<argos::CVector2> newFidelityList;
 
 	/* Remove this robot's old fidelity position from the fidelity list. */
@@ -752,7 +899,7 @@ void CPFA_controller::SetFidelityList() {
  * return TRUE:  pheromone was successfully targeted
  *        FALSE: pheromones don't exist or are all inactive
  *****/
-bool CPFA_controller::SetTargetPheromone() {
+bool MPFA_controller::SetTargetPheromone() {
 	argos::Real maxStrength = 0.0, randomWeight = 0.0;
 	bool isPheromoneSet = false;
 
@@ -761,9 +908,9 @@ bool CPFA_controller::SetTargetPheromone() {
 	// LoopFunctions->UpdatePheromoneList();
 
 	/* default target = nest; in case we have 0 active pheromones */
-	SetIsHeadingToNest(true);
+	//SetIsHeadingToNest(true);
 	//SetTarget(LoopFunctions->NestPosition);
- SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
+ //SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
 
 	/* Calculate a maximum strength based on active pheromone weights. */
 	for(size_t i = 0; i < ClosestNest->PheromoneList.size(); i++) {
@@ -781,7 +928,7 @@ bool CPFA_controller::SetTargetPheromone() {
 			       /* We've chosen a pheromone! */
 			       SetIsHeadingToNest(false);
           SetTarget(ClosestNest->PheromoneList[i].GetLocation());
-          TrailToFollow = ClosestNest->PheromoneList[i].GetTrail();
+          //TrailToFollow = ClosestNest->PheromoneList[i].GetTrail();
           isPheromoneSet = true;
           /* If we pick a pheromone, break out of this loop. */
           break;
@@ -792,7 +939,7 @@ bool CPFA_controller::SetTargetPheromone() {
 	}
 
 	//ofstream log_output_stream;
-	//log_output_stream.open("cpfa_log.txt", ios::app);
+	//log_output_stream.open("MPFA_log.txt", ios::app);
 	//log_output_stream << "Found: " << LoopFunctions->PheromoneList.size()  << " waypoints." << endl;
 	//log_output_stream << "Follow waypoint?: " << isPheromoneSet << endl;
 	//log_output_stream.close();
@@ -803,7 +950,7 @@ bool CPFA_controller::SetTargetPheromone() {
 /*****
  * Calculate and return the exponential decay of "value."
  *****/
-argos::Real CPFA_controller::GetExponentialDecay(argos::Real w, argos::Real time, argos::Real lambda) {
+argos::Real MPFA_controller::GetExponentialDecay(argos::Real w, argos::Real time, argos::Real lambda) {
 	/* convert time into units of haLoopFunctions-seconds from simulation frames */
 	//time = time / (LoopFunctions->TicksPerSecond / 2.0);
 
@@ -818,7 +965,7 @@ argos::Real CPFA_controller::GetExponentialDecay(argos::Real w, argos::Real time
 /*****
  * Provides a bound on the value by rolling over a la modulo.
  *****/
-argos::Real CPFA_controller::GetBound(argos::Real value, argos::Real min, argos::Real max) {
+argos::Real MPFA_controller::GetBound(argos::Real value, argos::Real min, argos::Real max) {
 	/* Calculate an offset. */
 	argos::Real offset = std::abs(min) + std::abs(max);
 
@@ -836,14 +983,14 @@ argos::Real CPFA_controller::GetBound(argos::Real value, argos::Real min, argos:
 	return value;
 }
 
-size_t CPFA_controller::GetSearchingTime(){//qilu 10/22
+size_t MPFA_controller::GetSearchingTime(){//qilu 10/22
     return searchingTime;
 }
-size_t CPFA_controller::GetTravelingTime(){//qilu 10/22
+size_t MPFA_controller::GetTravelingTime(){//qilu 10/22
     return travelingTime;
 }
 
-string CPFA_controller::GetStatus(){//qilu 10/22
+string MPFA_controller::GetStatus(){//qilu 10/22
     //DEPARTING, SEARCHING, RETURNING
     if (MPFA_state == DEPARTING) return "DEPARTING";
     else if (MPFA_state ==SEARCHING)return "SEARCHING";
@@ -854,17 +1001,17 @@ string CPFA_controller::GetStatus(){//qilu 10/22
     
 }
 
-/*void CPFA_controller::AddTravelingTime(size_t remainderTime){//qilu 10/22
+/*void MPFA_controller::AddTravelingTime(size_t remainderTime){//qilu 10/22
     travelingTime += remainderTime;
 }
-void CPFA_controller::AddSearchingTime(size_t remainderTime){//qilu 10/22
+void MPFA_controller::AddSearchingTime(size_t remainderTime){//qilu 10/22
     searchingTime += remainderTime;
 }*/
 
 /*****
  * Return the Poisson cumulative probability at a given k and lambda.
  *****/
-argos::Real CPFA_controller::GetPoissonCDF(argos::Real k, argos::Real lambda) {
+argos::Real MPFA_controller::GetPoissonCDF(argos::Real k, argos::Real lambda) {
 	argos::Real sumAccumulator       = 1.0;
 	argos::Real factorialAccumulator = 1.0;
 
@@ -876,7 +1023,7 @@ argos::Real CPFA_controller::GetPoissonCDF(argos::Real k, argos::Real lambda) {
 	return (exp(-lambda) * sumAccumulator);
 }
 
-void CPFA_controller::UpdateTargetRayList() {
+void MPFA_controller::UpdateTargetRayList() {
 	if(SimulationTick() % LoopFunctions->DrawDensityRate == 0 && LoopFunctions->DrawTargetRays == 1) {
 		/* Get position values required to construct a new ray */
 		argos::CVector2 t(GetTarget());
@@ -905,7 +1052,7 @@ void CPFA_controller::UpdateTargetRayList() {
 	}
 }
 
-void CPFA_controller::SetClosestNest(){//qilu 07/26/2016
+void MPFA_controller::SetClosestNest(){//qilu 07/26/2016
     Nest* NewClosestNest;
     CVector2 robotPos = GetPosition();
     Real minSquaredLen = (LoopFunctions->Nests[0].GetLocation()-robotPos).SquareLength();
@@ -930,4 +1077,4 @@ void CPFA_controller::SetClosestNest(){//qilu 07/26/2016
     }
     else ClosestNest = NewClosestNest;
 }
-REGISTER_CONTROLLER(CPFA_controller, "CPFA_controller")
+REGISTER_CONTROLLER(MPFA_controller, "MPFA_controller")

@@ -32,13 +32,18 @@ class Nest {
         CVector2		GetLocation();
         void		SetLocation();
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void     UpdateNestLocation(); //qilu 09/10/2016
         void  SetNestIdx(size_t idx);
+        void SetParentNestIdx_with_backtrack(size_t idx);
+        void SetDeliveryCapacity(size_t c);
+        size_t GetDeliveryCapacity();
         size_t  GetNestIdx();
+        size_t  GetParentNestIdx();
+        size_t GetCollectedTagNum();
         
 	private:
         CVector2 nestLocation;
         size_t  nest_idx;
+        size_t capacity;
         
 };
 

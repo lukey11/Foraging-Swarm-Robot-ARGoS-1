@@ -121,9 +121,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
   argos::Real NestPosition_2;
   argos::Real NestPosition_3;
 
-  //vector<CCylinderEntity> Cylinders; //qilu 10/18/2016
 
-  
 		/* list variables for food & pheromones */
 		std::vector<argos::CVector2> FoodList;
 		std::vector<argos::CColor>   FoodColoringList;
@@ -141,9 +139,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
         size_t lastNumCollectedFood; //qilu 08/19
         size_t currNumCollectedFood; //qilu 08/19
     
-      
   std::vector<Nest> Nests; //qilu 09/06
-  //std::vector<> DepotIDs;
   vector<size_t>			ForageList; //qilu 09/13
 		//argos::CVector2 NestPosition;
   //std::vector<argos::CVector2> NestPositions; //qilu 07/26/2016

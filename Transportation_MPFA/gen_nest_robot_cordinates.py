@@ -18,11 +18,11 @@ def sub_gen_coord(max_x,min_x, k):
     return coordinates
 
 
-max_x, max_y = 20,  20;
-min_x, min_y = -20, -20;
+max_x, max_y = 40,  40;
+min_x, min_y = -40, -40;
 
 
-gaps = [20, 10, 5]
+gaps = [40, 20, 10, 5]
 results=[]
 for k in gaps:
   print k

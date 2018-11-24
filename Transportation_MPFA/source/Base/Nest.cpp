@@ -14,8 +14,7 @@
 {
     /* required initializations */
 	   nestLocation    = location;
-	   departLocation  = location;
-    PheromoneList.clear();
+	   PheromoneList.clear();
     FidelityList.clear();
     DensityOnFidelity.clear(); //qilu 09/11/2016
     FoodList.clear(); //qilu 09/07/2016
@@ -25,8 +24,6 @@
     nest_idx=-1;
     parent_nest_idx = -1;
     level = -1;
-    travel_flag =0;
-    NestRadius = 0.25;
 }
 
 /*****
@@ -41,9 +38,6 @@ CVector2 Nest::GetLocation() {
     return nestLocation;
 }
 
-CVector2 Nest::GetDepartLocation() {
-    return departLocation;
-}
 
 void Nest::SetLocation() {
     nestLocation=CVector2(0.0, 0.0);
@@ -52,10 +46,6 @@ void Nest::SetLocation() {
 void Nest::SetLocation(CVector2 newLocation) {
     nestLocation = newLocation;
 }
-
-void Nest::SetDepartLocation(CVector2 location){
-	departLocation = location;
-	}
 
 
 void Nest:: SetNestIdx(size_t idx){
@@ -120,11 +110,3 @@ size_t Nest:: GetCollectedTagNum(){
      return FoodList.size();
  } 
  
-int Nest:: GetTravelFlag(){
-	return travel_flag;
-	}
-
-void Nest:: SetTravelFlag(int flag){
-	travel_flag = flag;
-}
-        

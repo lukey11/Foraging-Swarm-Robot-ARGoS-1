@@ -136,7 +136,7 @@ void MPFA_controller::Reset() {
     ResourceDensity = 0;
     collisionDelay = 0;
     
-  	 LoopFunctions->CollisionTime=0; //qilu 09/26/2016
+  	LoopFunctions->CollisionTime=0; //qilu 09/26/2016
 	   //LoopFunctions->currCollisionTime =0; //qilu 09/26/2016
     //LoopFunctions->lastCollisionTime =0; //qilu 09/26/2016
     
@@ -770,16 +770,15 @@ void MPFA_controller::SetHoldingFood() {
 	    if(IsHoldingFood()) {
 	         //SetClosestNest();//qilu 07/26/2016
 	         //SetIsHeadingToNest(true);
-	         //SetTarget(LoopFunctions->NestPosition);
 	         SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
 	         
-	         SetLocalResourceDensity();
          
 	         
 			LoopFunctions->FoodList.clear();
 			LoopFunctions->FoodColoringList.clear();
 	         LoopFunctions->FoodList = newFoodList;
 	         LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
+         SetLocalResourceDensity();
       }
 	}
 		

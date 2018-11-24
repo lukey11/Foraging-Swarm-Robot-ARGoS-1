@@ -66,9 +66,6 @@ void MPFA_qt_user_functions::DrawNest() {
 	/* 2d cartesian coordinates of the nest */
 //	Real x_coordinate = loopFunctions.NestPosition.GetX();
 //	Real y_coordinate = loopFunctions.NestPosition.GetX();
-//DrawCylinder(CVector3(0, 0, 0.1), CQuaternion(), loopFunctions.NestRadius, 0.1, CColor::RED);
-//DrawCircle(CVector3(0, 0, 0.001), CQuaternion(), loopFunctions.NestRadius, CColor::RED);
-//DrawCircle(CVector3(0, 0, 0.001), CQuaternion(), loopFunctions.NestRadius, CColor::RED);
 Real x_coordinate, y_coordinate;
 for (size_t i=0; i< loopFunctions.Nests.size(); i++){
      
@@ -150,8 +147,6 @@ void MPFA_qt_user_functions::DrawPheromones() {
                  ray = CRay3(CVector3(trail[j - 1].GetX(), trail[j - 1].GetY(), 0.01),
                  CVector3(loopFunctions.Nests[n].GetLocation().GetX(), loopFunctions.Nests[n].GetLocation().GetY(), 0.01));
                  
-                 //ray = CRay3(CVector3(loopFunctions.Nests[n].GetLocation().GetX(), loopFunctions.Nests[n].GetLocation().GetY(), 0.01),
-                 //CVector3(trail[j].GetX(), trail[j].GetY(), 0.01));
                  
                  DrawRay(ray, trailColor, 1.0);
              }
