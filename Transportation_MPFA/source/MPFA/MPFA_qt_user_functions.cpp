@@ -222,8 +222,10 @@ void MPFA_qt_user_functions::DrawBranches() {
     TrailColor.push_back(CColor::BLUE);
     TrailColor.push_back(CColor::ORANGE);
     
-    for(size_t i = 0; i < RayList.size(); i++) {
-		for(size_t j= 0; j<RayList[i].size(); j++){
+    for(size_t i = 0; i < RayList.size(); i++) 
+    {
+		for(size_t j= 0; j<RayList[i].size(); j++)
+        {
 		    DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
 			}
 		
