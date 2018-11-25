@@ -11,11 +11,7 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
-    #file = raw_input('please input an argos file: ')
-    #files = ['Cluster_MPFA_12by12.xml', 'Powerlaw_MPFA_12by12.xml', 'Random_MPFA_12by12.xml','Cluster_MPFA_14by14.xml', 'Powerlaw_MPFA_14by14.xml', 'Random_MPFA_14by14.xml', 'Cluster_MPFA_16by16.xml', 'Powerlaw_MPFA_16by16.xml', 'Random_MPFA_16by16.xml']
-    #files =['Cluster_static_MPFA_r48_50by50.xml', 'Powerlaw_static_MPFA_r48_50by50.xml','Random_static_MPFA_r48_50by50.xml','Cluster_static_MPFA_r72_50by50.xml', 'Powerlaw_static_MPFA_r72_50by50.xml','Random_static_MPFA_r72_50by50.xml','Cluster_static_MPFA_r96_50by50.xml', 'Powerlaw_static_MPFA_r96_50by50.xml','Random_static_MPFA_r96_50by50.xml']
-    #files =['Cluster_static_MPFA_10by10.xml', 'Powerlaw_static_MPFA_10by10.xml','Random_static_MPFA_10by10.xml']
-    files =['Powerlaw_static_MPFA_r24_50by50.xml']
+    files =['Random_MPFA_r1192_d256_tag16384_80by80.xml']
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)
