@@ -1763,7 +1763,7 @@ layout="2, 1, 1" />
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
+<!--
   <visualization>
 
 <qt-opengl>
