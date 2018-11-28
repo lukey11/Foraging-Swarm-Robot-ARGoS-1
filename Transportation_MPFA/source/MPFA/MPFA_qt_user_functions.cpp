@@ -193,12 +193,15 @@ void MPFA_qt_user_functions::DrawBranches() {
     { 
 		level = log(i-count)/log(4);
 		pidx = loopFunctions.Nests[i].GetParentNestIdx();
-	    x = loopFunctions.Nests[i].GetLocation().GetX(); 
+        //argos::LOG<<"loopFunctions.Nests["<<i<<"]="<<loopFunctions.Nests[i].GetLocation()<<", "<<loopFunctions.Nests[i].GetParentNestIdx()<<endl;
+        //argos::LOG<<"parent="<<loopFunctions.Nests[pidx].GetLocation()<<endl;
+        x = loopFunctions.Nests[i].GetLocation().GetX(); 
         y = loopFunctions.Nests[i].GetLocation().GetY();
         
         px = loopFunctions.Nests[pidx].GetLocation().GetX();
         py = loopFunctions.Nests[pidx].GetLocation().GetY();
-		targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
+		//argos::LOG<<"parent location = ["<<px<<", "<<py<<"]"<<endl;
+        targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
 		tempList.push_back(targetRay);
 		if(level > prev_level)
 		{
@@ -206,16 +209,14 @@ void MPFA_qt_user_functions::DrawBranches() {
 			tempList.clear();
 			prev_level++;
 			count = i; 
-			}
-		
-		}
-	  if(tempList.size() > 0)
-	  {
-		  RayList.push_back(tempList);
-	  tempList.clear();
-		  } 	
-  
-	
+        }
+    }
+	if(tempList.size() > 0)
+	{
+        RayList.push_back(tempList);
+	    tempList.clear();
+    } 	
+  	
 	std::vector<argos::CColor>        TrailColor;
     TrailColor.push_back(CColor::GREEN);
     TrailColor.push_back(CColor::RED);
@@ -226,7 +227,7 @@ void MPFA_qt_user_functions::DrawBranches() {
     {
 		for(size_t j= 0; j<RayList[i].size(); j++)
         {
-		    DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
+            DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
 			}
 		
 	}

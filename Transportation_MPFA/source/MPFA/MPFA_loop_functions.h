@@ -158,9 +158,8 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		bool IsCollidingWithFood(argos::CVector2 p);
   bool IsCollidingWithNest(argos::CVector2 p, argos::Real radius); //qilu 07/26/2016 for nest
   bool IsCollidingWithFood(argos::CVector2 p, argos::Real radius);//qilu 07/26/2016 for nest
-  void CreateNest(argos::CVector2 position); //qilu 07/26/2016 
-		int score;
-		int PrintFinalScore;
+  int score;
+  int PrintFinalScore;
 };
 
 #endif /* MPFA_LOOP_FUNCTIONS_H */

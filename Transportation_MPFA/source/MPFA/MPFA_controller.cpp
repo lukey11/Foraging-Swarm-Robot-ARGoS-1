@@ -577,9 +577,10 @@ void MPFA_controller::Surveying() {
 		log_output_stream << (GetHeading() - rotation ).SignedNormalize() << ", "  << SearchStepSize << ", "<< rotation << ", " <<  turn_vector << ", " << GetHeading() << ", " << survey_count << endl;
 		log_output_stream.close();
 		*/
-		
+		argos::LOG<<"survey..."<<endl;
 		if(fabs((GetHeading() - rotation).SignedNormalize().GetValue()) < TargetAngleTolerance.GetValue()) survey_count++;
 			//else Keep trying to reach the turning angle
+        
 	}
 	// Set the survey countdown
 	else {
@@ -587,8 +588,9 @@ void MPFA_controller::Surveying() {
 		SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
 		MPFA_state = RETURNING;
 		survey_count = 0; // Reset
-                searchingTime+=SimulationTick()-startTime;//qilu 10/22
-                startTime = SimulationTick();//qilu 10/22
+        searchingTime+=SimulationTick()-startTime;//qilu 10/22
+        startTime = SimulationTick();//qilu 10/22
+        argos::LOG<<"set the survey countdown..."<<endl;
 	}
 }
 
@@ -1078,5 +1080,6 @@ void MPFA_controller::SetClosestNest(){//qilu 07/26/2016
             ClosestNest = NewClosestNest;
     }
     else ClosestNest = NewClosestNest;
+    argos::LOG<<"robot ID="<<controllerID<<", nest id=" << NewClosestNest->GetNestIdx()<<endl;
 }
 REGISTER_CONTROLLER(MPFA_controller, "MPFA_controller")

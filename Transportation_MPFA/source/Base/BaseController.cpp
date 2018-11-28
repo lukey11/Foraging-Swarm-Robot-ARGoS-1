@@ -64,16 +64,16 @@ argos::CVector2 BaseController::GetPosition() {
 
 	// Add noise to the current position unless travelling to the nest
 	// Make the noise proportional to the distance to the target
-	/*
-	if (!heading_to_nest)
+	
+	/*if (!heading_to_nest)
 	{
 		argos::Real noise_x = RNG->Gaussian(PositionNoiseStdev);
 		argos::Real noise_y = RNG->Gaussian(PositionNoiseStdev);
 
 		x += noise_x;
 		y += noise_y;
-	}
-	*/
+	}*/
+	
 
 	return argos::CVector2(x, y);
 }
@@ -104,7 +104,8 @@ void BaseController::SetTarget(argos::CVector2 t) {
 		
 		x += noise_x;
 		y += noise_y;
-
+        argos::LOG << "x: "<< x << std::endl;
+	    argos::LOG << "y:" << y << std::endl;
 		//argos::LOG << "Not Heading to Nest " << std::endl;
 		//argos::LOG << "Noise x: "<< noise_x << std::endl;
 		//argos::LOG << "Noise y:" << noise_y << std::endl;

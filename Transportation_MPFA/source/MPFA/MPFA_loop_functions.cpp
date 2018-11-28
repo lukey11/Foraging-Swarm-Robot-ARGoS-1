@@ -124,7 +124,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
                while (parent_id != 0){
                    parent_id = Nests[parent_id].GetParentNestIdx();
                    parentNests.push_back(&Nests[parent_id]);
-                   }//end while  
+                   }//end while
+               argos::LOG<<"Nests["<<i<<"]="<<Nests[i].GetLocation()<<endl;
                Nests[i].SetParentNestIdx_no_backtrack(parentNests); 
            }//end if
          }// end if
@@ -524,7 +525,7 @@ void MPFA_loop_functions::PowerLawFoodDistribution() {
             otherClusterCount = DistributedCount / PowerRank + 1;
         singleClusterCount = otherClusterCount - modDiff;
     }
-    //-----Wayne: End of PowerRank and food per PowerRank group
+    //End of PowerRank and food per PowerRank group
     
 	for(size_t i = 0; i < PowerRank; i++) {
 		powerLawClusters.push_back(powerLawLength * powerLawLength);
@@ -580,22 +581,6 @@ void MPFA_loop_functions::PowerLawFoodDistribution() {
     }
     assert(TotalDistributedFood == FoodItemCount);
 }
-
-void MPFA_loop_functions::CreateNest(argos::CVector2 position){ //qilu 07/26/2016
-     Real     x_coordinate = position.GetX();
-     Real     y_coordinate = position.GetY();
-     size_t  num_trail=0;    
-     argos::CRange<argos::Real>   RangeX;
-     RangeX.Set(x_coordinate - NestRadius, x_coordinate + NestRadius);
-     argos::CRange<argos::Real>   RangeY;
-     RangeY.Set(y_coordinate - NestRadius, y_coordinate + NestRadius);
-     while(IsOutOfBounds(position, NestRadius) && num_trail<20){
-             position.Set(RNG->Uniform(RangeX), RNG->Uniform(RangeY));
-             num_trail++;
-      }
-      Nests.push_back(Nest(position));
- }
- 
  
 bool MPFA_loop_functions::IsOutOfArena(argos::CVector2 p){
   argos::Real x = p.GetX();

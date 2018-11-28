@@ -73,7 +73,7 @@ void Nest::SetParentNestIdx_no_backtrack(vector<Nest*> parents)
     Real distance;
     for(int i =1; i < parents.size(); i++){
         distance = (GetLocation() - parents[i]->GetLocation()).SquareLength(); 
-        if (distance - curr_squared_distance <=4){
+        if (distance - curr_squared_distance <= 25){
             curr_squared_distance = distance;
             parent_nest_idx = parents[i]->GetNestIdx();
         } 

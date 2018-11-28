@@ -491,7 +491,7 @@ void CPFA_controller::Returning() {
 	    argos::Real poissonCDF_sFollowRate = GetPoissonCDF(ResourceDensity, LoopFunctions->RateOfSiteFidelity);
 	    argos::Real r1 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 	    argos::Real r2 = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
-	    if (isHoldingFood) {        
+	    if (isHoldingFood) { 
           //drop off the food and display in the nest 
           argos::CVector2 placementPosition;
           placementPosition.Set(LoopFunctions->NestPosition.GetX()+RNG->Gaussian(0.1, 0), LoopFunctions->NestPosition.GetY()+RNG->Gaussian(0.1, 0));
