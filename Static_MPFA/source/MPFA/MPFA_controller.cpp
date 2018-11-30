@@ -114,7 +114,7 @@ void MPFA_controller::ControlStep() {
 	CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
 	CVector3 target3d(GetTarget().GetX(), GetTarget().GetY(), 0.00);
 	CRay3 targetRay(target3d, position3d);
-	myTrail.push_back(targetRay);
+	//myTrail.push_back(targetRay);
 	LoopFunctions->TargetRayList.push_back(targetRay);
 	LoopFunctions->TargetRayColorList.push_back(TrailColor);
 
@@ -166,13 +166,13 @@ void MPFA_controller::MPFA() {
 		// depart from nest after food drop off or simulation start
 		case DEPARTING:
 			//argos::LOG << "DEPARTING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			Departing();
 			break;
 		// after departing(), once conditions are met, begin searching()
 		case SEARCHING:
 			//argos::LOG << "SEARCHING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
 				Searching();
 			}
@@ -180,26 +180,26 @@ void MPFA_controller::MPFA() {
 		// return to nest after food pick up or giving up searching()
 		case RETURNING:
 			//argos::LOG << "RETURNING" << std::endl;
-			SetIsHeadingToNest(true);
+			//SetIsHeadingToNest(true);
 			Returning();
 			break;
 		case SURVEYING:
 			//argos::LOG << "SURVEYING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			Surveying();
 			break;
 	    case DEPOT_IDLING:
 	    //argos::LOG<<"DEPOT_IDLING"<<endl;
-	        SetIsHeadingToNest(false);
+	        //SetIsHeadingToNest(false);
 	        Idling();
 		    break;
 		case DEPOT_DELIVERING:
-    		SetIsHeadingToNest(true);
+    		//SetIsHeadingToNest(true);
 		    Delivering();
 		    break;
 		
 		case DEPOT_RETURNING:
-		    SetIsHeadingToNest(true);
+		    //SetIsHeadingToNest(true);
 		    DepotReturning();
 	        break;
 	}
@@ -583,7 +583,7 @@ void MPFA_controller::Surveying() {
 	}
 	// Set the survey countdown
 	else {
-		SetIsHeadingToNest(true); // Turn off error for this
+		SetIsHeadingToNest(false); // Turn on error for this
 		SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
 		MPFA_state = RETURNING;
 		survey_count = 0; // Reset
@@ -672,10 +672,15 @@ void MPFA_controller::Returning() {
 		    //log_output_stream.close();
     }
     // Take a small step towards the nest so we don't overshoot by too much is we miss it
-    else {
-	  SetIsHeadingToNest(true); // Turn off error for this
-           SetTarget(ClosestNest->GetLocation());
-	}		
+    else
+    {
+        if(IsAtTarget())
+        {
+        //argos::LOG<<"heading to true in returning"<<endl;
+        SetIsHeadingToNest(false); // Turn off error for this
+        SetTarget(ClosestNest->GetLocation());
+        }
+    }		
 }
 
 void MPFA_controller::SetRandomSearchLocation() {
@@ -706,7 +711,7 @@ void MPFA_controller::SetRandomSearchLocation() {
 	x += GetPosition().GetX();
 	y += GetPosition().GetY();
 		
-	SetIsHeadingToNest(true); // Turn off error for this
+	SetIsHeadingToNest(false); // Turn on error for this
 	SetTarget(argos::CVector2(x, y));
 }
 
@@ -728,7 +733,7 @@ void MPFA_controller::SetHoldingFood() {
 		    std::vector<argos::CVector2> newFoodList;
 		    std::vector<argos::CColor> newFoodColoringList;
 		    size_t i = 0, j = 0;
-      if(MPFA_state != RETURNING){
+      //if(MPFA_state != RETURNING){
 		         for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
 			            if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 		          // We found food! Calculate the nearby food density.
@@ -757,7 +762,7 @@ void MPFA_controller::SetHoldingFood() {
                             newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
                          }
                  }
-      }
+      //}
       if(j>0){
           for(; j < LoopFunctions->FoodList.size(); j++) {
               newFoodList.push_back(LoopFunctions->FoodList[j]);

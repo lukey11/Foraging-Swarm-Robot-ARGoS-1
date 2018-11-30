@@ -74,10 +74,10 @@
 	     DrawIDs = "1"
 	     DrawTrails = "0"
 	     DrawTargetRays = "0"
-	     FoodDistribution = "0"
-	     FoodItemCount = "64"
-	     PowerlawFoodUnitCount = "64"
-	     NumberOfClusters = "1"
+	     FoodDistribution = "1"
+	     FoodItemCount = "128"
+	     PowerlawFoodUnitCount = "128"
+	     NumberOfClusters = "3"
 	     ClusterWidthX = "8"
 	     ClusterWidthY = "8"
 	     FoodRadius = "0.05"
@@ -124,7 +124,7 @@
     <distribute>
             <position max="1, 1, 0.0" method="uniform" min="-1, -1, 0.0"/>
             <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-            <entity max_trials="100" quantity="2">
+            <entity max_trials="100" quantity="1">
                 <foot-bot id="F0"><controller config="CPFA"/></foot-bot>
             </entity>
         </distribute>
