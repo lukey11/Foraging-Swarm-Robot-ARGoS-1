@@ -11,13 +11,8 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
-    #file = raw_input('please input an argos file: ')
-    #files = ['Cluster_dynamic_MPFA_12by12.xml', 'Powerlaw_dynamic_MPFA_12by12.xml', 'Random_dynamic_MPFA_12by12.xml', 'Cluster_dynamic_MPFA_14by14.xml', 'Powerlaw_dynamic_MPFA_14by14.xml', 'Random_dynamic_MPFA_14by14.xml', 'Cluster_dynamic_MPFA_16by16.xml', 'Powerlaw_dynamic_MPFA_16by16.xml', 'Random_dynamic_MPFA_16by16.xml']
-    #files = ['Cluster_dynamic_MPFA_r24_50by50.xml', 'Powerlaw_dynamic_MPFA_r24_50by50.xml','Random_dynamic_MPFA_r24_50by50.xml']
-    #files = ['Cluster_dynamic_MPFA_r48_50by50.xml', 'Powerlaw_dynamic_MPFA_r48_50by50.xml','Random_dynamic_MPFA_r48_50by50.xml', 'Cluster_dynamic_MPFA_r72_50by50.xml', 'Powerlaw_dynamic_MPFA_r72_50by50.xml','Random_dynamic_MPFA_r72_50by50.xml', 'Cluster_dynamic_MPFA_r96_50by50.xml', 'Powerlaw_dynamic_MPFA_r96_50by50.xml','Random_dynamic_MPFA_r96_50by50.xml']
-    #files = ['Cluster_dynamic_MPFA_10by10.xml', 'Powerlaw_dynamic_MPFA_10by10.xml', 'Random_dynamic_MPFA_10by10.xml', 'Cluster_dynamic_MPFA_r96_50by50.xml', 'Powerlaw_dynamic_MPFA_r96_50by50.xml', 'Random_dynamic_MPFA_r96_50by50.xml']
-    #files = ['Random_dynamic_MPFA_r96_50by50.xml']
-    files = ['Random_dynamic_MPFA_10by10.xml']
+    files = ['Random_MPFA_backtracking_r1192_d256_tag16384_80by80.xml']
+    run_count = 5
     
     for file in files:
         print file
@@ -25,7 +20,7 @@ if __name__ == "__main__":
         count =1
         startTime =time.time()
         #result =[]
-        for _ in range(80):
+        for _ in range(run_count):
             print "Run "+str(count)
             count = count+1
             output = subprocess.check_output(['argos3 -n -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)

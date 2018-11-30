@@ -12,7 +12,7 @@ class Random_Argos:
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
     files = ['Random_MPFA_backtracking_r1192_d256_tag16384_80by80.xml']
-    run_count = 10
+    run_count = 5
     
     for file in files:
         print file
