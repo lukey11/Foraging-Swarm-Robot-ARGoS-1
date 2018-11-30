@@ -86,17 +86,8 @@ void BaseController::SetTarget(argos::CVector2 t) {
 
 	argos::Real x(t.GetX()), y(t.GetY());
 
-	//if(x > ForageRangeX.GetMax()) x = ForageRangeX.GetMax();
-	//else if(x < ForageRangeX.GetMin()) x = ForageRangeX.GetMin();
-	
-	//if(y > ForageRangeY.GetMax()) y = ForageRangeY.GetMax();
-	//else if(y < ForageRangeY.GetMin()) y = ForageRangeY.GetMin();
-	
-	//argos::LOG << "<<Updating Target Position>>" << std::endl;
-
-	//argos::LOG << "x: "<< x << std::endl;
-	//argos::LOG << "y:" << y << std::endl;
-
+	//argos::LOG << "original target = ["<< x <<", " << y<< "]"<< std::endl;
+	//argos::LOG<<"heading_to_nest="<<heading_to_nest<<endl;
 	if (!heading_to_nest) {
 		argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
 		argos::Real noise_x = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
@@ -104,14 +95,11 @@ void BaseController::SetTarget(argos::CVector2 t) {
 		
 		x += noise_x;
 		y += noise_y;
-        argos::LOG << "x: "<< x << std::endl;
-	    argos::LOG << "y:" << y << std::endl;
-		//argos::LOG << "Not Heading to Nest " << std::endl;
-		//argos::LOG << "Noise x: "<< noise_x << std::endl;
-		//argos::LOG << "Noise y:" << noise_y << std::endl;
-	} else {
-		//argos::LOG << "Heading to Nest " << std::endl;
-	}
+        //argos::LOG << "targets with noise: ["<< x <<", "<< y<<"]"<< std::endl;
+
+	} /*else {
+		argos::LOG << "Heading to original target=["<<x<<", "<<y<< "]"<< std::endl;
+	}*/
 
 	if(y > ForageRangeY.GetMax() || y < ForageRangeY.GetMin() ||
 			x > ForageRangeX.GetMax() || x < ForageRangeX.GetMin()) {
@@ -124,10 +112,9 @@ void BaseController::SetTarget(argos::CVector2 t) {
 	//argos::LOG << "New Target y:" << y << std::endl;
 
 	TargetPosition = argos::CVector2(x, y);
-	argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
+	//argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
+	//argos::LOG<<"TargetPosition="<<TargetPosition<<endl;
 	
-	//argos::LOG << "Distance: " << distanceToTarget << std::endl;
-	//argos::LOG << "<<New Target Set>>" << std::endl;
 }
 
 void BaseController::SetStartPosition(argos::CVector3 sp) {
@@ -154,11 +141,11 @@ void BaseController::SetNextMovement() {
 	// Allow the searcher to treat movement to the nest
 	// differently than other movement
 	if (heading_to_nest) {
-		DistTol = NestDistanceTolerance;
+        DistTol = NestDistanceTolerance;
 		AngleTol = NestAngleTolerance;
 	}
 	else {
-		DistTol = TargetDistanceTolerance;
+        DistTol = TargetDistanceTolerance;
 		AngleTol = TargetAngleTolerance;
 	}
  
@@ -474,7 +461,7 @@ bool BaseController::IsAtTarget()
 	}
 
 	argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
-
+     //argos:LOG<<"IsAtTarget: TargetPosition="<<TargetPosition<< "at target="<<int(distanceToTarget < DistTol)<<endl;
 	//argos::LOG << "IsAtTarget: Distance to Target: " << distanceToTarget << endl;
 	//argos::LOG << "IsAtTarget: TargetDistanceTolerance: " << DistTol << endl;
 

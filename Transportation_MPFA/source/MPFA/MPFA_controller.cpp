@@ -49,10 +49,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 
     FoodDistanceTolerance *= FoodDistanceTolerance;
 	SetIsHeadingToNest(true);
-	//SetTarget(argos::CVector2(0,0));
-	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
-	//SetClosestNest(); //this should not be here since the nests are not initilized.
 	
     m_pcLEDs   = GetActuator<CCI_LEDsActuator>("leds");
     controllerID= GetId();//qilu 07/26/2016
@@ -164,13 +161,15 @@ void MPFA_controller::MPFA() {
 		// depart from nest after food drop off or simulation start
 		case DEPARTING:
 			//argos::LOG << "DEPARTING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
+            //argos::LOG<<"heading to false in case departing"<<endl;
 			Departing();
 			break;
 		// after departing(), once conditions are met, begin searching()
 		case SEARCHING:
 			//argos::LOG << "SEARCHING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
+            //argos::LOG<<"heading to false in case searching"<<endl;
 			if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
 				Searching();
 			}
@@ -178,26 +177,28 @@ void MPFA_controller::MPFA() {
 		// return to nest after food pick up or giving up searching()
 		case RETURNING:
 			//argos::LOG << "RETURNING" << std::endl;
-			SetIsHeadingToNest(true);
+			//SetIsHeadingToNest(false);
+            //argos::LOG<<"heading to false in case returning"<<endl;
 			Returning();
 			break;
 		case SURVEYING:
 			//argos::LOG << "SURVEYING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
+            //argos::LOG<<"heading to false in case surveying"<<endl;
 			Surveying();
 			break;
 	    case DEPOT_IDLING:
 	    //argos::LOG<<"DEPOT_IDLING"<<endl;
-	        SetIsHeadingToNest(false);
+	        //SetIsHeadingToNest(false);
 	        Idling();
 		    break;
 		case DEPOT_DELIVERING:
-    		SetIsHeadingToNest(true);
+    		//SetIsHeadingToNest(true);
 		    Delivering();
 		    break;
 		
 		case DEPOT_RETURNING:
-		    SetIsHeadingToNest(true);
+		    //SetIsHeadingToNest(true);
 		    DepotReturning();
 	        break;
 	} 
@@ -218,7 +219,8 @@ bool MPFA_controller::IsInTargetNest() {
 
 
 bool MPFA_controller::IsInTheNest() {
-  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
+    int factor =2;
+  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<factor*LoopFunctions->NestRadiusSquared) {
             return true;
         }
   return false;
@@ -228,7 +230,6 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
 
 	// Initialize the SiteFidelityPosition
-	//SiteFidelityPosition = LoopFunctions->NestPosition;
 SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 	// Create the output file here because it needs LoopFunctions
@@ -405,7 +406,9 @@ void MPFA_controller::Departing()
 				 argos::CRadians turn_angle(angle1 + angle2);
 				 argos::CVector2 turn_vector(SearchStepSize, turn_angle);
 				 SetIsHeadingToNest(false);
+                 //argos::LOG<<"heading to false in switching to search"<<endl;
 				 SetTarget(turn_vector + GetPosition());
+                 
 			 }
 			 else if(distanceToTarget < TargetDistanceTolerance){
 				 SetRandomSearchLocation();
@@ -439,33 +442,36 @@ void MPFA_controller::Searching() {
  //LOG<<"Searching..."<<endl;
 	// "scan" for food only every half of a second
 	if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
+        //argos::LOG<<"before set holding food ...it is"<<isHoldingFood<<endl;
 		SetHoldingFood();
 	}
 	// When not carrying food, calculate movement.
-	if(IsHoldingFood() == false) {
+	if(IsHoldingFood() == false) 
+    {
 		 argos::CVector2 distance = GetPosition() - GetTarget();
 		 argos::Real     random   = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
      
          // If we reached our target search location, set a new one. The 
 	     // new search location calculation is different based on whether
 	     // we are currently using informed or uninformed search.
-	     if(distance.SquareLength() < TargetDistanceTolerance) {
+	     if(distance.SquareLength() < TargetDistanceTolerance) 
+         {
 	         // randomly give up searching
-	         if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && random < LoopFunctions->ProbabilityOfReturningToNest) {
-	             
+	         if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && random < LoopFunctions->ProbabilityOfReturningToNest) 
+             {
 	             //SetClosestNest();//qilu 07/26/2016
 	             SetIsHeadingToNest(true);
-	             //SetTarget(LoopFunctions->NestPosition);
+	             //argos::LOG<<"heading to true in giveup"<<endl;
 	             SetTarget(ClosestNest->GetLocation());
-	             isGivingUpSearch = true;
-	             ClosestNest->FidelityList.erase(controllerID); //09/07/2016
-	             ClosestNest->DensityOnFidelity.erase(controllerID); //09/11/2016
-	             SiteFidelityPosition= CVector2(10000,10000); //09/07/2016
-	             isUsingSiteFidelity = false; //qilu 09/07/2016
-	             updateFidelity = false; //qilu 09/07/2016
+                 isGivingUpSearch = true;
+	             ClosestNest->FidelityList.erase(controllerID); 
+	             ClosestNest->DensityOnFidelity.erase(controllerID); 
+	             SiteFidelityPosition= CVector2(10000,10000); 
+	             isUsingSiteFidelity = false;
+	             updateFidelity = false; 
 	             MPFA_state = RETURNING;
-	             searchingTime+=SimulationTick()-startTime;//qilu 10/22
-	             startTime = SimulationTick();//qilu 10/22
+	             searchingTime+=SimulationTick()-startTime;
+	             startTime = SimulationTick();
 	             /*
 	             ofstream log_output_stream;
 	             log_output_stream.open("giveup.txt", ios::app);
@@ -478,7 +484,8 @@ void MPFA_controller::Searching() {
 	         argos::Real rand = RNG->Gaussian(USCV);
 	
 	         // uninformed search
-	         if(isInformed == false) {
+	         if(isInformed == false) 
+             {
 		          argos::CRadians rotation(rand);
 		          argos::CRadians angle1(rotation);
 		          argos::CRadians angle2(GetHeading());
@@ -503,13 +510,14 @@ void MPFA_controller::Searching() {
 		          log_output_stream.close();
 		          */
 		          SetIsHeadingToNest(false);
+		          //argos::LOG<<"heading to false in uninformed search"<<endl;
 		          SetTarget(turn_vector + GetPosition());
-		     }
+             }
 	         // informed search
 	         else{
 	              SetIsHeadingToNest(false);
-	              
-	              if(IsAtTarget()) {
+	              if(IsAtTarget()) 
+                  {
 	                  size_t          t           = SearchTime++;
 	                  argos::Real     twoPi       = (argos::CRadians::TWO_PI).GetValue();
 	                  argos::Real     pi          = (argos::CRadians::PI).GetValue();
@@ -565,32 +573,35 @@ void MPFA_controller::Searching() {
 // Turns 36 times by 10 degrees
 void MPFA_controller::Surveying() {
  //LOG<<"Surveying..."<<endl;
+ //argos::LOG<<"survey_count="<<survey_count<<endl;
 	if (survey_count <= 4) { 
 		CRadians rotation(survey_count*3.14/2); // divide by 10 so the vecot is small and the linear motion is minimized
 		argos::CVector2 turn_vector(SearchStepSize, rotation.SignedNormalize());
 			
 		SetIsHeadingToNest(true); // Turn off error for this
+        //argos::LOG<<"heading to true in surveying *******"<<endl;
 		SetTarget(turn_vector + GetPosition());
+        
 		/*
 		ofstream log_output_stream;
 		log_output_stream.open("log.txt", ios::app);
 		log_output_stream << (GetHeading() - rotation ).SignedNormalize() << ", "  << SearchStepSize << ", "<< rotation << ", " <<  turn_vector << ", " << GetHeading() << ", " << survey_count << endl;
 		log_output_stream.close();
 		*/
-		argos::LOG<<"survey..."<<endl;
 		if(fabs((GetHeading() - rotation).SignedNormalize().GetValue()) < TargetAngleTolerance.GetValue()) survey_count++;
 			//else Keep trying to reach the turning angle
         
 	}
 	// Set the survey countdown
 	else {
-		SetIsHeadingToNest(true); // Turn off error for this
+		SetIsHeadingToNest(false); // Turn on error for this
+        //argos::LOG<<"heading to true, set the survey countdown..."<<endl;
 		SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
-		MPFA_state = RETURNING;
+        MPFA_state = RETURNING;
 		survey_count = 0; // Reset
         searchingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
-        argos::LOG<<"set the survey countdown..."<<endl;
+        
 	}
 }
 
@@ -645,8 +656,10 @@ void MPFA_controller::Returning() {
 		    if(updateFidelity && poissonCDF_sFollowRate > r2) {
 			    //log_output_stream << "Using site fidelity" << endl;
 			        SetIsHeadingToNest(false);
-			        SetTarget(SiteFidelityPosition);
+			        //argos::LOG<<"heading to false in using site fidelity"<<endl;
+                    SetTarget(SiteFidelityPosition);
 			        isInformed = true;
+                    
 		    }
       // use pheromone waypoints
       else if(SetTargetPheromone()) {
@@ -669,12 +682,16 @@ void MPFA_controller::Returning() {
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
     }
-	// Take a small step towards the nest so we don't overshoot by too much is we miss it
-	else {
-        SetIsHeadingToNest(true); // Turn off error for this
+    // Take a small step towards the nest so we don't overshoot by too much if we miss it
+    else 
+    {
+        if(IsAtTarget())
+        {
+        //argos::LOG<<"heading to true in returning"<<endl;
+        SetIsHeadingToNest(false); // Turn off error for this
         SetTarget(ClosestNest->GetLocation());
-        
-	}		
+        }
+    }		
 }
 
 void MPFA_controller::SetRandomSearchLocation() {
@@ -705,8 +722,9 @@ void MPFA_controller::SetRandomSearchLocation() {
 	x += GetPosition().GetX();
 	y += GetPosition().GetY();
 		
-	SetIsHeadingToNest(true); // Turn off error for this
-	SetTarget(argos::CVector2(x, y));
+	SetIsHeadingToNest(false); // Turn on error for this
+	//argos::LOG<<"heading to false in set random search location"<<endl;
+    SetTarget(argos::CVector2(x, y));
 }
 
 
@@ -729,11 +747,12 @@ void MPFA_controller::SetHoldingFood() {
 	    std::vector<argos::CVector2> newFoodList;
 	    std::vector<argos::CColor> newFoodColoringList;
 	    size_t i = 0, j = 0;
-		if(MPFA_state != RETURNING){
+		//if(MPFA_state != RETURNING){
 			for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
 			    if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 	               // We found food! Calculate the nearby food density.
 	               isHoldingFood = true;
+                   //argos::LOG<<"set holding food true"<<endl;
 	               numHeldFood = 1;
 	               MPFA_state = SURVEYING;
 	               //searchingTime+=SimulationTick()-startTime;//qilu 10/22
@@ -760,7 +779,7 @@ void MPFA_controller::SetHoldingFood() {
 					newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
 				 }
 			}
-		}
+		//}
 		if(j>0){
 			for(; j < LoopFunctions->FoodList.size(); j++) {
 			  newFoodList.push_back(LoopFunctions->FoodList[j]);
@@ -772,7 +791,7 @@ void MPFA_controller::SetHoldingFood() {
 	    if(IsHoldingFood()) {
 	         //SetClosestNest();//qilu 07/26/2016
 	         //SetIsHeadingToNest(true);
-	         SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
+	         //SetTarget(ClosestNest->GetLocation()); //qilu 07/26/2016
 	         
          
 	         
@@ -813,6 +832,7 @@ void MPFA_controller::SetHoldingFood() {
  * item detection is based on distance calculations with circles.
  *****/
 void MPFA_controller::SetLocalResourceDensity() {
+    //argos::LOG<<"set local resource density ..."<<endl;
 	argos::CVector2 distance;
 
 	// remember: the food we picked up is removed from the foodList before this function call
@@ -835,9 +855,6 @@ void MPFA_controller::SetLocalResourceDensity() {
     isUsingSiteFidelity = true;
     updateFidelity = true; //qilu 09/07/2016
     TrailToShare.push_back(SiteFidelityPosition);//qilu 09/07/2016
-    //ClosestNest->FidelityList[controllerID] = GetPosition(); //qilu 09/07/2016
-    //LOG<<"ClosestNest->FidelityList["<<controllerID<<"]="<<endl;
-    //ClosestNest->FidelityList.size()<<endl;
     ClosestNest->FidelityList[controllerID] = SiteFidelityPosition; //qilu 09/07/2016
     ClosestNest->DensityOnFidelity[controllerID]= ResourceDensity; //09/11/2016
 	/* Delay for 4 seconds (simulate iAnts scannning rotation). */
@@ -886,10 +903,6 @@ void MPFA_controller::SetFidelityList() {
 	std::vector<argos::CVector2> newFidelityList;
 
 	/* Remove this robot's old fidelity position from the fidelity list. */
-	/*for(size_t i = 0; i < LoopFunctions->FidelityList.size(); i++) {
-		if((LoopFunctions->FidelityList[i] - SiteFidelityPosition).SquareLength() != 0.0) {
-			newFidelityList.push_back(LoopFunctions->FidelityList[i]);
-		}*/
 	/* Update the global fidelity list. */
 	//LoopFunctions->FidelityList = newFidelityList;
  ClosestNest->FidelityList.erase(controllerID); //qilu 09/08/2016
@@ -931,6 +944,7 @@ bool MPFA_controller::SetTargetPheromone() {
 		   if(randomWeight < ClosestNest->PheromoneList[i].GetWeight()) {
 			       /* We've chosen a pheromone! */
 			       SetIsHeadingToNest(false);
+                   //argos::LOG<<"heading to false in set pheromone..."<<endl;
           SetTarget(ClosestNest->PheromoneList[i].GetLocation());
           //TrailToFollow = ClosestNest->PheromoneList[i].GetTrail();
           isPheromoneSet = true;
@@ -1080,6 +1094,6 @@ void MPFA_controller::SetClosestNest(){//qilu 07/26/2016
             ClosestNest = NewClosestNest;
     }
     else ClosestNest = NewClosestNest;
-    argos::LOG<<"robot ID="<<controllerID<<", nest id=" << NewClosestNest->GetNestIdx()<<endl;
+    //argos::LOG<<"robot ID="<<controllerID<<", nest id=" << NewClosestNest->GetNestIdx()<<endl;
 }
 REGISTER_CONTROLLER(MPFA_controller, "MPFA_controller")

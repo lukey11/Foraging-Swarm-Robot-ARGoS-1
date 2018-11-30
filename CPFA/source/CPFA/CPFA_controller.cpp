@@ -150,13 +150,13 @@ void CPFA_controller::CPFA() {
 		// depart from nest after food drop off or simulation start
 		case DEPARTING:
 			//argos::LOG << "DEPARTING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			Departing();
 			break;
 		// after departing(), once conditions are met, begin searching()
 		case SEARCHING:
 			//argos::LOG << "SEARCHING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
 				Searching();
 			}
@@ -164,12 +164,12 @@ void CPFA_controller::CPFA() {
 		// return to nest after food pick up or giving up searching()
 		case RETURNING:
 			//argos::LOG << "RETURNING" << std::endl;
-			SetIsHeadingToNest(true);
+			//SetIsHeadingToNest(true);
 			Returning();
 			break;
 		case SURVEYING:
 			//argos::LOG << "SURVEYING" << std::endl;
-			SetIsHeadingToNest(false);
+			//SetIsHeadingToNest(false);
 			Surveying();
 			break;
 	}
@@ -463,7 +463,7 @@ void CPFA_controller::Surveying() {
 	}
 	// Set the survey countdown
 	else {
-		SetIsHeadingToNest(true); // Turn off error for this
+		SetIsHeadingToNest(false); // Turn on error for this
 		SetTarget(LoopFunctions->NestPosition); 
 		CPFA_state = RETURNING;
 		survey_count = 0; // Reset
@@ -549,10 +549,15 @@ void CPFA_controller::Returning() {
                 
     }
 	// Take a small step towards the nest so we don't overshoot by too much is we miss it
-	else {
-		   SetIsHeadingToNest(true); // Turn off error for this
-           SetTarget(LoopFunctions->NestPosition); 
-	}		
+    else 
+    {
+        if(IsAtTarget())
+        {
+        //argos::LOG<<"heading to true in returning"<<endl;
+        SetIsHeadingToNest(false); // Turn off error for this
+        SetTarget(LoopFunctions->NestPosition);
+        }
+    }		
 }
 
 void CPFA_controller::SetRandomSearchLocation() {
@@ -598,7 +603,7 @@ void CPFA_controller::SetHoldingFood() {
 		    std::vector<argos::CVector2> newFoodList;
 		    std::vector<argos::CColor> newFoodColoringList;
 		    size_t i = 0, j = 0;
-      if(CPFA_state != RETURNING){
+      //if(CPFA_state != RETURNING){
 		         for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
 			            if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 		          // We found food! Calculate the nearby food density.
@@ -625,7 +630,7 @@ void CPFA_controller::SetHoldingFood() {
                             newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);
                          }
                  }
-      }
+      //}
       if(j>0){
           for(; j < LoopFunctions->FoodList.size(); j++) {
               newFoodList.push_back(LoopFunctions->FoodList[j]);
@@ -635,8 +640,8 @@ void CPFA_controller::SetHoldingFood() {
    
       // We picked up food. Update the food list minus what we picked up.
       if(IsHoldingFood()) {
-         SetIsHeadingToNest(true);
-         SetTarget(LoopFunctions->NestPosition);
+         //SetIsHeadingToNest(true);
+         //SetTarget(LoopFunctions->NestPosition);
          LoopFunctions->FoodList = newFoodList;
          LoopFunctions->FoodColoringList = newFoodColoringList; //qilu 09/12/2016
          SetLocalResourceDensity();
@@ -651,9 +656,9 @@ void CPFA_controller::SetHoldingFood() {
 
 	// We are carrying food and haven't reached the nest, keep building up the
 	// pheromone trail attached to this found food item.
-  if(IsHoldingFood() && SimulationTick() % LoopFunctions->DrawDensityRate == 0) {
+  /*if(IsHoldingFood() && SimulationTick() % LoopFunctions->DrawDensityRate == 0) {
         TrailToShare.push_back(GetPosition());
-  }
+  }*/
 }
 
 /*****
@@ -730,7 +735,7 @@ void CPFA_controller::SetFidelityList(argos::CVector2 newFidelity) {
 	/* Update the local fidelity position for this robot. */
 	SiteFidelityPosition = newFidelity;
  
-  //updateFidelity = true;
+  updateFidelity = true;
 }
 
 /*****
@@ -742,6 +747,8 @@ void CPFA_controller::SetFidelityList() {
 	/* Remove this robot's old fidelity position from the fidelity list. */
 	/* Update the global fidelity list. */
         LoopFunctions->FidelityList.erase(controllerID);
+ SiteFidelityPosition = CVector2(10000, 10000);
+ updateFidelity = true; 
 }
 
 /*****
@@ -757,8 +764,8 @@ bool CPFA_controller::SetTargetPheromone() {
 	/* update the pheromone list and remove inactive pheromones */
 
 	/* default target = nest; in case we have 0 active pheromones */
-	SetIsHeadingToNest(true);
-	SetTarget(LoopFunctions->NestPosition);
+	//SetIsHeadingToNest(true);
+	//SetTarget(LoopFunctions->NestPosition);
 	/* Calculate a maximum strength based on active pheromone weights. */
 	for(size_t i = 0; i < LoopFunctions->PheromoneList.size(); i++) {
 		if(LoopFunctions->PheromoneList[i].IsActive()) {

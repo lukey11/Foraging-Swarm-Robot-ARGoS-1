@@ -156,7 +156,7 @@ void MPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
-  score = 0.0;
+  score = 0;
    
     FoodList.clear();
     FoodColoringList.clear();
@@ -269,10 +269,8 @@ void MPFA_loop_functions::PostExperiment() {
        /* Real total_travel_time=0;
         Real total_search_time=0;
         ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
-        //travelSearchTimeDataOutput<<"Traveling time, Searching time"<<endl;
+        */        
         
-        
-        unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
          
         for(argos::CSpace::TMapPerType::iterator it = footbots.begin(); it != footbots.end(); it++) {
@@ -281,17 +279,17 @@ void MPFA_loop_functions::PostExperiment() {
             MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
             CollisionTime += c2.GetCollisionTime();
             
-            if(c2.GetStatus() == "SEARCHING"){
+            /*if(c2.GetStatus() == "SEARCHING"){
                 total_search_time += SimTime-c2.GetTravelingTime();
                 total_travel_time += c2.GetTravelingTime();
 	    }
             else {
 		total_search_time += c2.GetSearchingTime();
 		total_travel_time += SimTime-c2.GetSearchingTime();
-            }         
+            }*/         
         }
-        travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
-        travelSearchTimeDataOutput.close(); */   
+        //travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
+        //travelSearchTimeDataOutput.close(); */   
              
         ofstream dataOutput( (header+ "iAntTagData.txt").c_str(), ios::app);
         // output to file
@@ -299,7 +297,8 @@ void MPFA_loop_functions::PostExperiment() {
             dataOutput << "tags_collected, collisions_in_seconds, time_in_minutes, random_seed\n";//qilu 08/18
         }
     
-        dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        //dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        dataOutput << Score() << ", "<<CollisionTime/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
         ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);

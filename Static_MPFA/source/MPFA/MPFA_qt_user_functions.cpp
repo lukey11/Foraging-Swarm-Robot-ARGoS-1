@@ -54,7 +54,7 @@ void MPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFidelity();
 	DrawPheromones();
 	DrawNest();
-    //DrawBranches();
+    DrawBranches();
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
 
