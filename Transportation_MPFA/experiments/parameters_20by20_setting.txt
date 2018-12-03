@@ -7,4 +7,4 @@ PowerlawFoodUnitCount 1024
 NumberOfClusters 16
 ClusterWidthX 8
 ClusterWidthY 8
-NestRadius 0.12
+NestRadius 0.2

@@ -81,7 +81,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
         argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
-
+        
     NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
 

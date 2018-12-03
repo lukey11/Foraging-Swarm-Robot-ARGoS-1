@@ -47,7 +47,9 @@ void Nest::SetLocation(CVector2 newLocation) {
 }
 
 void Nest::SetNestRadius(int level, Real radius){
-    NestRadius = pow(2, level) * radius;
+    //NestRadius = pow(2, level) * radius;
+    NestRadius = (level+1) * radius;
+    //argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     NestRadiusSquared = NestRadius*NestRadius;
         
 }

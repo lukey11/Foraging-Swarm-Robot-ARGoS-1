@@ -103,7 +103,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         squared_distance = Nests[i].GetLocation().SquareLength();
         capacity = round(squared_distance/7.0);//7 is the diagonal distance of a region
         Nests[i].SetDeliveryCapacity(capacity);
-	Nests[i].SetNestRadius(NestRadius);
+	Nests[i].SetNestRadius(NestRadius, Nests.size());
     }
             
 		
