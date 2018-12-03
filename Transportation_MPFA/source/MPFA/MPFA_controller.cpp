@@ -373,8 +373,6 @@ void MPFA_controller::Departing()
     //LOG<<"Departing..."<<endl;
     if(ClosestNest == NULL){
 		SetClosestNest();
-		//SetDeliveringDestination();
-		
 	}
 	argos::Real distanceToTarget = (GetPosition() - GetTarget()).Length();
     argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));

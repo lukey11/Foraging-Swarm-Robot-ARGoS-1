@@ -11,14 +11,14 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
-    #files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
-    files = ['Random_CPFA_r1192_tag16384_80by80.xml']
+    files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
+    run_count = 10
     for file in files:
         print file 
         this_run = Random_Argos("./experiments/"+file)
         count =1
         startTime =time.time()
-        for _ in range(10):
+        for _ in range(run_count):
             print "Run "+str(count)
 	    singleRun_StartTime =  time.time()
             count = count+1

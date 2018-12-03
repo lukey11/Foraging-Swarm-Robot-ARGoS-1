@@ -80,7 +80,8 @@ for (size_t i=0; i< loopFunctions.Nests.size(); i++){
     	// Draw the nest on the arena
 
 	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
-     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
+     //DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.Nests[i].GetNestRadius(), 0.008, CColor::GREEN);
     }
 }
 
@@ -186,22 +187,20 @@ void MPFA_qt_user_functions::DrawBranches() {
 	std::vector<vector<argos::CRay3> >    RayList;
     std::vector<argos::CRay3>    tempList;
     CRay3 targetRay;
-    size_t count=0, prev_level=0;
+    size_t count=0, prev_level=0, revLevel=0;
     size_t level, pidx; 
     Real x, y, px, py;
+    
     for (size_t i=1; i< loopFunctions.Nests.size(); i++)
     { 
 		level = log(i-count)/log(4);
 		pidx = loopFunctions.Nests[i].GetParentNestIdx();
-        //argos::LOG<<"loopFunctions.Nests["<<i<<"]="<<loopFunctions.Nests[i].GetLocation()<<", "<<loopFunctions.Nests[i].GetParentNestIdx()<<endl;
-        //argos::LOG<<"parent="<<loopFunctions.Nests[pidx].GetLocation()<<endl;
         x = loopFunctions.Nests[i].GetLocation().GetX(); 
         y = loopFunctions.Nests[i].GetLocation().GetY();
         
         px = loopFunctions.Nests[pidx].GetLocation().GetX();
         py = loopFunctions.Nests[pidx].GetLocation().GetY();
-		//argos::LOG<<"parent location = ["<<px<<", "<<py<<"]"<<endl;
-        targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
+		targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
 		tempList.push_back(targetRay);
 		if(level > prev_level)
 		{
@@ -224,10 +223,11 @@ void MPFA_qt_user_functions::DrawBranches() {
     TrailColor.push_back(CColor::ORANGE);
     
     for(size_t i = 0; i < RayList.size(); i++) 
-    {
-		for(size_t j= 0; j<RayList[i].size(); j++)
+    {   
+        revLevel = level - i;
+        for(size_t j= 0; j<RayList[i].size(); j++)
         {
-            DrawRay(RayList[i][j], TrailColor[i], 20/log(RayList[i].size()));	
+            DrawRay(RayList[i][j], TrailColor[i], 2*revLevel*revLevel);	
 			}
 		
 	}
