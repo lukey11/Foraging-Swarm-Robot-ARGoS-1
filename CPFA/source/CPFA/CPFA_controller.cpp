@@ -177,7 +177,7 @@ void CPFA_controller::CPFA() {
 
 bool CPFA_controller::IsInTheNest() {
 	return ((GetPosition() - LoopFunctions->NestPosition).SquareLength()
-		< 4*LoopFunctions->NestRadiusSquared);
+		< LoopFunctions->NestRadiusSquared);
 	}
 
 void CPFA_controller::SetLoopFunctions(CPFA_loop_functions* lf) {

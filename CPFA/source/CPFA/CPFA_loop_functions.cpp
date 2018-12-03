@@ -33,7 +33,7 @@ CPFA_loop_functions::CPFA_loop_functions() :
 	RateOfPheromoneDecay(0.0),
 	FoodRadius(0.05),
 	FoodRadiusSquared(0.0025),
-	NestRadius(0.25),
+	NestRadius(0.12),
 	NestRadiusSquared(0.0625),
 	NestElevation(0.01),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
@@ -82,6 +82,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
 
+    NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
 
     //Number of distributed foods

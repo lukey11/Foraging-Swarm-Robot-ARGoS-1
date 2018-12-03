@@ -18,8 +18,7 @@
     FidelityList.clear();
     DensityOnFidelity.clear(); //qilu 09/11/2016
     FoodList.clear(); //qilu 09/07/2016
-    NewLocation = location; //qilu 09/19/2016
-    num_collected_tags=0;
+    //num_collected_tags=0;
     visited_time_point_in_minute=0;
     nest_idx=-1;
 }
@@ -42,6 +41,29 @@ void Nest::SetLocation(CVector2 newLocation) {
     nestLocation = newLocation;
 }
 
+void Nest::SetNestRadius(Real radius){
+    
+    if(nest_idx == 0)
+    {
+       NestRadius = radius;
+    }
+    else
+    {
+    NestRadius = 0.12;
+    }
+    NestRadiusSquared = NestRadius*NestRadius;
+        
+}
+
+argos::Real Nest::GetNestRadiusSquared(){
+    
+    return NestRadiusSquared;
+    }
+
+argos::Real Nest::GetNestRadius(){
+    
+    return NestRadius;
+    }
 void Nest:: SetNestIdx(size_t idx){
      nest_idx = idx;
  }

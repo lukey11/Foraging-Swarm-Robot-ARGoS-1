@@ -34,7 +34,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	FoodRadius(0.05),
 	FoodRadiusSquared(0.0025),
 	NestRadius(0.25),
-	NestRadiusSquared(0.0625),
+	//NestRadiusSquared(0.0625),
 	NestElevation(0.01),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
@@ -101,14 +101,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     for(int i=0; i < Nests.size(); i++)
     {
         squared_distance = Nests[i].GetLocation().SquareLength();
-        capacity = round(squared_distance/7.0);
+        capacity = round(squared_distance/7.0);//7 is the diagonal distance of a region
         Nests[i].SetDeliveryCapacity(capacity);
-        argos::LOG << "squared_distance="<<squared_distance<<endl;
-        argos::LOG << "Nest["<<i<<"].C="<<capacity<<endl;
+	Nests[i].SetNestRadius(NestRadius);
     }
             
 		
-    NestRadiusSquared = NestRadius*NestRadius;
+    //NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
         //Number of distributed foods
     if (FoodDistribution == 1){
@@ -550,21 +549,6 @@ void MPFA_loop_functions::PowerLawFoodDistribution() {
     assert(TotalDistributedFood == FoodItemCount);
 }
 
-void MPFA_loop_functions::CreateNest(argos::CVector2 position){ //qilu 07/26/2016
-     Real     x_coordinate = position.GetX();
-     Real     y_coordinate = position.GetY();
-     size_t  num_trail=0;    
-     argos::CRange<argos::Real>   RangeX;
-     RangeX.Set(x_coordinate - NestRadius, x_coordinate + NestRadius);
-     argos::CRange<argos::Real>   RangeY;
-     RangeY.Set(y_coordinate - NestRadius, y_coordinate + NestRadius);
-     while(IsOutOfBounds(position, NestRadius) && num_trail<20){
-             position.Set(RNG->Uniform(RangeX), RNG->Uniform(RangeY));
-             num_trail++;
-      }
-      Nests.push_back(Nest(position));
- }
- 
  
 bool MPFA_loop_functions::IsOutOfArena(argos::CVector2 p){
   argos::Real x = p.GetX();

@@ -47,14 +47,21 @@ void Nest::SetLocation(CVector2 newLocation) {
 }
 
 void Nest::SetNestRadius(int level, Real radius){
-    NestRadius = level * radius;
+    NestRadius = pow(2, level) * radius;
+    NestRadiusSquared = NestRadius*NestRadius;
         
 }
+
+argos::Real Nest::GetNestRadiusSquared(){
+    
+    return NestRadiusSquared;
+    }
 
 argos::Real Nest::GetNestRadius(){
     
     return NestRadius;
     }
+
         
 void Nest:: SetNestIdx(size_t idx){
      nest_idx = idx;
@@ -114,7 +121,7 @@ size_t Nest:: GetParentNestIdx()
 	return parent_nest_idx;
 	}
 
-size_t Nest:: GetCollectedTagNum(){
+/*size_t Nest:: GetCollectedTagNum(){
      return FoodList.size();
- } 
+ }*/ 
  

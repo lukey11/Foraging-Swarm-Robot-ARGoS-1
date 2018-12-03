@@ -48,8 +48,6 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	
 	FoodDistanceTolerance *= FoodDistanceTolerance;
 	SetIsHeadingToNest(true);
-    //SetTarget(argos::CVector2(0,0));
-	//qilu 10/21/2016 Let robots start to search immediately
 	SetTarget(p);
 
     m_pcLEDs   = GetActuator<CCI_LEDsActuator>("leds");
@@ -166,13 +164,11 @@ void MPFA_controller::MPFA() {
 		// depart from nest after food drop off or simulation start
 		case DEPARTING:
 			//argos::LOG << "DEPARTING" << std::endl;
-			//SetIsHeadingToNest(false);
 			Departing();
 			break;
 		// after departing(), once conditions are met, begin searching()
 		case SEARCHING:
 			//argos::LOG << "SEARCHING" << std::endl;
-			//SetIsHeadingToNest(false);
 			if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
 				Searching();
 			}
@@ -180,7 +176,6 @@ void MPFA_controller::MPFA() {
 		// return to nest after food pick up or giving up searching()
 		case RETURNING:
 			//argos::LOG << "RETURNING" << std::endl;
-			//SetIsHeadingToNest(true);
 			Returning();
 			break;
 		case SURVEYING:
@@ -206,9 +201,7 @@ void MPFA_controller::MPFA() {
 }
 
 bool MPFA_controller::IsInTargetNest() {
-	    int factor =4;
-			
-        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<factor*LoopFunctions->NestRadiusSquared) {
+        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<ClosestNest->GetNestRadiusSquared()) {
             return true;
         }
   return false;
@@ -216,7 +209,7 @@ bool MPFA_controller::IsInTargetNest() {
 
 
 bool MPFA_controller::IsInTheNest() {
-  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<4*LoopFunctions->NestRadiusSquared) {
+  if ((GetPosition() - ClosestNest->GetLocation()).SquareLength()<ClosestNest->GetNestRadiusSquared()) {
             return true;
         }
   return false;
@@ -226,7 +219,6 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
 
 	// Initialize the SiteFidelityPosition
-	//SiteFidelityPosition = LoopFunctions->NestPosition;
 SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 	// Create the output file here because it needs LoopFunctions
@@ -316,7 +308,6 @@ void MPFA_controller::Delivering(){
             if(TargetNest->GetNestIdx() == 0) //drop in the center nest
             {
 			    total_targets_collected += numHeldFood;
-                //ClosestNest->num_collected_tags++;
                 LoopFunctions->setScore(total_targets_collected);
                 LoopFunctions->currNumCollectedFood += numHeldFood;  
 		    }
@@ -367,24 +358,23 @@ void MPFA_controller::Departing()
     //LOG<<"Departing..."<<endl;
     if(ClosestNest == NULL){
 		SetClosestNest();
-		//SetDeliveringDestination();
 		
 	}
     argos::Real distanceToTarget = (GetPosition() - GetTarget()).Length();
     argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
 
-	    /*
-	    ofstream log_output_stream;
-	    log_output_stream.open("MPFA_log.txt", ios::app);
-	    log_output_stream << "Distance to target: " << distanceToTarget << endl;
-	    log_output_stream << "Current Position: " << GetPosition() << ", Target: " << GetTarget() << endl;
-	    log_output_stream.close();
-	    */
+    /*
+    ofstream log_output_stream;
+    log_output_stream.open("MPFA_log.txt", ios::app);
+    log_output_stream << "Distance to target: " << distanceToTarget << endl;
+    log_output_stream << "Current Position: " << GetPosition() << ", Target: " << GetTarget() << endl;
+    log_output_stream.close();
+    */
 
     /* When not informed, continue to travel until randomly switching to the searching state. */
     if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
-        if(isInformed == false){
-            if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && randomNumber < LoopFunctions->ProbabilityOfSwitchingToSearching){
+       if(isInformed == false){
+           if(SimulationTick()%(5*SimulationTicksPerSecond())==0 && randomNumber < LoopFunctions->ProbabilityOfSwitchingToSearching){
                 //LOG<<"Switch to search..."<<endl;
                 Stop();
                 SearchTime = 0;
@@ -577,7 +567,7 @@ void MPFA_controller::Surveying() {
 		log_output_stream << (GetHeading() - rotation ).SignedNormalize() << ", "  << SearchStepSize << ", "<< rotation << ", " <<  turn_vector << ", " << GetHeading() << ", " << survey_count << endl;
 		log_output_stream.close();
 		*/
-		
+
 		if(fabs((GetHeading() - rotation).SignedNormalize().GetValue()) < TargetAngleTolerance.GetValue()) survey_count++;
 			//else Keep trying to reach the turning angle
 	}
@@ -615,10 +605,6 @@ void MPFA_controller::Returning() {
 
         ClosestNest->visited_time_point_in_minute = (argos::Real)(SimulationTick() / SimulationTicksPerSecond())/60;
         if (isHoldingFood) { 
-	      //num_targets_collected++;
-              //ClosestNest->num_collected_tags++;
-              //LoopFunctions->currNumCollectedFood++;
-              //LoopFunctions->setScore(num_targets_collected);
 
           //drop off the food and display in the nest 
           argos::CVector2 placementPosition;
@@ -629,7 +615,14 @@ void MPFA_controller::Returning() {
               placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
      
           ClosestNest->FoodList.push_back(placementPosition);
-          	      
+          
+          if(ClosestNest->GetNestIdx() == 0) //drop in the center nest
+            {
+			    total_targets_collected ++;
+                LoopFunctions->setScore(total_targets_collected);
+                LoopFunctions->currNumCollectedFood ++;  
+		    }
+            	      
               if(poissonCDF_pLayRate > r1 && updateFidelity) {
                   TrailToShare.push_back(ClosestNest->GetLocation()); //qilu 07/26/2016
                   argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
@@ -668,15 +661,12 @@ void MPFA_controller::Returning() {
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
                 
-      //ClosestNest.FoodList = LoopFunctions->UpdateCollectedFoodList(ClosestNest.FoodList);
-		    //log_output_stream.close();
     }
     // Take a small step towards the nest so we don't overshoot by too much is we miss it
     else
     {
         if(IsAtTarget())
         {
-        //argos::LOG<<"heading to true in returning"<<endl;
         SetIsHeadingToNest(false); // Turn off error for this
         SetTarget(ClosestNest->GetLocation());
         }

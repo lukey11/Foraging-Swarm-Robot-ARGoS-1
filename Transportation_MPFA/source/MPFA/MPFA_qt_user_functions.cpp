@@ -187,7 +187,7 @@ void MPFA_qt_user_functions::DrawBranches() {
 	std::vector<vector<argos::CRay3> >    RayList;
     std::vector<argos::CRay3>    tempList;
     CRay3 targetRay;
-    size_t count=0, prev_level=0, revLevel=0;
+    size_t count=0, prev_level=0, revLevel=0, lineWidth=0;
     size_t level, pidx; 
     Real x, y, px, py;
     
@@ -224,10 +224,11 @@ void MPFA_qt_user_functions::DrawBranches() {
     
     for(size_t i = 0; i < RayList.size(); i++) 
     {   
-        revLevel = level - i;
+        lineWidth = 32/(3*i+1);
+        
         for(size_t j= 0; j<RayList[i].size(); j++)
         {
-            DrawRay(RayList[i][j], TrailColor[i], 2*revLevel*revLevel);	
+            DrawRay(RayList[i][j], TrailColor[i], lineWidth);	
 			}
 		
 	}

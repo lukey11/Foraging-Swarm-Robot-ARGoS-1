@@ -34,7 +34,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	FoodRadius(0.05),
 	FoodRadiusSquared(0.0025),
 	NestRadius(0.25),
-	NestRadiusSquared(0.0625),
+	//NestRadiusSquared(0.0625),
 	NestElevation(0.01),
     BacktrackDelivery(1),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
@@ -125,7 +125,6 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
                    parent_id = Nests[parent_id].GetParentNestIdx();
                    parentNests.push_back(&Nests[parent_id]);
                    }//end while
-               //argos::LOG<<"Nests["<<i<<"]="<<Nests[i].GetLocation()<<endl;
                Nests[i].SetParentNestIdx_no_backtrack(parentNests); 
            }//end if
          }// end if
@@ -144,11 +143,11 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     {
         revLevel = level+1 - Nests[i].GetLevel();
         Nests[i].SetDeliveryCapacity(pow(2, revLevel+1)*pow(numBranch, revLevel));
-        Nests[i].SetNestRadius(revLevel+1, NestRadius);
+        Nests[i].SetNestRadius(revLevel, NestRadius);
     }
             
 		
-    NestRadiusSquared = NestRadius*NestRadius;
+    //NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
         //Number of distributed foods
     if (FoodDistribution == 1){

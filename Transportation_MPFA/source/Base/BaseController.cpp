@@ -162,8 +162,7 @@ void BaseController::SetNextMovement() {
 		//cout << "TargetAngleTolerance: " << TargetAngleTolerance << endl;
 		//cout << "TargetDistanceTolerance: " << TargetDistanceTolerance << endl;
 
-
-		if(!IsAtTarget()) {
+        if(!IsAtTarget()) {
 			if(headingToTargetError > AngleTol) {
 				PushMovement(LEFT, -ToDegrees(headingToTargetError).GetValue());
 			} else if(headingToTargetError < -AngleTol) {
@@ -461,9 +460,10 @@ bool BaseController::IsAtTarget()
 	}
 
 	argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
-     //argos:LOG<<"IsAtTarget: TargetPosition="<<TargetPosition<< "at target="<<int(distanceToTarget < DistTol)<<endl;
-	//argos::LOG << "IsAtTarget: Distance to Target: " << distanceToTarget << endl;
-	//argos::LOG << "IsAtTarget: TargetDistanceTolerance: " << DistTol << endl;
+    //argos::LOG << "IsAtTarget: DistanceTolerance: " << DistTol << endl;
+    //argos::LOG << "IsAtTarget: Distance to Target: " << distanceToTarget << endl;
+	//argos:LOG<<"IsAtTarget: TargetPosition="<<TargetPosition<< "at target="<<int(distanceToTarget < DistTol)<<endl;
+
 
 	return (distanceToTarget < DistTol) ? (true) : (false);
 }

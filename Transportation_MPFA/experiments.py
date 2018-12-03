@@ -15,8 +15,8 @@ if __name__ == "__main__":
     #allFiles = [files1 , files2, files3]
     #runs = [160,40,10]
     #runs = [1]
-    files = ['Random_MPFA_backtracking_r2_d1_tag64_5by5.xml', 'Random_MPFA_backtracking_r16_d4_tag256_10by10.xml', 'Random_MPFA_backtracking_r72_d16_tag1024_20by20.xml', 'Random_MPFA_backtracking_r296_d64_tag4096_40by40.xml', 'Random_MPFA_backtracking_r1192_d256_tag16384_80by80.xml', 'Random_MPFA_backtracking_r16_d4_tag256_10by10.xml', 'Random_MPFA_r72_d16_tag1024_20by20.xml', 'Random_MPFA_r296_d64_tag4096_40by40.xml', 'Random_MPFA_r1192_d256_tag16384_80by80.xml']
-    run_count = 10
+    files = ['Random_MPFA_backtracking_r2_d1_tag64_5by5.xml', 'Random_MPFA_backtracking_r16_d4_tag256_10by10.xml', 'Random_MPFA_backtracking_r72_d16_tag1024_20by20.xml', 'Random_MPFA_backtracking_r296_d64_tag4096_40by40.xml', 'Random_MPFA_backtracking_r1192_d256_tag16384_80by80.xml']
+    run_count = 20
     #for (run_count, files) in zip(runs, allFiles):
     #    print "Total runs=",run_count
     for file in files:
