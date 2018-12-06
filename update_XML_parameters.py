@@ -30,11 +30,12 @@ class ProcessXML:
             for idx in range(len(parameters.keys())):
                 if  parameters.keys()[idx] != "XMLBlock":
                     if block.getAttribute(parameters.keys()[idx]) == '':
-                        #print "The attribute ", parameters.keys()[idx], " does not exist!!!!!!!!!!!!"
                         break
-                    elif idx == len(parameters.keys())-1:
-                            attrs = block
-                            count +=1
+                    else:
+                        attrs = block
+                        count +=1
+                        break
+    
         if count > 1:
             print "More than one blocks have the same attribute!!!!!!!!!!!!!!!!!!!"            
             return
@@ -94,13 +95,7 @@ def update_Visulization(sourceFile, visualValue):
     #targetFile.write(f)
     #targetFile.close()
     
-     
-    f.close()        
-    
-if __name__ == "__main__":
-    folder = raw_input('Please select a directory: ')
-    dataFile = raw_input('Please select the input file: ')
-    
+def run(folder, dataFile):
     dataFileLocation = os.path.join(folder, dataFile)
     if not os.path.isfile(dataFileLocation):
         print "The file ", dataFileLocation, " does not exist!!!!!!!!!!!!!!!!!"
@@ -126,6 +121,16 @@ if __name__ == "__main__":
                 this_run.update_XML_parameters(parameterDict)
         else:
             print fileLocation, ' does not exist!!!!!!!!!!!!!!!!!!!!'
+
+    
+if __name__ == "__main__":
+    folder = raw_input('Please select a directory: ')
+    #dataFile = raw_input('Please select the input file: ')
+    #dataFiles = ['parameters_1024tags_setting.txt', 'parameters_16384tags_setting.txt']
+    dataFiles = ['parameters_destination_noise.txt']
+    for dataFile in dataFiles:
+        run(folder, dataFile)
+    
 
 
 

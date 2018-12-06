@@ -1,0 +1,9 @@
+XMLBlock settings
+Files Random_CPFA_r72_tag1024_20by20 Random_CPFA_r296_tag1024_40by40
+FoodDistribution 0
+MaxSimTimeInSeconds 1800
+FoodItemCount 1024
+PowerlawFoodUnitCount 1024
+NumberOfClusters 16
+ClusterWidthX 8
+ClusterWidthY 8

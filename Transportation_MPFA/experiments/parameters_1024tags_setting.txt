@@ -1,0 +1,8 @@
+XMLBlock settings
+Files Random_MPFA_backtracking_r296_d64_tag1024_40by40 Random_MPFA_r296_d64_tag1024_40by40
+MaxSimTimeInSeconds 1800
+FoodItemCount 1024
+PowerlawFoodUnitCount 1024
+NumberOfClusters 16
+ClusterWidthX 8
+ClusterWidthY 8
