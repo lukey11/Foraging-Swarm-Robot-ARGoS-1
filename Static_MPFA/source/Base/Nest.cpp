@@ -51,7 +51,7 @@ void Nest::SetNestRadius(Real radius, size_t nestNum){
     {
         NestRadius = radius;
     }
-    argos::LOG<<"nest id="<<GetNestIdx()<<", NestRadius="<<NestRadius<<endl;
+    //argos::LOG<<"nest id="<<GetNestIdx()<<", NestRadius="<<NestRadius<<endl;
     NestRadiusSquared = NestRadius*NestRadius;
         
 }
