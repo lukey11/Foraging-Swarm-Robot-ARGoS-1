@@ -197,7 +197,7 @@ void MPFA_controller::MPFA() {
 }
 
 bool MPFA_controller::IsInTargetNest() {
-        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<ClosestNest->GetNestRadiusSquared()) {
+        if ((GetPosition() - TargetNest->GetLocation()).SquareLength()<TargetNest->GetNestRadiusSquared()) {
             return true;
         }
   return false;
@@ -294,10 +294,10 @@ void MPFA_controller::Delivering(){
 		argos::CVector2 placementPosition;
         for(int i =0; i < numHeldFood; i++){
             
-            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5);
           
             while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
-              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.3), TargetNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.3));
+              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5);
             }
             TargetNest->FoodList.push_back(placementPosition);
 		}
@@ -613,10 +613,10 @@ void MPFA_controller::Returning()
       //drop off the food and display in the nest 
       argos::CVector2 placementPosition;
           
-      placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
+      placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.5), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.5));
           
       while((placementPosition-ClosestNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius/2.0-LoopFunctions->FoodRadius, 2))
-          placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.1, 0), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.1, 0));
+          placementPosition.Set(ClosestNest->GetLocation().GetX()+RNG->Gaussian(0.2, 0.5), ClosestNest->GetLocation().GetY()+RNG->Gaussian(0.2, 0.5));
      
       ClosestNest->FoodList.push_back(placementPosition);
       
