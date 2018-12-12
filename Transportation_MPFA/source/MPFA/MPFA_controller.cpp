@@ -294,10 +294,10 @@ void MPFA_controller::Delivering(){
 		argos::CVector2 placementPosition;
         for(int i =0; i < numHeldFood; i++){
             
-            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5);
+            placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5));
           
             while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
-              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5);
+              placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5));
             }
             TargetNest->FoodList.push_back(placementPosition);
 		}
