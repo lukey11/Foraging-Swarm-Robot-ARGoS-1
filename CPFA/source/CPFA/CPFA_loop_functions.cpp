@@ -131,7 +131,7 @@ void CPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
-  score = 0.0;
+    score = 0;
    
     FoodList.clear();
     CollectedFoodList.clear();
@@ -191,7 +191,7 @@ bool CPFA_loop_functions::IsExperimentFinished() {
 		isFinished = true;
 	}
     //set to collected 88% food and then stop
-    if(score >= NumDistributedFood*1.0){
+    if(score >= NumDistributedFood){
 		isFinished = true;
 		}
          

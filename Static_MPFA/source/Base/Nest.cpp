@@ -45,9 +45,9 @@ void Nest::SetNestRadius(Real radius, size_t nestNum){
     
     if(GetNestIdx() == 0 && nestNum > 1)
     {
-        //NestRadius = radius * (1+log(nestNum-1)/log(4));
-        NestRadius = pow(2, 1+log(nestNum-1)/log(4)) * radius;
-	argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
+        NestRadius = radius * (1+log(nestNum-1)/log(4));
+        //NestRadius = pow(2, 1+log(nestNum-1)/log(4)) * radius;
+	//argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     }
     else
     {

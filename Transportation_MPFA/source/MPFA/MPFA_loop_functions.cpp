@@ -107,9 +107,9 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	       }
 	       else
 	       {
-	         int levelDiff = (i - numNestsInPreviousLevels)/pow(4, level+1); 	
+	         int levelDiff = (i - numNestsInPreviousLevels)/pow(4, level); 	
 	         if(levelDiff == 1){
-				 numNestsInPreviousLevels += pow(4, level+1);
+				 numNestsInPreviousLevels += pow(4, level);
 		        level++;
 	         }
 	         Nests[i].SetLevel(level);
@@ -147,7 +147,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         revLevel = level - Nests[i].GetLevel();
         argos::LOG<<"revLevel="<<revLevel<<endl;
         Nests[i].SetDeliveryCapacity(pow(2, revLevel+1)*pow(numBranch, revLevel));
-        Nests[i].SetNestRadius(revLevel, NestRadius);
+        Nests[i].SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
     }
             
 		
