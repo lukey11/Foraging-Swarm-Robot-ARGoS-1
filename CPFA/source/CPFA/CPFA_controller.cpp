@@ -176,8 +176,6 @@ void CPFA_controller::CPFA() {
 }
 
 bool CPFA_controller::IsInTheNest() {
-    argos::LOG<<"dist="<<(GetPosition() - LoopFunctions->NestPosition).SquareLength()<<endl;
-    argos::LOG<<"radius="<<LoopFunctions->NestRadiusSquared<<endl;
     
 	return ((GetPosition() - LoopFunctions->NestPosition).SquareLength()
 		< LoopFunctions->NestRadiusSquared);

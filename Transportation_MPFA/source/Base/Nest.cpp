@@ -56,7 +56,7 @@ void Nest::SetNestRadius(int level, Real radius, int backtrackFlag){
     {
         NestRadius = (level+1) * radius;
     }
-    argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
+    //argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     NestRadiusSquared = NestRadius*NestRadius;
         
 }
@@ -107,7 +107,7 @@ void Nest::SetParentNestIdx_no_backtrack(vector<Nest*> parents)
 void Nest::SetDeliveryCapacity(size_t c)
 {
     capacity = c;
-	argos::LOG<<"nest id="<<GetNestIdx()<<", capacity="<< capacity <<endl;
+	//argos::LOG<<"nest id="<<GetNestIdx()<<", capacity="<< capacity <<endl;
 	}
      
 size_t Nest::GetDeliveryCapacity()
