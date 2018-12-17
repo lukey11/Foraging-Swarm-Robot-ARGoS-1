@@ -11,8 +11,8 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
-    files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
-    #files = ['Random_CPFA_r296_tag64_40by40.xml', 'Random_CPFA_r296_tag256_40by40.xml', 'Random_CPFA_r296_tag1024_40by40.xml', 'Random_CPFA_r296_tag16384_40by40.xml' ]
+    #files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
+    files = ['Random_CPFA_r296_tag64_40by40.xml', 'Random_CPFA_r296_tag256_40by40.xml', 'Random_CPFA_r296_tag1024_40by40.xml', 'Random_CPFA_r296_tag16384_40by40.xml' ]
     run_count = 15
     for file in files:
         print file 

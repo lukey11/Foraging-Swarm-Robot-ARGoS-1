@@ -41,7 +41,7 @@
     <!-- evolvable parameters -->
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
-         <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="16384" FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" NestPosition_1="17.5, 17.5" NestPosition_10="7.9, 12.6" NestPosition_11="2.5, 17.5" NestPosition_12="2.5, 12.5" NestPosition_13="7.6, 6.9" NestPosition_14="7.5, 2.5" NestPosition_15="2.7, 7.3" NestPosition_16="3.1, 2.1" NestPosition_17="17.5, -2.2" NestPosition_18="17.5, -7.5" NestPosition_19="12.7, -2.5" NestPosition_2="17.5, 12.5" NestPosition_20="13.1, -7.7" NestPosition_21="17.5, -12.5" NestPosition_22="17.5, -17.5" NestPosition_23="13.1, -12.3" NestPosition_24="12.5, -17.5" NestPosition_25="7.5, -2.5" NestPosition_26="7.5, -6.7" NestPosition_27="3.1, -2.1" NestPosition_28="2.7, -7.3" NestPosition_29="7.9, -12.9" NestPosition_3="12.5, 17.5" NestPosition_30="7.5, -17.5" NestPosition_31="2.5, -12.5" NestPosition_32="2.5, -17.3" NestPosition_33="-2.5, 17.5" NestPosition_34="-2.5, 12.7" NestPosition_35="-7.7, 17.5" NestPosition_36="-7.5, 11.8" NestPosition_37="-2.5, 7.5" NestPosition_38="-2.3, 3.3" NestPosition_39="-7.5, 8.1" NestPosition_4="12.9, 12.3" NestPosition_40="-7.5, 2.5" NestPosition_41="-12.5, 17.5" NestPosition_42="-12.5, 13.1" NestPosition_43="-17.5, 17.5" NestPosition_44="-17.5, 12.5" NestPosition_45="-12.5, 7.0" NestPosition_46="-12.5, 2.5" NestPosition_47="-17.5, 7.5" NestPosition_48="-17.1, 2.9" NestPosition_49="-2.1, -2.9" NestPosition_5="17.5, 7.5" NestPosition_50="-2.5, -7.5" NestPosition_51="-7.0, -2.7" NestPosition_52="-7.0, -7.9" NestPosition_53="-2.5, -12.5" NestPosition_54="-2.5, -17.5" NestPosition_55="-7.1, -12.1" NestPosition_56="-7.5, -17.5" NestPosition_57="-12.5, -2.5" NestPosition_58="-12.1, -7.1" NestPosition_59="-17.5, -2.5" NestPosition_6="17.5, 2.5" NestPosition_60="-17.5, -7.5" NestPosition_61="-12.1, -12.9" NestPosition_62="-12.5, -17.5" NestPosition_63="-17.5, -12.5" NestPosition_64="-17.5, -17.5" NestPosition_7="12.9, 7.6" NestPosition_8="12.5, 2.5" NestPosition_9="7.5, 17.5" NestRadius="0.25" NumberOfClusters="64" OutputData="0" PowerlawFoodUnitCount="16384" VariableFoodPlacement="0"/>
+         <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="1024" FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" NestPosition_1="17.5, 17.5" NestPosition_10="7.9, 12.6" NestPosition_11="2.5, 17.5" NestPosition_12="2.5, 12.5" NestPosition_13="7.6, 6.9" NestPosition_14="7.5, 2.5" NestPosition_15="2.7, 7.3" NestPosition_16="3.1, 2.1" NestPosition_17="17.5, -2.2" NestPosition_18="17.5, -7.5" NestPosition_19="12.7, -2.5" NestPosition_2="17.5, 12.5" NestPosition_20="13.1, -7.7" NestPosition_21="17.5, -12.5" NestPosition_22="17.5, -17.5" NestPosition_23="13.1, -12.3" NestPosition_24="12.5, -17.5" NestPosition_25="7.5, -2.5" NestPosition_26="7.5, -6.7" NestPosition_27="3.1, -2.1" NestPosition_28="2.7, -7.3" NestPosition_29="7.9, -12.9" NestPosition_3="12.5, 17.5" NestPosition_30="7.5, -17.5" NestPosition_31="2.5, -12.5" NestPosition_32="2.5, -17.3" NestPosition_33="-2.5, 17.5" NestPosition_34="-2.5, 12.7" NestPosition_35="-7.7, 17.5" NestPosition_36="-7.5, 11.8" NestPosition_37="-2.5, 7.5" NestPosition_38="-2.3, 3.3" NestPosition_39="-7.5, 8.1" NestPosition_4="12.9, 12.3" NestPosition_40="-7.5, 2.5" NestPosition_41="-12.5, 17.5" NestPosition_42="-12.5, 13.1" NestPosition_43="-17.5, 17.5" NestPosition_44="-17.5, 12.5" NestPosition_45="-12.5, 7.0" NestPosition_46="-12.5, 2.5" NestPosition_47="-17.5, 7.5" NestPosition_48="-17.1, 2.9" NestPosition_49="-2.1, -2.9" NestPosition_5="17.5, 7.5" NestPosition_50="-2.5, -7.5" NestPosition_51="-7.0, -2.7" NestPosition_52="-7.0, -7.9" NestPosition_53="-2.5, -12.5" NestPosition_54="-2.5, -17.5" NestPosition_55="-7.1, -12.1" NestPosition_56="-7.5, -17.5" NestPosition_57="-12.5, -2.5" NestPosition_58="-12.1, -7.1" NestPosition_59="-17.5, -2.5" NestPosition_6="17.5, 2.5" NestPosition_60="-17.5, -7.5" NestPosition_61="-12.1, -12.9" NestPosition_62="-12.5, -17.5" NestPosition_63="-17.5, -12.5" NestPosition_64="-17.5, -17.5" NestPosition_7="12.9, 7.6" NestPosition_8="12.5, 2.5" NestPosition_9="7.5, 17.5" NestRadius="0.25" NumberOfClusters="16" OutputData="0" PowerlawFoodUnitCount="1024" VariableFoodPlacement="0"/>
 
   </loop_functions>
 
@@ -78,7 +78,7 @@
 <distribute>
 <position center="10.0, 10.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F0">
 <controller config="MPFA"/>
 </foot-bot>
@@ -89,7 +89,7 @@
 <distribute>
 <position center="10.0, -10.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F1">
 <controller config="MPFA"/>
 </foot-bot>
@@ -99,7 +99,7 @@
 <distribute>
 <position center="-10.0, 10.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F2">
 <controller config="MPFA"/>
 </foot-bot>
@@ -110,7 +110,7 @@
 <distribute>
 <position center="-10.0, -10.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F3">
 <controller config="MPFA"/>
 </foot-bot>
@@ -121,7 +121,7 @@
 <distribute>
 <position center="15.0, 15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F4">
 <controller config="MPFA"/>
 </foot-bot>
@@ -132,7 +132,7 @@
 <distribute>
 <position center="15.0, 5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F5">
 <controller config="MPFA"/>
 </foot-bot>
@@ -143,7 +143,7 @@
 <distribute>
 <position center="15.0, -5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F6">
 <controller config="MPFA"/>
 </foot-bot>
@@ -153,7 +153,7 @@
 <distribute>
 <position center="15.0, -15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F7">
 <controller config="MPFA"/>
 </foot-bot>
@@ -163,7 +163,7 @@
 <distribute>
 <position center="5.0, 15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F8">
 <controller config="MPFA"/>
 </foot-bot>
@@ -173,7 +173,7 @@
 <distribute>
 <position center="5.0, 5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F9">
 <controller config="MPFA"/>
 </foot-bot>
@@ -183,7 +183,7 @@
 <distribute>
 <position center="5.0, -5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F10">
 <controller config="MPFA"/>
 </foot-bot>
@@ -193,7 +193,7 @@
 <distribute>
 <position center="5.0, -15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F11">
 <controller config="MPFA"/>
 </foot-bot>
@@ -203,7 +203,7 @@
 <distribute>
 <position center="-5.0, 15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F12">
 <controller config="MPFA"/>
 </foot-bot>
@@ -213,7 +213,7 @@
 <distribute>
 <position center="-5.0, 5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F13">
 <controller config="MPFA"/>
 </foot-bot>
@@ -223,7 +223,7 @@
 <distribute>
 <position center="-5.0, -5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F14">
 <controller config="MPFA"/>
 </foot-bot>
@@ -233,7 +233,7 @@
 <distribute>
 <position center="-5.0, -15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F15">
 <controller config="MPFA"/>
 </foot-bot>
@@ -243,7 +243,7 @@
 <distribute>
 <position center="-15.0, 15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F16">
 <controller config="MPFA"/>
 </foot-bot>
@@ -253,7 +253,7 @@
 <distribute>
 <position center="-15.0, 5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F17">
 <controller config="MPFA"/>
 </foot-bot>
@@ -263,7 +263,7 @@
 <distribute>
 <position center="-15.0, -5.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F18">
 <controller config="MPFA"/>
 </foot-bot>
@@ -273,7 +273,7 @@
 <distribute>
 <position center="-15.0, -15.0, 0.0" distances="0.5, 0.5, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="F19">
 <controller config="MPFA"/>
 </foot-bot>
@@ -292,9 +292,9 @@
 </distribute>
 
 <distribute>
-<position center="17.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D20">
 <controller config="MPFA"/>
 </foot-bot>
@@ -311,9 +311,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D21">
 <controller config="MPFA"/>
 </foot-bot>
@@ -329,9 +329,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D22">
 <controller config="MPFA"/>
 </foot-bot>
@@ -347,9 +347,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D23">
 <controller config="MPFA"/>
 </foot-bot>
@@ -365,9 +365,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D24">
 <controller config="MPFA"/>
 </foot-bot>
@@ -383,9 +383,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D25">
 <controller config="MPFA"/>
 </foot-bot>
@@ -401,9 +401,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D26">
 <controller config="MPFA"/>
 </foot-bot>
@@ -419,9 +419,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D27">
 <controller config="MPFA"/>
 </foot-bot>
@@ -437,9 +437,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D28">
 <controller config="MPFA"/>
 </foot-bot>
@@ -455,9 +455,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D29">
 <controller config="MPFA"/>
 </foot-bot>
@@ -473,9 +473,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D30">
 <controller config="MPFA"/>
 </foot-bot>
@@ -491,9 +491,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D31">
 <controller config="MPFA"/>
 </foot-bot>
@@ -509,9 +509,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D32">
 <controller config="MPFA"/>
 </foot-bot>
@@ -527,9 +527,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D33">
 <controller config="MPFA"/>
 </foot-bot>
@@ -545,9 +545,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D34">
 <controller config="MPFA"/>
 </foot-bot>
@@ -563,9 +563,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D35">
 <controller config="MPFA"/>
 </foot-bot>
@@ -581,9 +581,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D36">
 <controller config="MPFA"/>
 </foot-bot>
@@ -599,9 +599,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D37">
 <controller config="MPFA"/>
 </foot-bot>
@@ -617,9 +617,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D38">
 <controller config="MPFA"/>
 </foot-bot>
@@ -635,9 +635,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D39">
 <controller config="MPFA"/>
 </foot-bot>
@@ -653,9 +653,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D40">
 <controller config="MPFA"/>
 </foot-bot>
@@ -671,9 +671,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D41">
 <controller config="MPFA"/>
 </foot-bot>
@@ -689,9 +689,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D42">
 <controller config="MPFA"/>
 </foot-bot>
@@ -707,9 +707,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D43">
 <controller config="MPFA"/>
 </foot-bot>
@@ -725,9 +725,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D44">
 <controller config="MPFA"/>
 </foot-bot>
@@ -743,9 +743,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D45">
 <controller config="MPFA"/>
 </foot-bot>
@@ -761,9 +761,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D46">
 <controller config="MPFA"/>
 </foot-bot>
@@ -779,9 +779,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D47">
 <controller config="MPFA"/>
 </foot-bot>
@@ -797,9 +797,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D48">
 <controller config="MPFA"/>
 </foot-bot>
@@ -815,9 +815,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D49">
 <controller config="MPFA"/>
 </foot-bot>
@@ -833,9 +833,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D50">
 <controller config="MPFA"/>
 </foot-bot>
@@ -851,9 +851,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D51">
 <controller config="MPFA"/>
 </foot-bot>
@@ -869,9 +869,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D52">
 <controller config="MPFA"/>
 </foot-bot>
@@ -887,9 +887,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D53">
 <controller config="MPFA"/>
 </foot-bot>
@@ -905,9 +905,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D54">
 <controller config="MPFA"/>
 </foot-bot>
@@ -923,9 +923,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D55">
 <controller config="MPFA"/>
 </foot-bot>
@@ -941,9 +941,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D56">
 <controller config="MPFA"/>
 </foot-bot>
@@ -959,9 +959,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D57">
 <controller config="MPFA"/>
 </foot-bot>
@@ -977,9 +977,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D58">
 <controller config="MPFA"/>
 </foot-bot>
@@ -995,9 +995,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D59">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1013,9 +1013,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D60">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1031,9 +1031,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D61">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1049,9 +1049,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D62">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1067,9 +1067,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D63">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1085,9 +1085,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D64">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1103,9 +1103,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D65">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1121,9 +1121,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D66">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1139,9 +1139,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D67">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1157,9 +1157,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D68">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1175,9 +1175,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D69">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1193,9 +1193,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D70">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1211,9 +1211,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D71">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1229,9 +1229,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D72">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1247,9 +1247,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D73">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1265,9 +1265,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D74">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1283,9 +1283,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D75">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1301,9 +1301,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, 18.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D76">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1319,9 +1319,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, 13.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D77">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1337,9 +1337,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, 8.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D78">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1355,9 +1355,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, 3.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D79">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1373,9 +1373,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, -2.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D80">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1391,9 +1391,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, -7.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D81">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1409,9 +1409,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, -12.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D82">
 <controller config="MPFA"/>
 </foot-bot>
@@ -1427,9 +1427,9 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, -17.0, 0.0" distances="0.4, 0.4, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D83">
 <controller config="MPFA"/>
 </foot-bot>
