@@ -555,8 +555,19 @@ void CPFA_controller::Returning() {
         if(IsAtTarget())
         {
         //argos::LOG<<"heading to true in returning"<<endl;
-        SetIsHeadingToNest(false); // Turn off error for this
-        SetTarget(LoopFunctions->NestPosition);
+        //SetIsHeadingToNest(false); // Turn off error for this
+        //SetTarget(LoopFunctions->NestPosition);
+        //randomly search for the nest
+        argos::Real USCV = LoopFunctions->UninformedSearchVariation.GetValue();
+        argos::Real rand = RNG->Gaussian(USCV);
+
+        argos::CRadians rotation(rand);
+        argos::CRadians angle1(rotation);
+        argos::CRadians angle2(GetHeading());
+        argos::CRadians turn_angle(angle1 + angle2);
+        argos::CVector2 turn_vector(SearchStepSize, turn_angle);
+        SetIsHeadingToNest(false);
+        SetTarget(turn_vector + GetPosition());
         }
     }		
 }

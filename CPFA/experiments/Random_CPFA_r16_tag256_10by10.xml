@@ -29,7 +29,7 @@
 
       <params>
 
-        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05"/>
+        <settings DestinationNoiseStdev="10.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05"/>
       </params>
 
     </CPFA_controller>

@@ -98,6 +98,8 @@ void BaseController::SetTarget(argos::CVector2 t) {
 	//argos::LOG << "y:" << y << std::endl;
 
 	if (!heading_to_nest) {
+    //if(!heading_to_nest && GetId().compare(0, 1, "D")!=0){
+        //argos::LOG<<"GetId()="<<GetId()<<endl;
 		argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
 		argos::Real noise_x = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
 		argos::Real noise_y = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);

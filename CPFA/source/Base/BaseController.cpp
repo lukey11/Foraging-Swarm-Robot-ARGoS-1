@@ -99,7 +99,6 @@ void BaseController::SetTarget(argos::CVector2 t) {
 		argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
 		argos::Real noise_x = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
 		argos::Real noise_y = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
-		
 		x += noise_x;
 		y += noise_y;
 
