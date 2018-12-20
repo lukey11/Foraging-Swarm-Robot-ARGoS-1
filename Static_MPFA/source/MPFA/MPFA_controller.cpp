@@ -300,10 +300,10 @@ void MPFA_controller::Delivering(){
             while((placementPosition-TargetNest->GetLocation()).SquareLength()>pow(LoopFunctions->NestRadius-LoopFunctions->FoodRadius, 2)){
               placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5));
             }
-            if(TargetNest->FoodList.size() <= 300 || TargetNest->GetNestIdx()!=0) //do not display targets more than 300 in the center nest. This is just for reducing the cost of memmory
-            {
+            //if(TargetNest->FoodList.size() <= 300 || TargetNest->GetNestIdx()!=0) //do not display targets more than 300 in the center nest. This is just for reducing the cost of memmory
+            //{
             TargetNest->FoodList.push_back(placementPosition);
-            }
+            //}
 		}
             if(TargetNest->GetNestIdx() == 0) //drop in the center nest
             {

@@ -305,8 +305,6 @@ void MPFA_loop_functions::PostExperiment() {
         //for(size_t i=1; i< ForageList.size(); i++) forageDataOutput<<", "<<ForageList[i];
         for(size_t i=0; i< Nests.size(); i++) forageDataOutput<<Nests[i].FoodList.size()<<" ";
         forageDataOutput<<"\n";
-
-	forageDataOutput<<"\n";
         forageDataOutput.close();
         Nests.clear();
       }  
