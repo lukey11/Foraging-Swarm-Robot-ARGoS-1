@@ -301,9 +301,12 @@ void MPFA_loop_functions::PostExperiment() {
         dataOutput.close();
     
         ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
-        if(ForageList.size()!=0) forageDataOutput<<"Forage: "<< ForageList[0];
-        for(size_t i=1; i< ForageList.size(); i++) forageDataOutput<<", "<<ForageList[i];
+        //if(ForageList.size()!=0) forageDataOutput<<"Forage: "<< ForageList[0];
+        //for(size_t i=1; i< ForageList.size(); i++) forageDataOutput<<", "<<ForageList[i];
+        for(size_t i=0; i< Nests.size(); i++) forageDataOutput<<Nests[i].FoodList.size()<<" ";
         forageDataOutput<<"\n";
+
+	forageDataOutput<<"\n";
         forageDataOutput.close();
         Nests.clear();
       }  
