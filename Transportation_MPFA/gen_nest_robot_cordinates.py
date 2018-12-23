@@ -29,12 +29,17 @@ for k in gaps:
   results.append(sub_gen_coord(max_x, min_x, k))
 
 
-coord_info =open("coord.xml", "w")
+coord_info =open("coord_for_worldFile.xml", "w")
+coord_info_text = open("coord.xml", "w")
 count =1;
 for coords in results:
     for xy in coords:
         coord_info.write("NestPosition_" + str(count) +"=\"" + str(xy[0]) + ", " + str(xy[1])+"\"\n") 
+        coord_info_text.write(str(xy[0]) + " " + str(xy[1])+"\n") 
         count += 1  
+
+coord_info_text.close()
+
 
 # there is only delivering robots
 count =0;

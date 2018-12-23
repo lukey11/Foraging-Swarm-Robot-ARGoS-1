@@ -13,7 +13,9 @@ if __name__ == "__main__":
     #files = ['Random_MPFA_r2_d1_tag64_5by5.xml', 'Random_MPFA_r16_d4_tag256_10by10.xml', 'Random_MPFA_r72_d16_tag1024_20by20.xml', 'Random_MPFA_r296_d64_tag4096_40by40.xml']
     #files = ['Random_MPFA_r1192_d256_tag16384_80by80.xml']
     #files = ['Random_MPFA_backtracking_r16_d4_tag256_10by10.xml', 'Random_MPFA_backtracking_r72_d16_tag1024_20by20.xml', 'Random_MPFA_backtracking_r296_d64_tag4096_40by40.xml', 'Random_MPFA_backtracking_r1192_d256_tag16384_80by80.xml']
-    files = ['Random_MPFA_r296_d64_tag64_40by40.xml', 'Random_MPFA_r296_d64_tag256_40by40.xml', 'Random_MPFA_r296_d64_tag1024_40by40.xml', 'Random_MPFA_r296_d64_tag16384_40by40.xml']
+    #files = ['Random_MPFA_r296_d64_tag64_40by40.xml', 'Random_MPFA_r296_d64_tag256_40by40.xml', 'Random_MPFA_r296_d64_tag1024_40by40.xml', 'Random_MPFA_r296_d64_tag16384_40by40.xml']
+    files = ['Random_MPFA_backtracking_r24_d4_tag256_10by10.xml', 'Random_MPFA_backtracking_r104_d16_tag1024_20by20.xml', 'Random_MPFA_backtracking_r424_d64_tag4096_40by40.xml', 'Random_MPFA_backtracking_r1704_d256_tag16384_80by80.xml']
+    
     run_count = 15
     #for (run_count, files) in zip(runs, allFiles):
     #    print "Total runs=",run_count

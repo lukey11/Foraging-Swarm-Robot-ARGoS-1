@@ -146,7 +146,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         //argos::LOG<<"Nests["<<i<<"] level="<<Nests[i].GetLevel()<<endl;
         revLevel = level - Nests[i].GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
-        Nests[i].SetDeliveryCapacity(pow(2, revLevel+1)*pow(numBranch, revLevel));
+        Nests[i].SetDeliveryCapacity(2*pow(2, revLevel+1)*pow(numBranch, revLevel));//initial capacity is 4
         Nests[i].SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
     }
             
