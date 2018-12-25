@@ -9,8 +9,8 @@ def sub_gen_coord(max_x,min_x, k):
     x1 = max_x - k/2.0
     y1 = max_y - k/2.0
     coordinates =[]
-    for i in range((max_x - min_x)/k):
-        for j in range((max_x - min_x)/k):
+    for i in range(int(max_x - min_x)/k):
+        for j in range(int(max_x - min_x)/k):
             x = x1 -k*i  
             y = y1 -k*j
             coordinates.append([x, y])
@@ -18,11 +18,11 @@ def sub_gen_coord(max_x,min_x, k):
     return coordinates
 
 
-max_x, max_y = 40,  40;
-min_x, min_y = -40, -40;
+max_x, max_y = 12.5,  12.5;
+min_x, min_y = -12.5, -12.5;
 
 
-gaps = [40, 20, 10, 5]
+gaps = [5]
 results=[]
 for k in gaps:
   print k
@@ -43,56 +43,86 @@ coord_info_text.close()
 
 # there is only delivering robots
 count =0;
+
 for coords in results[:-1]:
     for xy in coords:
-	
 	coord_info.write("<distribute>\n")
-	coord_info.write("<position method=\"grid\"\n")
-	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1])+ ", 0.0\"\n")
-	coord_info.write("distances=\"0.4, 0.4, 0.0\"\n")
-	coord_info.write("layout=\"2, 1, 1\" />\n")
-	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
-	coord_info.write("<entity quantity=\"2\" max_trials=\"100\">\n")
-	coord_info.write("<foot-bot id=\"D" + str(count) + "\">\n")
-	coord_info.write("<controller config=\"MPFA\"/>\n")
-	coord_info.write("</foot-bot>\n")
-	coord_info.write("</entity>\n")
-	coord_info.write("</distribute>\n\n")
-	count += 1  
+        coord_info.write("<position max=\"" + str(xy[0]+0.5)+ ", " + str(xy[1]+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.5)+ ", " + str(xy[1]-0.5) + ", 0.0\"/>\n")
+        coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
+        coord_info.write("<entity max_trials=\"100\" quantity=\"2\">\n")
+        coord_info.write("<foot-bot id=\"D" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+        coord_info.write("</entity>\n")
+        coord_info.write("</distribute>\n\n")
+        count += 1  
 
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
-	coord_info.write("<distribute>\n")
-	coord_info.write("<position method=\"grid\"\n")
-	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1])+ ", 0.0\"\n")
-	coord_info.write("distances=\"0.4, 0.4, 0.0\"\n")
-	coord_info.write("layout=\"2, 1, 1\" />\n")
-	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
-	coord_info.write("<entity quantity=\"2\" max_trials=\"100\">\n")
-	coord_info.write("<foot-bot id=\"F" + str(count) + "\">\n")
-	coord_info.write("<controller config=\"MPFA\"/>\n")
-	coord_info.write("</foot-bot>\n")
-	coord_info.write("</entity>\n")
-	coord_info.write("</distribute>\n\n")
-	
-	
-	coord_info.write("<distribute>\n")
-	coord_info.write("<position method=\"grid\"\n")
-	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1]+0.5)+ ", 0.0\"\n")
-	coord_info.write("distances=\"0.4, 0.4, 0.0\"\n")
-	coord_info.write("layout=\"2, 1, 1\" />\n")
-	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
-	coord_info.write("<entity quantity=\"2\" max_trials=\"100\">\n")
-	coord_info.write("<foot-bot id=\"D" + str(count) + "\">\n")
-	coord_info.write("<controller config=\"MPFA\"/>\n")
-	coord_info.write("</foot-bot>\n")
-	coord_info.write("</entity>\n")
-	coord_info.write("</distribute>\n\n")
-	count += 1  
+    coord_info.write("<distribute>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+0.5)+ ", " + str(xy[1]+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.5)+ ", " + str(xy[1]-0.5) + ", 0.0\"/>\n")
+    coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
+    coord_info.write("<entity max_trials=\"100\" quantity=\"4\">\n")
+    coord_info.write("<foot-bot id=\"F" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+    coord_info.write("</entity>\n")
+    coord_info.write("</distribute>\n\n")
+    
+    coord_info.write("<distribute>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+0.5)+ ", " + str(xy[1]+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.5)+ ", " + str(xy[1]-0.5) + ", 0.0\"/>\n")
+    coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
+    coord_info.write("<entity max_trials=\"100\" quantity=\"2\">\n")
+    coord_info.write("<foot-bot id=\"D" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+    coord_info.write("</entity>\n")
+    coord_info.write("</distribute>\n\n")
+    count += 1  
 
 coord_info.close() 
 
 
 
+#for coords in results[:-1]:
+#    for xy in coords:
+	
+#	coord_info.write("<distribute>\n")
+#	coord_info.write("<position method=\"grid\"\n")
+#	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1])+ ", 0.0\"\n")
+#	coord_info.write("distances=\"0.3, 0.3, 0.0\"\n")
+#	coord_info.write("layout=\"2, 1, 1\" />\n")
+#	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
+#	coord_info.write("<entity quantity=\"2\" max_trials=\"100\">\n")
+#	coord_info.write("<foot-bot id=\"D" + str(count) + "\">\n")
+#	coord_info.write("<controller config=\"MPFA\"/>\n")
+#	coord_info.write("</foot-bot>\n")
+#	coord_info.write("</entity>\n")
+#	coord_info.write("</distribute>\n\n")
+#	count += 1  
+
+## there are foraging and delivering robots in each region
+#for xy in results[-1]:
+#	coord_info.write("<distribute>\n")
+#	coord_info.write("<position method=\"grid\"\n")
+#	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1])+ ", 0.0\"\n")
+#	coord_info.write("distances=\"0.3, 0.3, 0.0\"\n")
+#	coord_info.write("layout=\"2, 2, 1\" />\n")
+#	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
+#	coord_info.write("<entity quantity=\"4\" max_trials=\"100\">\n")
+#	coord_info.write("<foot-bot id=\"F" + str(count) + "\">\n")
+#	coord_info.write("<controller config=\"MPFA\"/>\n")
+#	coord_info.write("</foot-bot>\n")
+#	coord_info.write("</entity>\n")
+#	coord_info.write("</distribute>\n\n")
+	
+	
+#	coord_info.write("<distribute>\n")
+#	coord_info.write("<position method=\"grid\"\n")
+#	coord_info.write("center=\"" + str(xy[0])+ ", " + str(xy[1]+0.5)+ ", 0.0\"\n")
+#	coord_info.write("distances=\"0.3, 0.3, 0.0\"\n")
+#	coord_info.write("layout=\"2, 1, 1\" />\n")
+#	coord_info.write("<orientation method=\"constant\" values=\"0.0, 0.0, 0.0\"/>\n")
+#	coord_info.write("<entity quantity=\"2\" max_trials=\"100\">\n")
+#	coord_info.write("<foot-bot id=\"D" + str(count) + "\">\n")
+#	coord_info.write("<controller config=\"MPFA\"/>\n")
+#	coord_info.write("</foot-bot>\n")
+#	coord_info.write("</entity>\n")
+#	coord_info.write("</distribute>\n\n")
+#	count += 1  
     
 

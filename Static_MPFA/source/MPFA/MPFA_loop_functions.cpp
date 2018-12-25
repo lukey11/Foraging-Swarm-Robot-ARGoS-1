@@ -80,6 +80,18 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
  argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
+    
+    // calculate the forage range and compensate for the robot's radius of 0.085m
+	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
+	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
+	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
+	ForageRangeX.Set(-rangeX, rangeX);
+	ForageRangeY.Set(-rangeY, rangeY);
+
+    ArenaWidth = ArenaSize[0];
+    
+    
+    
     string PosStrRegionNest;
     size_t numNestsInPreviousLevels =0, level=-1; 
         
@@ -95,19 +107,23 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          }// end if
      }//end for
      
+     size_t regionWidth = ArenaWidth/sqrt((Nests.size()-1));
+     //argos::LOG<<"regionWidth="<<regionWidth<<endl;
+     
     //set capacity for delivery robots
     Real distance;
-    int capacity; 
+    int capacity, total_capacity=0; 
     for(int i=0; i < Nests.size(); i++)
     {
         distance = sqrt(Nests[i].GetLocation().SquareLength());
-        capacity = 4*round(distance/sqrt(12.5));// is the diagonal distance of a region
+        capacity = 4*round(distance/sqrt(2*(pow(regionWidth/2.0, 2))));// is the diagonal distance of a region
         Nests[i].SetDeliveryCapacity(capacity);
+        total_capacity += capacity;
         //argos::LOG<<"distance="<<distance<<endl;
-        //argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
-	Nests[i].SetNestRadius(NestRadius, Nests.size());
+        argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
+	    Nests[i].SetNestRadius(NestRadius, Nests.size());
     }
-            
+    argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 		
     //NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
@@ -119,14 +135,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         NumDistributedFood = FoodItemCount;  
     }
 
-	// calculate the forage range and compensate for the robot's radius of 0.085m
-	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
-	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
-	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
-	ForageRangeX.Set(-rangeX, rangeX);
-	ForageRangeY.Set(-rangeY, rangeY);
-
-    ArenaWidth = ArenaSize[0];
+	
 	   // Send a pointer to this loop functions object to each controller.
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
