@@ -19,7 +19,7 @@ def sub_gen_coord(max_x,min_x, k):
 
 arena_width = 81
 
-max_x, max_y = arena_width/2,  arena_width/2;
+max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 gaps = [9]
@@ -59,7 +59,7 @@ for coords in results[:-1]:
         total_robot += quantity
 	    
         coord_info.write("<distribute>\n")
-        coord_info.write("<position max=\"" + str(xy[0]+0.08*quantity)+ ", " + str(xy[1]+0.08*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\"/>\n")
+        coord_info.write("<position max=\"" + str(xy[0]+0.07*quantity)+ ", " + str(xy[1]+0.07*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.05*quantity)+ ", " + str(xy[1]-0.05*quantity) + ", 0.0\"/>\n")
         coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
         coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
         coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
@@ -89,7 +89,7 @@ for xy in results[-1]:
     total_robot += quantity
     
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0]+0.08*quantity)+ ", " + str(xy[1]+0.08*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+0.07*quantity)+ ", " + str(xy[1]+0.07*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.05*quantity)+ ", " + str(xy[1]-0.05*quantity) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
     coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
