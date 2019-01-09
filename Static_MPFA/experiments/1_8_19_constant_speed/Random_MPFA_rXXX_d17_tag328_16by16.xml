@@ -368,7 +368,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="328
   <!-- ****************** -->
 
 
- <visualization>
+<!-- <visualization>
 
 <qt-opengl>
       <camera>

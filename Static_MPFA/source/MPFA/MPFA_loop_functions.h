@@ -91,7 +91,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		size_t ClusterWidthX;
 		size_t ClusterWidthY;
                 size_t PowerRank;
-        size_t ArenaWidth;
+        float ArenaWidth;
   size_t SimTime; //qilu 09/13/2016
   Real curr_time_in_minutes; //qilu 09/13/2016
   Real last_time_in_minutes; //qilu 09/13/2016
