@@ -5,6 +5,7 @@
 #include <source/Base/Pheromone.h>
 #include <source/Base/Nest.h> //qilu 09/06
 #include <source/MPFA/MPFA_loop_functions.h>
+#include <argos3/core/simulator/entity/floor_entity.h>
 /* Definition of the LEDs actuator */
 #include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 

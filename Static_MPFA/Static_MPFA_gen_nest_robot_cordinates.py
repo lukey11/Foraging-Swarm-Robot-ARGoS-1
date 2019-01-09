@@ -17,12 +17,12 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 81
+arena_width = 64
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
-gaps = [9]
+gaps = [8]
 results=[]
 for k in gaps:
   print k
@@ -46,7 +46,7 @@ count =0;
 
 total_robot=0
 
-num_Drobot = 5
+num_Drobot = 4
 unit = np.sqrt(2*((gaps[-1]/2.0)**2))
 for coords in results[:-1]:
     for xy in coords:
@@ -59,7 +59,7 @@ for coords in results[:-1]:
         total_robot += quantity
 	    
         coord_info.write("<distribute>\n")
-        coord_info.write("<position max=\"" + str(xy[0]+0.07*quantity)+ ", " + str(xy[1]+0.07*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.05*quantity)+ ", " + str(xy[1]-0.05*quantity) + ", 0.0\"/>\n")
+        coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/4.0)+ ", " + str(xy[1]+gaps[-1]/4.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/4.0)+ ", " + str(xy[1]-gaps[-1]/4.0) + ", 0.0\"/>\n")
         coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
         coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
         coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
@@ -89,7 +89,7 @@ for xy in results[-1]:
     total_robot += quantity
     
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0]+0.07*quantity)+ ", " + str(xy[1]+0.07*quantity) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.05*quantity)+ ", " + str(xy[1]-0.05*quantity) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/4.0)+ ", " + str(xy[1]+gaps[-1]/4.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/4.0)+ ", " + str(xy[1]-gaps[-1]/4.0) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
     coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")

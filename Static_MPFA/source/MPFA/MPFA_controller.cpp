@@ -38,7 +38,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings, "TargetAngleTolerance",    TargetAngleTolerance);
 	argos::GetNodeAttribute(settings, "SearchStepSize",          SearchStepSize);
 	argos::GetNodeAttribute(settings, "RobotForwardSpeed",       RobotForwardSpeed);
-	argos::GetNodeAttribute(settings, "RobotRotationSpeed",      RobotRotationSpeed);
+    argos::GetNodeAttribute(settings, "RobotRotationSpeed",      RobotRotationSpeed);
 	argos::GetNodeAttribute(settings, "ResultsDirectoryPath",      results_path);
 	argos::GetNodeAttribute(settings, "DestinationNoiseStdev",      DestinationNoiseStdev);
 	argos::GetNodeAttribute(settings, "PositionNoiseStdev",      PositionNoiseStdev);
@@ -66,6 +66,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
     {
 		m_pcLEDs->SetAllColors(CColor::GREEN);
 		}
+
 }
 
 void MPFA_controller::ControlStep() {
@@ -217,6 +218,12 @@ bool MPFA_controller::IsInTheNest() {
 
 void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
+    argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
+    if(lf->VaryForwardSpeedFlag == 1)
+    {
+        RobotForwardSpeed *= pow((lf->ArenaWidth/4.0), 1/3.0);
+        argos::LOG<<"RobotForwardSpeed="<<RobotForwardSpeed<<endl;
+        }
 
 	// Initialize the SiteFidelityPosition
 SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
@@ -323,7 +330,7 @@ void MPFA_controller::Delivering(){
             y = ClosestNest->GetNestRadius()*randomNumberY;
             //argos::LOG<<"closest randomNumber="<<x<< ", "<< y <<endl;
             SetTarget(ClosestNest->GetLocation()+argos::CVector2(x, y)); //minor shift for mitigating congestions at the same location
-            argos::LOG<<"ClosestNest="<<ClosestNest->GetLocation()<<endl;
+            //argos::LOG<<"ClosestNest="<<ClosestNest->GetLocation()<<endl;
             MPFA_state = DEPOT_RETURNING;  
             numHeldFood = 0;   
         }
