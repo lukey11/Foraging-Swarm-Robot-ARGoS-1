@@ -141,6 +141,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     if (Nests.size() == 1) level =0;
     //argos::LOG<<"level="<<level<<endl;
     
+    ostringstream arena_width_str;
+    arena_width_str << GetSpace().GetArenaSize()[0];
+         
+    string header = "./results/MPFA_transport_" +arena_width_str.str()+"by"+arena_width_str.str()+"_";
+    
+    ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
+    
     for(int i=0; i < Nests.size(); i++)
     {
         //argos::LOG<<"Nests["<<i<<"] level="<<Nests[i].GetLevel()<<endl;
@@ -148,9 +155,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         //argos::LOG<<"revLevel="<<revLevel<<endl;
         Nests[i].SetDeliveryCapacity(2*pow(2, revLevel+1)*pow(numBranch, revLevel));//initial capacity is 4
         Nests[i].SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
+        
+        CapacityDataOutput<<Nests[i].GetDeliveryCapacity()<<" ";
     }
             
-		
+	CapacityDataOutput<<"\n";
+    CapacityDataOutput.close();
+        
+        	
     //NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
         //Number of distributed foods
@@ -312,7 +324,6 @@ void MPFA_loop_functions::PostExperiment() {
         Real total_search_time=0;
         ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
         */
-        
         
         argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
          

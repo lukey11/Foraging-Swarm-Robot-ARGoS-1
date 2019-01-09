@@ -313,7 +313,13 @@ void MPFA_controller::Delivering(){
             SetIsHeadingToNest(true);
 	        //argos::CVector3 p = GetStartPosition();
 	        //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
-            SetTarget(ClosestNest->GetLocation());
+            argos::Real randomNumberX = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
+            argos::Real randomNumberY = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
+            argos::Real x, y;
+            x = ClosestNest->GetNestRadius()*randomNumberX;
+            y = ClosestNest->GetNestRadius()*randomNumberY;
+            //argos::LOG<<"closest randomNumber="<<x<< ", "<< y <<endl;
+            SetTarget(ClosestNest->GetLocation()+argos::CVector2(x, y)); //minor shift for mitigating congestions at the same location
             MPFA_state = DEPOT_RETURNING;  
             numHeldFood = 0;   
         }
@@ -337,7 +343,14 @@ void MPFA_controller::Idling()
 		isHoldingFood = true;
 		numHeldFood = packSize;
 		SetIsHeadingToNest(true);
-	    SetTarget(TargetNest->GetLocation());
+        argos::Real randomNumberX = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
+        argos::Real randomNumberY = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
+        argos::Real x, y;
+        x = TargetNest->GetNestRadius()*randomNumberX;
+        y = TargetNest->GetNestRadius()*randomNumberY;
+        
+        //argos::LOG<<"target randomNumber="<<x<< ", "<< y <<endl;
+        SetTarget(TargetNest->GetLocation()+argos::CVector2(x, y));
 	    MPFA_state = DEPOT_DELIVERING;	        
 	}	
 }
@@ -761,10 +774,10 @@ void MPFA_controller::SetHoldingFood() {
 				   startTime = SimulationTick();//qilu 10/22
 				   //distribute a new food 
 			         argos::CVector2 placementPosition;
-			         placementPosition.Set(LoopFunctions->FoodList[i].GetX()+RNG->Gaussian(0.25, 0.5), LoopFunctions->FoodList[i].GetY()+RNG->Gaussian(0.25, 0.5));
+			         placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 			          
 			         while(LoopFunctions->IsOutOfBounds(placementPosition, 1, 1)){
-			            placementPosition.Set(GetPosition().GetX()+RNG->Gaussian(0.25, 0.5), GetPosition().GetY()+RNG->Gaussian(0.25, 0.5));
+			             placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 			         }
 			         newFoodList.push_back(placementPosition);
 					 newFoodColoringList.push_back(LoopFunctions->FoodColoringList[i]);

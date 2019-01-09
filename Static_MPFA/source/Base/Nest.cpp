@@ -41,19 +41,28 @@ void Nest::SetLocation(CVector2 newLocation) {
     nestLocation = newLocation;
 }
 
-void Nest::SetNestRadius(Real radius, size_t nestNum){
-    
+void Nest::SetNestRadius(Real radius, float ArenaWidth, size_t nestNum){
+    argos::LOG<<"ArenaWidth="<< ArenaWidth <<endl;
     if(GetNestIdx() == 0 && nestNum > 1)
     {
-        NestRadius = radius * (1+log(nestNum-1)/log(4));
+        if(ArenaWidth <= 10){
+            NestRadius = radius;
+        }
+        else
+        {
+            NestRadius = radius * (ArenaWidth/10.0);
+            }
+        //NestRadius = radius * (1+log(nestNum-1)/log(4));
+        //NestRadius = radius * (regionWidth/4.0) * (1+log(nestNum-1)/log(4));
         //NestRadius = pow(2, 1+log(nestNum-1)/log(4)) * radius;
 	//argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     }
     else
     {
         NestRadius = radius;
+        //NestRadius = radius*regionWidth/4.0;
     }
-    //argos::LOG<<"nest id="<<GetNestIdx()<<", NestRadius="<<NestRadius<<endl;
+    argos::LOG<<"nest id="<<GetNestIdx()<<", NestRadius="<<NestRadius<<endl;
     NestRadiusSquared = NestRadius*NestRadius;
         
 }
