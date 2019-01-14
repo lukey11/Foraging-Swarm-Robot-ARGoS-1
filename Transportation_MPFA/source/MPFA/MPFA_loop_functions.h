@@ -98,6 +98,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
                 int Nest_travel_time_in_ticks;
                 size_t Num_robots;
                 size_t BacktrackDelivery;
+                size_t numBranch;
   
 		/* MPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
@@ -139,7 +140,8 @@ class MPFA_loop_functions : public argos::CLoopFunctions
         size_t lastNumCollectedFood; //qilu 08/19
         size_t currNumCollectedFood; //qilu 08/19
     
-  std::vector<Nest> Nests; //qilu 09/06
+  //std::vector<Nest> Nests; //qilu 09/06
+  map<int,Nest> Nests; 
   vector<size_t>			ForageList; //qilu 09/13
 		//argos::CVector2 NestPosition;
   //std::vector<argos::CVector2> NestPositions; //qilu 07/26/2016

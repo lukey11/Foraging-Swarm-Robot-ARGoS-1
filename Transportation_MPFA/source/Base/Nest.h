@@ -40,7 +40,7 @@ class Nest {
         argos::Real GetNestRadiusSquared();
         
         void  SetNestIdx(size_t idx);
-        void SetParentNestIdx_with_backtrack(size_t idx);
+        void SetParentNestIdx_with_backtrack(size_t idx, size_t NumOfBranch, map<int, Nest> *Nests);
         void SetParentNestIdx_no_backtrack(vector<Nest *> parents);
         void SetLevel(size_t idx);
         void SetRegionFlag(int flag);
