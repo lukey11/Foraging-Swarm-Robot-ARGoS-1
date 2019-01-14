@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #files =['Random_MPFA_r1192_d256_tag16384_80by80.xml']
     #files = ['Random_MPFA_r1192_d256_tag16384_80by80.xml', 'Random_MPFA_r296_d64_tag4096_40by40.xml', 'Random_MPFA_r2_d1_tag64_5by5.xml', 'Random_MPFA_r16_d4_tag256_10by10.xml', 'Random_MPFA_r72_d16_tag1024_20by20.xml']
     #files = ['Random_MPFA_r192_d65_tag64_40by40.xml', 'Random_MPFA_r192_d65_tag256_40by40.xml', 'Random_MPFA_r192_d65_tag1024_40by40.xml', 'Random_MPFA_r384_d65_tag16384_40by40.xml']
-    files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d65_tag5243_64by64.xml']
+    files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d65_tag5243_64by64.xml', '1_8_19_constant_speed/Random_MPFA_rXXX_d17_tag328_16by16.xml']
     run_count = 5
     for file in files:
         print file

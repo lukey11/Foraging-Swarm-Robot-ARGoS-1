@@ -15,7 +15,7 @@ if __name__ == "__main__":
     #files = ['Random_MPFA_r1192_d256_tag16384_80by80.xml', 'Random_MPFA_r296_d64_tag4096_40by40.xml', 'Random_MPFA_r2_d1_tag64_5by5.xml', 'Random_MPFA_r16_d4_tag256_10by10.xml', 'Random_MPFA_r72_d16_tag1024_20by20.xml']
     #files = ['Random_MPFA_r120_d17_tag655_16by16.xml', 'Random_MPFA_r228_d25_tag1600_25by25.xml', 'Random_MPFA_r376_d37_tag3318_36by36.xml']
     files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d82_tag8398_81by81.xml']
-    run_count = 5
+    run_count = 2
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)
