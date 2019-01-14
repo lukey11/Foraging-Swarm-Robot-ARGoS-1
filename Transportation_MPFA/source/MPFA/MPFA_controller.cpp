@@ -1086,19 +1086,19 @@ void MPFA_controller::SetClosestNest(){//qilu 07/26/2016
     Nest* NewClosestNest;
     CVector2 robotPos = GetPosition();
     Real minSquaredLen = (LoopFunctions->Nests[0].GetLocation()-robotPos).SquareLength();
-    size_t minIdex =0;
+    size_t minIdx =0;
     Real squaredLen;
-    for(size_t i=1; i<LoopFunctions->Nests.size(); i++){
-        squaredLen = (LoopFunctions->Nests[i].GetLocation()-robotPos).SquareLength();
+    for(map<int, Nest>:: iterator it= LoopFunctions->Nests.begin(); it!= LoopFunctions->Nests.end(); it++){
+        squaredLen = (it->second.GetLocation()-robotPos).SquareLength();
         if (squaredLen < minSquaredLen) {
             minSquaredLen = squaredLen;
-            minIdex = i;
+            minIdx = it->first;
         }
     }
     //ClosestNest->FidelityList.erase(controllerID); //qilu 09/07/2016
 		  //SiteFidelityPosition=CVector2(10000,10000);
 		
-    NewClosestNest = &LoopFunctions->Nests[minIdex];
+    NewClosestNest = &LoopFunctions->Nests[minIdx];
     if(ClosestNest != NULL){
         if(ClosestNest->GetNestIdx() != NewClosestNest->GetNestIdx())
             SetFidelityList();

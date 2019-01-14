@@ -5,7 +5,8 @@ import os.path
 import numpy as np
 from pylab import *
 
-def sub_gen_coord(max_x,min_x, k):
+def sub_gen_coord(max_x,min_x, k, b):
+    
     x1 = max_x - k/2.0
     y1 = max_y - k/2.0
     coordinates =[]
@@ -17,16 +18,18 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
+arena_width = 81
 
-max_x, max_y = 20,  20;
-min_x, min_y = -20, -20;
+max_x, max_y = arena_width/2.0,  arena_width/2.0;
+min_x, min_y = -max_x, -max_y;
 
 
-gaps = [20, 10, 5]
+gaps = [27, 9]
+branch =9
 results=[]
 for k in gaps:
   print k
-  results.append(sub_gen_coord(max_x, min_x, k))
+  results.append(sub_gen_coord(max_x, min_x, k, branch))
 
 
 coord_info =open("coord_for_worldFile.xml", "w")
@@ -44,13 +47,14 @@ coord_info_text.close()
 # there is only delivering robots
 count =0;
 
+total_robot=0
 for coords in results[:-1]:
     for xy in coords:
 	coord_info.write("<distribute>\n")
-        coord_info.write("<position max=\"" + str(xy[0]+0.8)+ ", " + str(xy[1]+0.8) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\"/>\n")
+        coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
         coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
         coord_info.write("<entity max_trials=\"100\" quantity=\"2\">\n")
-        coord_info.write("<foot-bot id=\"D" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+        coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
         coord_info.write("</entity>\n")
         coord_info.write("</distribute>\n\n")
         count += 1  
@@ -58,7 +62,7 @@ for coords in results[:-1]:
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0]+0.8)+ ", " + str(xy[1]+0.8) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+0.5)+ ", " + str(xy[1]+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\"4\">\n")
     coord_info.write("<foot-bot id=\"F" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
@@ -66,10 +70,10 @@ for xy in results[-1]:
     coord_info.write("</distribute>\n\n")
     
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0])+ ", " + str(xy[1]) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-0.8)+ ", " + str(xy[1]-0.8) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\"2\">\n")
-    coord_info.write("<foot-bot id=\"D" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+    coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
     coord_info.write("</entity>\n")
     coord_info.write("</distribute>\n\n")
     count += 1  

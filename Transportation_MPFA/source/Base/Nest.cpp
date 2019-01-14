@@ -56,7 +56,6 @@ void Nest::SetNestRadius(int level, Real radius, int backtrackFlag){
     {
         NestRadius = (level+1) * radius;
     }
-    //argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     NestRadiusSquared = NestRadius*NestRadius;
         
 }
@@ -80,25 +79,40 @@ void Nest:: SetLevel(size_t l){
 	level = l; 
 }
  
-void Nest::SetParentNestIdx_with_backtrack(size_t idx)
+void Nest::SetParentNestIdx_with_backtrack(size_t idx, size_t NumOfBranch, map<int, Nest> *Nests)
 {
     if (idx == 0) {
         parent_nest_idx = 0;
     }
     else{
-	    parent_nest_idx = (idx-1)/4;
+	    parent_nest_idx = (idx-1)/NumOfBranch;
+        map<int, Nest>::iterator it = Nests->find(parent_nest_idx);
+        while(it == Nests->end()){//the nest id does not exist
+           parent_nest_idx = parent_nest_idx/NumOfBranch;
+           it = Nests->find(parent_nest_idx);
+        }
     }
 }
  
 void Nest::SetParentNestIdx_no_backtrack(vector<Nest*> parents)
 {
-    Nest* curr_parent = parents[0];
-    Real curr_squared_distance = (GetLocation() - curr_parent->GetLocation()).SquareLength();
-    Real distance;
+    CVector2 curr_direction, other_direction;
+    Real x1, y1, x2, y2, product, detrminant, angle;
+    
+    curr_direction = GetLocation() - parents[0]->GetLocation();
+    parent_nest_idx = parents[0]->GetNestIdx();
+       
+    x1 = curr_direction.GetX();
+    y1 = curr_direction.GetY();
+        
     for(int i =1; i < parents.size(); i++){
-        distance = (GetLocation() - parents[i]->GetLocation()).SquareLength(); 
-        if (distance - curr_squared_distance <= 25){
-            curr_squared_distance = distance;
+        other_direction = GetLocation() - parents[i]->GetLocation();
+        x2 = other_direction.GetX();
+        y2 = other_direction.GetY();
+        
+        product = x1*x2 + y1*y2;
+        detrminant = x1*y2 - y1*x2;  
+        if (abs(atan2(detrminant, product)) >= 1.8){//degree, remove backtracking 
             parent_nest_idx = parents[i]->GetNestIdx();
         } 
     }

@@ -54,7 +54,7 @@ void MPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFidelity();
 	DrawPheromones();
 	DrawNest();
-    //DrawBranches();
+    DrawBranches();
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
 
@@ -67,10 +67,9 @@ void MPFA_qt_user_functions::DrawNest() {
 //	Real x_coordinate = loopFunctions.NestPosition.GetX();
 //	Real y_coordinate = loopFunctions.NestPosition.GetX();
 Real x_coordinate, y_coordinate;
-for (size_t i=0; i< loopFunctions.Nests.size(); i++){
-     
-     x_coordinate = loopFunctions.Nests[i].GetLocation().GetX(); //qilu 07/05
-     y_coordinate = loopFunctions.Nests[i].GetLocation().GetY();
+for(map<int, Nest>:: iterator it= loopFunctions.Nests.begin(); it!= loopFunctions.Nests.end(); it++){     
+     x_coordinate = it->second.GetLocation().GetX(); //qilu 07/05
+     y_coordinate = it->second.GetLocation().GetY();
     //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
 	    Real elevation = loopFunctions.NestElevation;
 
@@ -81,7 +80,7 @@ for (size_t i=0; i< loopFunctions.Nests.size(); i++){
 
 	    //DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GREEN);
      //DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
-     DrawCylinder(nest_3d, CQuaternion(), loopFunctions.Nests[i].GetNestRadius(), 0.008, CColor::GREEN);
+     DrawCylinder(nest_3d, CQuaternion(), it->second.GetNestRadius(), 0.008, CColor::GREEN);
     }
 }
 
@@ -96,10 +95,10 @@ void MPFA_qt_user_functions::DrawFood() {
 	}
  
  //draw food in nests
- for (size_t i=0; i< loopFunctions.Nests.size(); i++){ 
-   for (size_t j=0; j< loopFunctions.Nests[i].FoodList.size(); j++){
-        x = loopFunctions.Nests[i].FoodList[j].GetX();
-        y = loopFunctions.Nests[i].FoodList[j].GetY();
+ for(map<int, Nest>:: iterator it= loopFunctions.Nests.begin(); it!= loopFunctions.Nests.end(); it++){
+       for (size_t j=0; j< it->second.FoodList.size(); j++){
+        x = it->second.FoodList[j].GetX();
+        y = it->second.FoodList[j].GetY();
         DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
      }
   } 
@@ -109,8 +108,8 @@ void MPFA_qt_user_functions::DrawFood() {
 void MPFA_qt_user_functions::DrawFidelity() {
 
 	   Real x, y;
-    for(size_t i=0; i< loopFunctions.Nests.size(); i++){
-        for(map<string, CVector2>::iterator it= loopFunctions.Nests[i].FidelityList.begin(); it!=loopFunctions.Nests[i].FidelityList.end(); ++it) {
+    for(map<int, Nest>:: iterator iter= loopFunctions.Nests.begin(); iter!= loopFunctions.Nests.end(); iter++){
+        for(map<string, CVector2>::iterator it= iter->second.FidelityList.begin(); it!=iter->second.FidelityList.end(); ++it) {
             x = it->second.GetX()+0.001;
             y = it->second.GetY()+0.001;
             DrawCylinder(CVector3(x, y, 0.0), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::YELLOW);
@@ -123,131 +122,82 @@ void MPFA_qt_user_functions::DrawPheromones() {
 	Real x, y, weight;
 	vector<CVector2> trail;
 	CColor trailColor = CColor::GREEN, pColor = CColor::GREEN;
-
- for(size_t n=0; n<loopFunctions.Nests.size(); n++){
-	    for(size_t i = 0; i < loopFunctions.Nests[n].PheromoneList.size(); i++) {
-		       x = loopFunctions.Nests[n].PheromoneList[i].GetLocation().GetX();
-		       y = loopFunctions.Nests[n].PheromoneList[i].GetLocation().GetY();
-
-		       if(loopFunctions.DrawTrails == 1) {
-			          trail  = loopFunctions.Nests[n].PheromoneList[i].GetTrail();
-			          weight = loopFunctions.Nests[n].PheromoneList[i].GetWeight();
+    for(map<int, Nest>:: iterator it= loopFunctions.Nests.begin(); it!= loopFunctions.Nests.end(); it++){
+        for(size_t i = 0; i < it->second.PheromoneList.size(); i++) {
+            x = it->second.PheromoneList[i].GetLocation().GetX();
+            y = it->second.PheromoneList[i].GetLocation().GetY();
+    
+            if(loopFunctions.DrawTrails == 1) {
+                trail  = it->second.PheromoneList[i].GetTrail();
+                weight = it->second.PheromoneList[i].GetWeight();
                 
-
-             if(weight > 0.25 && weight <= 1.0)        // [ 100.0% , 25.0% )
-                 pColor = trailColor = CColor::GREEN;
-             else if(weight > 0.05 && weight <= 0.25)  // [  25.0% ,  5.0% )
-                 pColor = trailColor = CColor::YELLOW;
-             else                                      // [   5.0% ,  0.0% ]
-                 pColor = trailColor = CColor::RED;
+                if(weight > 0.25 && weight <= 1.0)        // [ 100.0% , 25.0% )
+                    pColor = trailColor = CColor::GREEN;
+                else if(weight > 0.05 && weight <= 0.25)  // [  25.0% ,  5.0% )
+                    pColor = trailColor = CColor::YELLOW;
+                else                                      // [   5.0% ,  0.0% ]
+                    pColor = trailColor = CColor::RED;
       
-             CRay3 ray;
-             size_t j = 0;
+                 CRay3 ray;
+                 size_t j = 0;
       
-             for(j = 1; j < trail.size(); j++) {
-                 ray = CRay3(CVector3(trail[j - 1].GetX(), trail[j - 1].GetY(), 0.01),
-                 CVector3(loopFunctions.Nests[n].GetLocation().GetX(), loopFunctions.Nests[n].GetLocation().GetY(), 0.01));
-                 
-                 
-                 DrawRay(ray, trailColor, 1.0);
-             }
-
-			          DrawCylinder(CVector3(x, y, 0.0), CQuaternion(), loopFunctions.FoodRadius, 0.025, pColor);
-		       } 
-         else {
-			          weight = loopFunctions.Nests[n].PheromoneList[i].GetWeight();
-
-             if(weight > 0.25 && weight <= 1.0)        // [ 100.0% , 25.0% )
-                 pColor = CColor::GREEN;
-             else if(weight > 0.05 && weight <= 0.25)  // [  25.0% ,  5.0% )
-                 pColor = CColor::YELLOW;
-             else                                      // [   5.0% ,  0.0% ]
-                 pColor = CColor::RED;
+                 for(j = 1; j < trail.size(); j++) {
+                     ray = CRay3(CVector3(trail[j - 1].GetX(), trail[j - 1].GetY(), 0.01),
+                     CVector3(it->second.GetLocation().GetX(), it->second.GetLocation().GetY(), 0.01));
+                     DrawRay(ray, trailColor, 1.0);
+                 }
+                 DrawCylinder(CVector3(x, y, 0.0), CQuaternion(), loopFunctions.FoodRadius, 0.025, pColor);
+            } 
+            else {
+                weight = it->second.PheromoneList[i].GetWeight();
+    
+                if(weight > 0.25 && weight <= 1.0)        // [ 100.0% , 25.0% )
+                    pColor = CColor::GREEN;
+                else if(weight > 0.05 && weight <= 0.25)  // [  25.0% ,  5.0% )
+                    pColor = CColor::YELLOW;
+                else                                      // [   5.0% ,  0.0% ]
+                    pColor = CColor::RED;
       
-             DrawCylinder(CVector3(x, y, 0.0), CQuaternion(), loopFunctions.FoodRadius, 0.025, pColor);
-         }
-	    }
- }
+                DrawCylinder(CVector3(x, y, 0.0), CQuaternion(), loopFunctions.FoodRadius, 0.025, pColor);
+            }
+        }
+    }
 }
 
 void MPFA_qt_user_functions::DrawTargetRays() {
-	//size_t tick = loopFunctions.GetSpace().GetSimulationClock();
-	//size_t tock = loopFunctions.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick() / 8;
-
-	//if(tock == 0) tock = 1;
-
-	//if(tick % tock == 0) {
-		for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) {
-			DrawRay(loopFunctions.TargetRayList[j], loopFunctions.TargetRayColorList[j]);
-		}
-		loopFunctions.TargetRayList.clear();
-	//}
+	for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) 
+    {
+        DrawRay(loopFunctions.TargetRayList[j], loopFunctions.TargetRayColorList[j]);
+    }
+    loopFunctions.TargetRayList.clear();
 }
 void MPFA_qt_user_functions::DrawBranches() {
 	std::vector<vector<argos::CRay3> >    RayList;
     std::vector<argos::CRay3>    tempList;
     CRay3 targetRay;
-    size_t count=0, prev_level=0, revLevel=0, lineWidth=0;
+    size_t count=0, prev_level=1, revLevel=0, lineWidth=15;
     size_t level, pidx; 
     Real x, y, px, py;
     
-    for (size_t i=1; i< loopFunctions.Nests.size(); i++)
-    { 
-		level = log(i-count)/log(4);
-		pidx = loopFunctions.Nests[i].GetParentNestIdx();
-        x = loopFunctions.Nests[i].GetLocation().GetX(); 
-        y = loopFunctions.Nests[i].GetLocation().GetY();
-        
-        px = loopFunctions.Nests[pidx].GetLocation().GetX();
-        py = loopFunctions.Nests[pidx].GetLocation().GetY();
-		targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
-		tempList.push_back(targetRay);
-		if(level > prev_level)
-		{
-			RayList.push_back(tempList);
-			tempList.clear();
-			prev_level++;
-			count = i; 
-        }
-    }
-	if(tempList.size() > 0)
-	{
-        RayList.push_back(tempList);
-	    tempList.clear();
-    } 	
-  	
-	std::vector<argos::CColor>        TrailColor;
+    
+    std::vector<argos::CColor> TrailColor;
     TrailColor.push_back(CColor::GREEN);
     TrailColor.push_back(CColor::RED);
     TrailColor.push_back(CColor::BLUE);
     TrailColor.push_back(CColor::ORANGE);
     
-    for(size_t i = 0; i < RayList.size(); i++) 
-    {   
-        lineWidth = 32/(3*i+1);
+    for(map<int, Nest>::iterator it = loopFunctions.Nests.begin(); it != loopFunctions.Nests.end(); it++)
+    {
+        x = it->second.GetLocation().GetX();
+        y = it->second.GetLocation().GetY();
         
-        for(size_t j= 0; j<RayList[i].size(); j++)
-        {
-            DrawRay(RayList[i][j], TrailColor[i], lineWidth);	
-			}
-		
-	}
+        level = it->second.GetLevel();
+        pidx = it->second.GetParentNestIdx();
+        px = loopFunctions.Nests[pidx].GetLocation().GetX();
+        py = loopFunctions.Nests[pidx].GetLocation().GetY();
+        targetRay = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
+        DrawRay(targetRay, TrailColor[level], lineWidth/(level+1));
+    }
 }
-
-/*
-void MPFA_qt_user_functions::DrawTargetRays() {
-
-	CColor c = CColor::BLUE;
-
-	for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) {
-			DrawRay(loopFunctions.TargetRayList[j],c);
-	}
-
-	//if(loopFunctions.SimTime % (loopFunctions.TicksPerSecond * 10) == 0) {
-		// comment out for DSA, uncomment for MPFA
-		loopFunctions.TargetRayList.clear();
-	//}
-}
-*/
 
 REGISTER_QTOPENGL_USER_FUNCTIONS(MPFA_qt_user_functions, "MPFA_qt_user_functions")
