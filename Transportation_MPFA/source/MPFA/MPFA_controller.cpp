@@ -213,6 +213,12 @@ bool MPFA_controller::IsInTheNest() {
 
 void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
+    argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
+    if(lf->VaryForwardSpeedFlag == 1)
+    {
+        RobotForwardSpeed *= pow((lf->ArenaWidth/4.0), 1/3.0);
+        argos::LOG<<"RobotForwardSpeed="<<RobotForwardSpeed<<endl;
+        }
 
 	// Initialize the SiteFidelityPosition
 SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016

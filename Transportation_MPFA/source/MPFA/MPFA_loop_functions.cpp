@@ -68,6 +68,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
+    argos::GetNodeAttribute(settings_node, "VaryForwardSpeedFlag", VaryForwardSpeedFlag);
 	argos::GetNodeAttribute(settings_node, "OutputData", OutputData);
 	argos::GetNodeAttribute(settings_node, "DrawIDs", DrawIDs);
 	argos::GetNodeAttribute(settings_node, "DrawTrails", DrawTrails);
