@@ -118,6 +118,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		argos::Real SearchRadiusSquared;
 
         size_t VaryForwardSpeedFlag;
+        size_t VaryCapacityFlag;
   argos::Real NestPosition_0; //qilu 09/06/2016
   argos::Real NestPosition_1;
   argos::Real NestPosition_2;

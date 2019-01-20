@@ -69,6 +69,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
     argos::GetNodeAttribute(settings_node, "VaryForwardSpeedFlag", VaryForwardSpeedFlag);
+    argos::GetNodeAttribute(settings_node, "VaryCapacityFlag", VaryCapacityFlag);
 	argos::GetNodeAttribute(settings_node, "OutputData", OutputData);
 	argos::GetNodeAttribute(settings_node, "DrawIDs", DrawIDs);
 	argos::GetNodeAttribute(settings_node, "DrawTrails", DrawTrails);
@@ -150,9 +151,12 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
         revLevel = level - it->second.GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
-        //vary capacity
-        //Nests[i].SetDeliveryCapacity(2*pow(2, revLevel+1)*pow(numBranch, revLevel));//initial capacity is 4
-        it->second.SetDeliveryCapacity(8);
+        if(VaryCapacityFlag){//vary capacity
+            it->second.SetDeliveryCapacity(8*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+        }
+        else{
+            it->second.SetDeliveryCapacity(8);
+            }
         it->second.SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
         CapacityDataOutput<<it->second.GetDeliveryCapacity()<<" ";
     }

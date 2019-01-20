@@ -13,8 +13,8 @@ if __name__ == "__main__":
     #files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
     #files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
     #files = ['Random_CPFA_r296_tag64_40by40.xml', 'Random_CPFA_r296_tag256_40by40.xml', 'Random_CPFA_r296_tag1024_40by40.xml', 'Random_CPFA_r296_tag16384_40by40.xml' ]
-    files = ['Random_CPFA_r24_tag256_10by10.xml', 'Random_CPFA_r104_tag1024_20by20.xml', 'Random_CPFA_r424_tag4096_40by40.xml', 'Random_CPFA_r1704_tag16384_80by80.xml']
-    run_count = 15
+    files = ['1_19_19_constant_speed/Random_CPFA_r16_tag20_4by4.xml', '1_19_19_constant_speed/Random_CPFA_r128_tag328_16by16.xml']
+    run_count = 10
     for file in files:
         print file 
         this_run = Random_Argos("./experiments/"+file)

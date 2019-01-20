@@ -17,8 +17,8 @@ if __name__ == "__main__":
     #files = ['Widths_32_48_64_96/Test_no_deliver_Random_MPFA_r16_d5_tag82_8by8.xml', 'Widths_32_48_64_96/Test_no_deliver_Random_MPFA_r16_d5_tag328_16by16.xml', 'Widths_32_48_64_96/Test_no_deliver_Random_MPFA_r16_d5_tag737_24by24.xml']
     #files = ['Widths_32_48_64_96/Test_Random_MPFA_r24_d5_tag82_8by8.xml', 'Widths_32_48_64_96/Test_Random_MPFA_r16_d5_tag328_16by16.xml', 'Widths_32_48_64_96/Test_Random_MPFA_r16_d5_tag737_24by24.xml']
     #files = ['1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag82_8by8.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag328_16by16.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag415_18by18.xml']
-    files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d82_tag8398_81by81.xml']
-    run_count = 2
+    files = ['1_19_19_constant_speed_no_delivery/Random_MPFA_r16_d5_tag20_4by4.xml', '1_19_19_constant_speed_no_delivery/Random_MPFA_rXXX_d17_tag328_16by16.xml', '1_19_19_vary_speed_no_delivery/Random_MPFA_r16_d5_tag20_4by4.xml', '1_19_19_vary_speed_no_delivery/Random_MPFA_rXXX_d17_tag328_16by16.xml', '1_19_19_vary_speed_no_delivery/Random_MPFA_rXXX_d82_tag8398_81by81.xml']
+    run_count = 10
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)

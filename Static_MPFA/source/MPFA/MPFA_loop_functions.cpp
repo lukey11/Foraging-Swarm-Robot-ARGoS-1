@@ -36,8 +36,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	NestRadius(0.25),
 	//NestRadiusSquared(0.0625),
 	NestElevation(0.01),
-    BacktrackDelivery(1),
-	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
+    // We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
         NumDistributedFood(0),
 	score(0),
@@ -82,7 +81,6 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
  argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
-    argos::GetNodeAttribute(settings_node, "BacktrackDelivery", BacktrackDelivery);
     // calculate the forage range and compensate for the robot's radius of 0.085m
 	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
 	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
