@@ -57,22 +57,22 @@
     <floor id="floor" pixels_per_meter="10" source="loop_functions"/>
     
     <!-- Place four boxes in a square to delimit the arena -->
-    <box id="wall_north1" movable="false" size="64,0.05,0.5">
-      <body orientation="0,0,0" position="0,32,0"/>
+    <box id="wall_north1" movable="false" size="81,0.05,0.5">
+      <body orientation="0,0,0" position="0,40.5,0"/>
     </box> 
     
     
-    <box id="wall_south" movable="false" size="64,0.05,0.5">
-      <body orientation="0,0,0" position="0,-32,0"/>
+    <box id="wall_south" movable="false" size="81,0.05,0.5">
+      <body orientation="0,0,0" position="0,-40.5,0"/>
     </box>
     
-    <box id="wall_east" movable="false" size="0.05,64,0.5">
-      <body orientation="0,0,0" position="32,0,0"/>
+    <box id="wall_east" movable="false" size="0.05,81,0.5">
+      <body orientation="0,0,0" position="40.5,0,0"/>
     </box>
     
     
-    <box id="wall_west" movable="false" size="0.05, 64,0.5">
-      <body orientation="0,0,0" position="-32,0,0"/>
+    <box id="wall_west" movable="false" size="0.05, 81,0.5">
+      <body orientation="0,0,0" position="-40.5,0,0"/>
     </box>
     
     
