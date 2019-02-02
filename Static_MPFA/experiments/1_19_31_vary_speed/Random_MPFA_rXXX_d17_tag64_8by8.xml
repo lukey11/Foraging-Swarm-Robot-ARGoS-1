@@ -42,314 +42,313 @@
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
          <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
-         DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="328" FoodRadius="0.05" MaxSimCounter="1" 
+         DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="64" FoodRadius="0.05" MaxSimCounter="1" 
          MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" 
-         NestPosition_1="6.0, 6.0"
-NestPosition_2="6.0, 2.0"
-NestPosition_3="6.0, -2.0"
-NestPosition_4="6.0, -6.0"
-NestPosition_5="2.0, 6.0"
-NestPosition_6="2.0, 2.0"
-NestPosition_7="2.0, -2.0"
-NestPosition_8="2.0, -6.0"
-NestPosition_9="-2.0, 6.0"
-NestPosition_10="-2.0, 2.0"
-NestPosition_11="-2.0, -2.0"
-NestPosition_12="-2.0, -6.0"
-NestPosition_13="-6.0, 6.0"
-NestPosition_14="-6.0, 2.0"
-NestPosition_15="-6.0, -2.0"
-NestPosition_16="-6.0, -6.0"
-NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="328" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0"/>
+         NestPosition_1="3.0, 3.0"
+NestPosition_2="3.0, 1.0"
+NestPosition_3="3.0, -1.0"
+NestPosition_4="3.0, -3.0"
+NestPosition_5="1.0, 3.0"
+NestPosition_6="1.0, 1.0"
+NestPosition_7="1.0, -1.0"
+NestPosition_8="1.0, -3.0"
+NestPosition_9="-1.0, 3.0"
+NestPosition_10="-1.0, 1.0"
+NestPosition_11="-1.0, -1.0"
+NestPosition_12="-1.0, -3.0"
+NestPosition_13="-3.0, 3.0"
+NestPosition_14="-3.0, 1.0"
+NestPosition_15="-3.0, -1.0"
+NestPosition_16="-3.0, -3.0"
+
+NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64" VariableFoodPlacement="0" VaryForwardSpeedFlag = "1"/>
 
   </loop_functions>
 
   <!-- *********************** -->
   <!-- * Arena configuration * -->
   <!-- *********************** -->
-  <arena center="0,0,0.5" size="16, 16, 1">
+  <arena center="0,0,0.5" size="8, 8, 1">
 
     <floor id="floor" pixels_per_meter="10" source="loop_functions"/>
     
     <!-- Place four boxes in a square to delimit the arena -->
-    <box id="wall_north1" movable="false" size="16,0.05,0.5">
-      <body orientation="0,0,0" position="0,8,0"/>
+    <box id="wall_north1" movable="false" size="8,0.05,0.5">
+      <body orientation="0,0,0" position="0,4,0"/>
     </box> 
     
     
-    <box id="wall_south" movable="false" size="16,0.05,0.5">
-      <body orientation="0,0,0" position="0,-8,0"/>
+    <box id="wall_south" movable="false" size="8,0.05,0.5">
+      <body orientation="0,0,0" position="0,-4,0"/>
     </box>
     
-    <box id="wall_east" movable="false" size="0.05, 16, 0.5">
-      <body orientation="0,0,0" position="8,0,0"/>
+    <box id="wall_east" movable="false" size="0.05, 8, 0.5">
+      <body orientation="0,0,0" position="4,0,0"/>
     </box>
     
     
-    <box id="wall_west" movable="false" size="0.05, 16, 0.5">
-      <body orientation="0,0,0" position="-8,0,0"/>
+    <box id="wall_west" movable="false" size="0.05, 8, 0.5">
+      <body orientation="0,0,0" position="-4,0,0"/>
     </box>
     
     
    <!--Distribute foraging robots --> 
-
 <distribute>
-<position max="6.0, 6.0, 0.0" method="uniform" min="5.2, 5.2, 0.0"/>
+<position max="3.5, 3.5, 0.0" method="uniform" min="2.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F0"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F0-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.8, 6.8, 0.0" method="uniform" min="6.0, 6.0, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
-<foot-bot id="D0"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="6.0, 2.0, 0.0" method="uniform" min="5.2, 1.2, 0.0"/>
+<position max="3.5, 3.5, 0.0" method="uniform" min="2.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F1"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D0-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.8, 2.8, 0.0" method="uniform" min="6.0, 2.0, 0.0"/>
+<position max="3.5, 1.5, 0.0" method="uniform" min="2.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D1"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F1-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.0, -2.0, 0.0" method="uniform" min="5.2, -2.8, 0.0"/>
+<position max="3.5, 1.5, 0.0" method="uniform" min="2.5, 0.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D1-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="3.5, -0.5, 0.0" method="uniform" min="2.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F2"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F2-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.8, -1.2, 0.0" method="uniform" min="6.0, -2.0, 0.0"/>
+<position max="3.5, -0.5, 0.0" method="uniform" min="2.5, -1.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D2-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="3.5, -2.5, 0.0" method="uniform" min="2.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D2"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F3-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.0, -6.0, 0.0" method="uniform" min="5.2, -6.8, 0.0"/>
+<position max="3.5, -2.5, 0.0" method="uniform" min="2.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F3"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D3-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="6.8, -5.2, 0.0" method="uniform" min="6.0, -6.0, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
-<foot-bot id="D3"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="2.0, 6.0, 0.0" method="uniform" min="1.2, 5.2, 0.0"/>
+<position max="1.5, 3.5, 0.0" method="uniform" min="0.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F4"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F4-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.8, 6.8, 0.0" method="uniform" min="2.0, 6.0, 0.0"/>
+<position max="1.5, 3.5, 0.0" method="uniform" min="0.5, 2.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D4-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="1.5, 1.5, 0.0" method="uniform" min="0.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D4"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F5-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.0, 2.0, 0.0" method="uniform" min="1.2, 1.2, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="F5"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="2.8, 2.8, 0.0" method="uniform" min="2.0, 2.0, 0.0"/>
+<position max="1.5, 1.5, 0.0" method="uniform" min="0.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="2">
-<foot-bot id="D5"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D5-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.0, -2.0, 0.0" method="uniform" min="1.2, -2.8, 0.0"/>
+<position max="1.5, -0.5, 0.0" method="uniform" min="0.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F6"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F6-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.8, -1.2, 0.0" method="uniform" min="2.0, -2.0, 0.0"/>
+<position max="1.5, -0.5, 0.0" method="uniform" min="0.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="2">
-<foot-bot id="D6"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D6-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.0, -6.0, 0.0" method="uniform" min="1.2, -6.8, 0.0"/>
+<position max="1.5, -2.5, 0.0" method="uniform" min="0.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F7"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F7-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="2.8, -5.2, 0.0" method="uniform" min="2.0, -6.0, 0.0"/>
+<position max="1.5, -2.5, 0.0" method="uniform" min="0.5, -3.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D7-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="-0.5, 3.5, 0.0" method="uniform" min="-1.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D7"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F8-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-2.0, 6.0, 0.0" method="uniform" min="-2.8, 5.2, 0.0"/>
+<position max="-0.5, 3.5, 0.0" method="uniform" min="-1.5, 2.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D8-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="-0.5, 1.5, 0.0" method="uniform" min="-1.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F8"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F9-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-1.2, 6.8, 0.0" method="uniform" min="-2.0, 6.0, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="D8"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-2.0, 2.0, 0.0" method="uniform" min="-2.8, 1.2, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="F9"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-1.2, 2.8, 0.0" method="uniform" min="-2.0, 2.0, 0.0"/>
+<position max="-0.5, 1.5, 0.0" method="uniform" min="-1.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="2">
-<foot-bot id="D9"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D9-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-2.0, -2.0, 0.0" method="uniform" min="-2.8, -2.8, 0.0"/>
+<position max="-0.5, -0.5, 0.0" method="uniform" min="-1.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F10"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F10-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-1.2, -1.2, 0.0" method="uniform" min="-2.0, -2.0, 0.0"/>
+<position max="-0.5, -0.5, 0.0" method="uniform" min="-1.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="2">
-<foot-bot id="D10"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D10-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-2.0, -6.0, 0.0" method="uniform" min="-2.8, -6.8, 0.0"/>
+<position max="-0.5, -2.5, 0.0" method="uniform" min="-1.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F11"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F11-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-1.2, -5.2, 0.0" method="uniform" min="-2.0, -6.0, 0.0"/>
+<position max="-0.5, -2.5, 0.0" method="uniform" min="-1.5, -3.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D11-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="-2.5, 3.5, 0.0" method="uniform" min="-3.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D11"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F12-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-6.0, 6.0, 0.0" method="uniform" min="-6.8, 5.2, 0.0"/>
+<position max="-2.5, 3.5, 0.0" method="uniform" min="-3.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F12"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D12-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-5.2, 6.8, 0.0" method="uniform" min="-6.0, 6.0, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
-<foot-bot id="D12"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-6.0, 2.0, 0.0" method="uniform" min="-6.8, 1.2, 0.0"/>
+<position max="-2.5, 1.5, 0.0" method="uniform" min="-3.5, 0.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F13"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F13-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-5.2, 2.8, 0.0" method="uniform" min="-6.0, 2.0, 0.0"/>
+<position max="-2.5, 1.5, 0.0" method="uniform" min="-3.5, 0.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D13-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="-2.5, -0.5, 0.0" method="uniform" min="-3.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D13"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F14-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-6.0, -2.0, 0.0" method="uniform" min="-6.8, -2.8, 0.0"/>
+<position max="-2.5, -0.5, 0.0" method="uniform" min="-3.5, -1.5, 0.0"/>
+<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
+<entity max_trials="100" quantity="3">
+<foot-bot id="D14-"><controller config="MPFA"/></foot-bot>
+</entity>
+</distribute>
+
+<distribute>
+<position max="-2.5, -2.5, 0.0" method="uniform" min="-3.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="F14"><controller config="MPFA"/></foot-bot>
+<foot-bot id="F15-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position max="-5.2, -1.2, 0.0" method="uniform" min="-6.0, -2.0, 0.0"/>
+<position max="-2.5, -2.5, 0.0" method="uniform" min="-3.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
-<foot-bot id="D14"><controller config="MPFA"/></foot-bot>
+<foot-bot id="D15-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
-<distribute>
-<position max="-6.0, -6.0, 0.0" method="uniform" min="-6.8, -6.8, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="F15"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-5.2, -5.2, 0.0" method="uniform" min="-6.0, -6.0, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
-<foot-bot id="D15"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
- 
   </arena> 
     
   <!-- ******************* -->
@@ -368,7 +367,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="328
   <!-- ****************** -->
 
 
-<!--<visualization>
+<!-- <visualization>
 
 <qt-opengl>
       <camera>

@@ -34,7 +34,7 @@ coord_info_text = open("coord.xml", "w")
 count =1;
 for coords in results:
     for xy in coords:
-        coord_info.write("NestPosition_" + str(count) +"=\"" + str(xy[0]) + ", " + str(xy[1])+"\"\n") 
+        coord_info.write("NestPosition_" + str(count) +"=\"" + str(xy[0]-32) + ", " + str(xy[1]-32)+"\"\n") 
         coord_info_text.write(str(xy[0]) + " " + str(xy[1])+"\n") 
         count += 1  
 
@@ -93,12 +93,11 @@ for xy in results[-1]:
     print (forageRate*2*distance)/speed
     quantity = math.ceil((forageRate*2*distance)/speed)
     
-    if quantity > 30:
-        quantity = 30
     print "quantity", quantity
     total_robot += quantity
     
     coord_info.write("<distribute>\n")
+    #coord_info.write("<position max=\"" + str(xy[0]-32+gaps[-1]/4.0)+ ", " + str(xy[1]-32+gaps[-1]/4.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-32-gaps[-1]/4.0)+ ", " + str(xy[1]-32-gaps[-1]/4.0) + ", 0.0\"/>\n")
     coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/4.0)+ ", " + str(xy[1]+gaps[-1]/4.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/4.0)+ ", " + str(xy[1]-gaps[-1]/4.0) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
