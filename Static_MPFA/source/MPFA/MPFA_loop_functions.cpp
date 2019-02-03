@@ -113,11 +113,12 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 8;
+    int unitCapacity = 4;
     for(int i=0; i < Nests.size(); i++)
     {
         distance = sqrt(Nests[i].GetLocation().SquareLength());
-        capacity = unitCapacity*round(distance/sqrt(2*(pow(regionWidth/2.0, 2))));// is the diagonal distance of a region
+        //capacity = unitCapacity*round(distance/sqrt(2*(pow(regionWidth/2.0, 2))));// is the diagonal distance of a region
+        capacity = unitCapacity;
         Nests[i].SetDeliveryCapacity(capacity);
         total_capacity += capacity;
         //argos::LOG<<"distance="<<distance<<endl;

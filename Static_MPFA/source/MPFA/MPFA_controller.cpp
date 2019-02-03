@@ -364,14 +364,7 @@ void MPFA_controller::Idling()
 		isHoldingFood = true;
 		numHeldFood = packSize;
 		SetIsHeadingToNest(true);
-        argos::Real randomNumberX = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
-        argos::Real randomNumberY = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
-        argos::Real x, y;
-        x = TargetNest->GetNestRadius()*randomNumberX;
-        y = TargetNest->GetNestRadius()*randomNumberY;
-        
-        //argos::LOG<<"target randomNumber="<<x<< ", "<< y <<endl;
-        SetTarget(TargetNest->GetLocation()+argos::CVector2(x, y)); //minor shift for mitigating congestions at the same location
+        SetTarget(TargetNest->GetLocation()); 
 	    MPFA_state = DEPOT_DELIVERING;	        
 	}	
 }
