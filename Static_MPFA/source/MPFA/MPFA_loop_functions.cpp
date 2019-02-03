@@ -274,7 +274,11 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
          
-        string header = "./results/"+type+"_static_MPFA_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+         
+        ostringstream varySpeed_str;
+        varySpeed_str << VaryForwardSpeedFlag;
+         
+        string header = "./results/"+type+"_static_MPFA_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_"+ varySpeed_str.str()+"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
        /* Real total_travel_time=0;
