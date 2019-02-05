@@ -48,7 +48,7 @@
 NestPosition_2="0.5, -0.5"
 NestPosition_3="-0.5, 0.5"
 NestPosition_4="-0.5, -0.5"
-NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="4" VariableFoodPlacement="0" VaryForwardSpeedFlag = "1"/>
+NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="4" VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 
   </loop_functions>
 
