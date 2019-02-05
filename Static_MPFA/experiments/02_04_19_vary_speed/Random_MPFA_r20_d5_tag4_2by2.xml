@@ -41,14 +41,14 @@
     <!-- evolvable parameters -->
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
-         <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
+         <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
          DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="4" FoodRadius="0.05" MaxSimCounter="1" 
          MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" 
          NestPosition_1="0.5, 0.5"
 NestPosition_2="0.5, -0.5"
 NestPosition_3="-0.5, 0.5"
 NestPosition_4="-0.5, -0.5"
-NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="4" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0"/>
+NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="4" VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 
   </loop_functions>
 

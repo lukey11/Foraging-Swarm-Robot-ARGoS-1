@@ -135,9 +135,9 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         if(numBranch == 4){
             numBranch = 3;
             }
-        if(numBranch == 9){
+        /*if(numBranch == 9){
             numBranch = 5;
-           }
+           }*/
     }
     if (Nests.size() == 1) level =0;
     
@@ -146,16 +146,17 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          
     string header = "./results/MPFA_transport_" +arena_width_str.str()+"by"+arena_width_str.str()+"_";
     
+    size_t initCapcity = 4;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
         revLevel = level - it->second.GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
         if(VaryCapacityFlag){//vary capacity
-            it->second.SetDeliveryCapacity(8*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
         }
         else{
-            it->second.SetDeliveryCapacity(8);
+            it->second.SetDeliveryCapacity(initCapcity);
             }
         it->second.SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
         CapacityDataOutput<<it->second.GetDeliveryCapacity()<<" ";

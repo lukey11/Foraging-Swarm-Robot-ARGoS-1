@@ -61,7 +61,7 @@ NestPosition_14="-3.0, 1.0"
 NestPosition_15="-3.0, -1.0"
 NestPosition_16="-3.0, -3.0"
 
-NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0"/>
+NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64" VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 
   </loop_functions>
 
@@ -101,13 +101,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="3.5, 3.5, 0.0" method="uniform" min="2.5, 2.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="D0-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="3.5, 1.5, 0.0" method="uniform" min="2.5, 0.5, 0.0"/>
@@ -117,13 +110,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="3.5, 1.5, 0.0" method="uniform" min="2.5, 0.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D1-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="3.5, -0.5, 0.0" method="uniform" min="2.5, -1.5, 0.0"/>
@@ -133,13 +119,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="3.5, -0.5, 0.0" method="uniform" min="2.5, -1.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D2-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="3.5, -2.5, 0.0" method="uniform" min="2.5, -3.5, 0.0"/>
@@ -149,13 +128,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="3.5, -2.5, 0.0" method="uniform" min="2.5, -3.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="D3-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="1.5, 3.5, 0.0" method="uniform" min="0.5, 2.5, 0.0"/>
@@ -165,13 +137,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="1.5, 3.5, 0.0" method="uniform" min="0.5, 2.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D4-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="1.5, 1.5, 0.0" method="uniform" min="0.5, 0.5, 0.0"/>
@@ -181,27 +146,12 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </entity>
 </distribute>
 
-<distribute>
-<position max="1.5, 1.5, 0.0" method="uniform" min="0.5, 0.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D5-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
 
 <distribute>
 <position max="1.5, -0.5, 0.0" method="uniform" min="0.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F6-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="1.5, -0.5, 0.0" method="uniform" min="0.5, -1.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D6-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
@@ -214,26 +164,10 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </distribute>
 
 <distribute>
-<position max="1.5, -2.5, 0.0" method="uniform" min="0.5, -3.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D7-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
 <position max="-0.5, 3.5, 0.0" method="uniform" min="-1.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F8-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-0.5, 3.5, 0.0" method="uniform" min="-1.5, 2.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D8-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
@@ -246,26 +180,10 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </distribute>
 
 <distribute>
-<position max="-0.5, 1.5, 0.0" method="uniform" min="-1.5, 0.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D9-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
 <position max="-0.5, -0.5, 0.0" method="uniform" min="-1.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F10-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-0.5, -0.5, 0.0" method="uniform" min="-1.5, -1.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D10-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
@@ -278,26 +196,10 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </distribute>
 
 <distribute>
-<position max="-0.5, -2.5, 0.0" method="uniform" min="-1.5, -3.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D11-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
 <position max="-2.5, 3.5, 0.0" method="uniform" min="-3.5, 2.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F12-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-2.5, 3.5, 0.0" method="uniform" min="-3.5, 2.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="D12-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
@@ -310,14 +212,6 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </distribute>
 
 <distribute>
-<position max="-2.5, 1.5, 0.0" method="uniform" min="-3.5, 0.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D13-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
 <position max="-2.5, -0.5, 0.0" method="uniform" min="-3.5, -1.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
@@ -326,26 +220,10 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 </distribute>
 
 <distribute>
-<position max="-2.5, -0.5, 0.0" method="uniform" min="-3.5, -1.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
-<foot-bot id="D14-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
 <position max="-2.5, -2.5, 0.0" method="uniform" min="-3.5, -3.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F15-"><controller config="MPFA"/></foot-bot>
-</entity>
-</distribute>
-
-<distribute>
-<position max="-2.5, -2.5, 0.0" method="uniform" min="-3.5, -3.5, 0.0"/>
-<orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
-<foot-bot id="D15-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
 
