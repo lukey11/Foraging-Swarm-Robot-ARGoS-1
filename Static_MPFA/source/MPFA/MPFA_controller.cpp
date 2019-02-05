@@ -38,11 +38,11 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings, "TargetAngleTolerance",    TargetAngleTolerance);
 	argos::GetNodeAttribute(settings, "SearchStepSize",          SearchStepSize);
 	argos::GetNodeAttribute(settings, "RobotForwardSpeed",       RobotForwardSpeed);
-    argos::GetNodeAttribute(settings, "RobotRotationSpeed",      RobotRotationSpeed);
+        argos::GetNodeAttribute(settings, "RobotRotationSpeed",      RobotRotationSpeed);
 	argos::GetNodeAttribute(settings, "ResultsDirectoryPath",      results_path);
 	argos::GetNodeAttribute(settings, "DestinationNoiseStdev",      DestinationNoiseStdev);
 	argos::GetNodeAttribute(settings, "PositionNoiseStdev",      PositionNoiseStdev);
-    argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
+        argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
 
 	argos::CVector2 p(GetPosition());
 	SetStartPosition(argos::CVector3(p.GetX(), p.GetY(), 0.0));

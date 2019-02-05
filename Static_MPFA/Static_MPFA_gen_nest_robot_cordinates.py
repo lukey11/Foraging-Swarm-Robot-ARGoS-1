@@ -53,27 +53,6 @@ print "forageRate=", forageRate
 #unit = np.sqrt(2*((1/2.0)**2))
 
 
-#for coords in results[:-1]:
-#    for xy in coords:
-#        distance = np.sqrt(xy[0]**2 + xy[1]**2)
-#        print "distance=", distance
-#        #print "unit=", unit
-#        print round(2*distance/0.16)
-#        quantity = num_Drobot*round(distance/unit)
-#        print "quantity", quantity
-#        if quantity > 30:
-#            quantity = 30
-#        total_robot += quantity
-	    
-#        coord_info.write("<distribute>\n")
-#        coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/4.0)+ ", " + str(xy[1]+gaps[-1]/4.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/4.0)+ ", " + str(xy[1]-gaps[-1]/4.0) + ", 0.0\"/>\n")
-#        coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
-#        coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
-#        coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
-#        coord_info.write("</entity>\n")
-#        coord_info.write("</distribute>\n\n")
-#        count += 1  
-        
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
     coord_info.write("<distribute>\n")
