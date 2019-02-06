@@ -133,7 +133,7 @@ NestPosition_83="-28.0, -20.0"
 NestPosition_84="-28.0, -28.0"
 
 
-NestRadius="0.30" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="5243" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0" NumOfBranches = "4"/>
+NestRadius="0.30" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="5243" VariableFoodPlacement="0" VaryForwardSpeedFlag = "1" NumOfBranches = "4"/>
 
   </loop_functions>
 

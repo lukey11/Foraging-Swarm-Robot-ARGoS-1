@@ -11,7 +11,7 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
-    files = ['1_8_19_constant_speed/Random_MPFA_r16_d5_tag20_4by4.xml', '1_8_19_constant_speed/Random_MPFA_rXXX_d17_tag328_16by16.xml', '1_8_19_constant_speed/Random_MPFA_rXXX_d82_tag8398_81by81.xml']
+    files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d17_tag328_16by16.xml']
     run_count = 5
     
     for file in files:
