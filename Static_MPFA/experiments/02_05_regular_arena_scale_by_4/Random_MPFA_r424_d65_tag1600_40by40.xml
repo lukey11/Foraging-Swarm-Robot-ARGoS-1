@@ -29,7 +29,7 @@
 
       <params>
 
-        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05"/>
+        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05" QuardArena="0"/>
       </params>
 
     </MPFA_controller>
@@ -41,40 +41,50 @@
     <!-- evolvable parameters -->
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
-         <settings BacktrackDelivery="1" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
-	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="4096" FoodRadius="0.05" MaxSimCounter="1" 
+         <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
+	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="1600" FoodRadius="0.05" MaxSimCounter="1" 
 	 MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" 
-	 NestPosition_1="10, 10.0" NestPosition_10="15.0, -15" NestPosition_11="5.4, -4.6" 
-	 NestPosition_12="5.0, -15" NestPosition_13="-5.0, 15.0" NestPosition_14="-5.0, 5.7" 
-	 NestPosition_15="-15.0, 15.0" NestPosition_16="-15.0, 5.0" NestPosition_17="-4.6, -5.4" 
-	 NestPosition_18="-5.0, -15.0" NestPosition_19="-15.0, -5.0" NestPosition_2="10, -10.0" 
-	 NestPosition_20="-15.0, -15.0" NestPosition_21="17.5, 17.5" NestPosition_22="17.5, 12.5" 
-	 NestPosition_23="12.5, 17.5" NestPosition_24="12.9, 12.3" NestPosition_25="17.5, 7.5" 
-	 NestPosition_26="17.5, 2.5" NestPosition_27="12.9, 7.6" NestPosition_28="12.5, 2.5" 
-	 NestPosition_29="7.5, 17.5" NestPosition_3="-10, 10.0" NestPosition_30="7.9, 12.6" 
-	 NestPosition_31="2.5, 17.5" NestPosition_32="2.5, 12.5" NestPosition_33="7.6, 6.9" 
-	 NestPosition_34="7.5, 2.5" NestPosition_35="2.7, 7.3" NestPosition_36="3.1, 2.1" 
-	 NestPosition_37="17.5, -2.2" NestPosition_38="17.5, -7.5" NestPosition_39="12.7, -2.5" 
-	 NestPosition_4="-10, -10.0" NestPosition_40="13.1, -7.7" NestPosition_41="17.5, -12.5" 
-	 NestPosition_42="17.5, -17.5" NestPosition_43="13.1, -12.3" 
-	 NestPosition_44="12.5, -17.5" NestPosition_45="7.5, -2.5" NestPosition_46="7.5, -6.7" 
-	 NestPosition_47="3.1, -2.1" NestPosition_48="2.7, -7.3" NestPosition_49="7.9, -12.9" 
-	 NestPosition_5="15.0, 15.0" NestPosition_50="7.5, -17.5" NestPosition_51="2.5, -12.5" 
-	 NestPosition_52="2.5, -17.3" NestPosition_53="-2.5, 17.5" NestPosition_54="-2.5, 12.7" 
-	 NestPosition_55="-7.7, 17.5" NestPosition_56="-7.5, 11.8" NestPosition_57="-2.5, 7.5" 
-	 NestPosition_58="-2.3, 3.3" NestPosition_59="-7.5, 8.1" NestPosition_6="15.0, 5" 
-	 NestPosition_60="-7.5, 2.5" NestPosition_61="-12.5, 17.5" NestPosition_62="-12.5, 13.1" 
-	 NestPosition_63="-17.5, 17.5" NestPosition_64="-17.5, 12.5" NestPosition_65="-12.5, 7.0" 
-	 NestPosition_66="-12.5, 2.5" NestPosition_67="-17.5, 7.5" NestPosition_68="-17.1, 2.9" 
-	 NestPosition_69="-2.1, -2.9" NestPosition_7="5.0, 15" NestPosition_70="-2.5, -7.5" 
-	 NestPosition_71="-7.0, -2.7" NestPosition_72="-7.0, -7.9" NestPosition_73="-2.5, -12.5" 
-	 NestPosition_74="-2.5, -17.5" NestPosition_75="-7.1, -12.1" NestPosition_76="-7.5, -17.5" 
-	 NestPosition_77="-12.5, -2.5" NestPosition_78="-12.1, -7.1" NestPosition_79="-17.5, -2.5" 
-	 NestPosition_8="5.4, 4.6" NestPosition_80="-17.5, -7.5" NestPosition_81="-12.1, -12.9" 
-	 NestPosition_82="-12.5, -17.5" NestPosition_83="-17.5, -12.5" NestPosition_84="-17.5, -17.5" 
-	 NestPosition_9="15.0, -5" NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
-	 PowerlawFoodUnitCount="4096" 
-	 VariableFoodPlacement="0"/>
+	 NestPosition_1="17.5, 17.5" 
+	 NestPosition_10="7.9, 12.6" 
+	 NestPosition_11="2.5, 17.5" 
+	 NestPosition_12="2.5, 12.5" 
+	 NestPosition_13="7.6, 6.9" 
+	 NestPosition_14="7.5, 2.5" 
+	 NestPosition_15="2.7, 7.3" 
+	 NestPosition_16="3.1, 2.1" 
+	 NestPosition_17="17.5, -2.2" 
+	 NestPosition_18="17.5, -7.5" 
+	 NestPosition_19="12.7, -2.5" 
+	 NestPosition_2="17.5, 12.5" 
+	 NestPosition_20="13.1, -7.7" 
+	 NestPosition_21="17.5, -12.5" 
+	 NestPosition_22="17.5, -17.5" 
+	 NestPosition_23="13.1, -12.3" 
+	 NestPosition_24="12.5, -17.5" 
+	 NestPosition_25="7.5, -2.5" 
+	 NestPosition_26="7.5, -6.7" 
+	 NestPosition_27="3.1, -2.1" NestPosition_28="2.7, -7.3" NestPosition_29="7.9, -12.9" 
+	 NestPosition_3="12.5, 17.5" NestPosition_30="7.5, -17.5" NestPosition_31="2.5, -12.5" 
+	 NestPosition_32="2.5, -17.3" NestPosition_33="-2.5, 17.5" NestPosition_34="-2.5, 12.7" 
+	 NestPosition_35="-7.7, 17.5" NestPosition_36="-7.5, 11.8" NestPosition_37="-2.5, 7.5" 
+	 NestPosition_38="-2.3, 3.3" NestPosition_39="-7.5, 8.1" NestPosition_4="12.9, 12.3" 
+	 NestPosition_40="-7.5, 2.5" NestPosition_41="-12.5, 17.5" 
+	 NestPosition_42="-12.5, 13.1" NestPosition_43="-17.5, 17.5" 
+	 NestPosition_44="-17.5, 12.5" NestPosition_45="-12.5, 7.0" 
+	 NestPosition_46="-12.5, 2.5" NestPosition_47="-17.5, 7.5" 
+	 NestPosition_48="-17.1, 2.9" NestPosition_49="-2.1, -2.9" 
+	 NestPosition_5="17.5, 7.5" NestPosition_50="-2.5, -7.5" 
+	 NestPosition_51="-7.0, -2.7" NestPosition_52="-7.0, -7.9" 
+	 NestPosition_53="-2.5, -12.5" NestPosition_54="-2.5, -17.5" 
+	 NestPosition_55="-7.1, -12.1" NestPosition_56="-7.5, -17.5" 
+	 NestPosition_57="-12.5, -2.5" NestPosition_58="-12.1, -7.1" 
+	 NestPosition_59="-17.5, -2.5" NestPosition_6="17.5, 2.5" 
+	 NestPosition_60="-17.5, -7.5" NestPosition_61="-12.1, -12.9" 
+	 NestPosition_62="-12.5, -17.5" NestPosition_63="-17.5, -12.5" 
+	 NestPosition_64="-17.5, -17.5" NestPosition_7="12.9, 7.6" 
+	 NestPosition_8="12.5, 2.5" NestPosition_9="7.5, 17.5" 
+	 NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
+	 PowerlawFoodUnitCount="4096" VaryCapacityFlag = "1" VaryForwardSpeedFlag = "0" VariableFoodPlacement="0"/>
 
   </loop_functions>
 
@@ -107,11 +117,12 @@
     
    <!--Distribute foraging robots -->   
 
+<!--
 <distribute>
-<position center="10.0, 10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="10.0, 10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D0">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F0">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
@@ -119,31 +130,20 @@
 
 
 <distribute>
-<position center="10.0, -10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="10.0, -10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D1">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F1">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-10.0, 10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-10.0, 10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D2">
-<controller config="MPFA"/>
-</foot-bot>
-</entity>
-</distribute>
-
-
-<distribute>
-<position center="-10.0, -10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
-<orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D3">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F2">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
@@ -151,10 +151,10 @@
 
 
 <distribute>
-<position center="15.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-10.0, -10.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D4">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F3">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
@@ -162,10 +162,10 @@
 
 
 <distribute>
-<position center="15.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="15.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D5">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F4">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
@@ -173,144 +173,156 @@
 
 
 <distribute>
-<position center="15.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="15.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D6">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F5">
+<controller config="MPFA"/>
+</foot-bot>
+</entity>
+</distribute>
+
+
+<distribute>
+<position center="15.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<orientation method="constant" values="0.0, 0.0, 0.0"/>
+<entity max_trials="100" quantity="4">
+<foot-bot id="F6">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="15.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="15.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D7">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F7">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="5.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="5.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D8">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F8">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="5.5, 4.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="5.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D9">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F9">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="5.5, -4.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="5.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D10">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F10">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="5.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="5.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D11">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F11">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-5.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-5.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D12">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F12">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-5.0, 5.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-5.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D13">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F13">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-4.5, -5.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-5.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D14">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F14">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-5.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-5.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D15">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F15">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-15.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-15.0, 15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D16">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F16">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-15.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-15.0, 5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D17">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F17">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-15.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-15.0, -5.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D18">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F18">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
 
 <distribute>
-<position center="-15.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-15.0, -15.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
-<entity max_trials="100" quantity="2">
-<foot-bot id="D19">
+<entity max_trials="100" quantity="4">
+<foot-bot id="F19">
 <controller config="MPFA"/>
 </foot-bot>
 </entity>
 </distribute>
+-->
 
 <distribute>
 <position center="17.5, 17.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
@@ -322,7 +334,6 @@
 </entity>
 </distribute>
 
-
 <distribute>
 <position center="17.5, 18.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
@@ -332,6 +343,7 @@
 </foot-bot>
 </entity>
 </distribute>
+
 <distribute>
 <position center="17.5, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
@@ -405,7 +417,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="17.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F25">
@@ -414,7 +426,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="17.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="17.5, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D25">
@@ -468,7 +480,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, 18, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, 18.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D28">
@@ -477,7 +489,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.7, 12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F29">
@@ -486,7 +498,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.7, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, 13.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D29">
@@ -494,9 +506,8 @@
 </foot-bot>
 </entity>
 </distribute>
-
 <distribute>
-<position center="13, 7.3, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F30">
@@ -505,7 +516,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="13, 7.8, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, 8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D30">
@@ -532,7 +543,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -2.7, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F32">
@@ -541,7 +552,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="12.5, -2.2, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D32">
@@ -550,7 +561,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="13, -8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F33">
@@ -559,7 +570,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="13, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D33">
@@ -568,7 +579,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="13, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="12.5, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F34">
@@ -577,7 +588,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="13, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="12.5, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D34">
@@ -603,7 +614,6 @@
 </foot-bot>
 </entity>
 </distribute>
-
 <distribute>
 <position center="7.5, 17.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
@@ -623,7 +633,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.7, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F37">
@@ -632,7 +642,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.7, 13.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="7.5, 13.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D37">
@@ -640,9 +650,8 @@
 </foot-bot>
 </entity>
 </distribute>
-
 <distribute>
-<position center="7.5, 6.6, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F38">
@@ -651,7 +660,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, 7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="7.5, 8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D38">
@@ -659,7 +668,6 @@
 </foot-bot>
 </entity>
 </distribute>
-
 <distribute>
 <position center="7.5, 2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
@@ -678,7 +686,6 @@
 </foot-bot>
 </entity>
 </distribute>
-
 
 <distribute>
 <position center="7.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
@@ -699,7 +706,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -6.8, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F41">
@@ -708,7 +715,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.5, -6.4, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="7.5, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D41">
@@ -717,7 +724,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.7, -13, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="7.5, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F42">
@@ -726,7 +733,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="7.7, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="7.5, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D42">
@@ -789,7 +796,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F46">
@@ -798,7 +805,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="2.5, 8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D46">
@@ -807,7 +814,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.9, 1.8, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, 2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F47">
@@ -816,7 +823,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.9, 2.3, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="2.5, 3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D47">
@@ -825,7 +832,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="3.0, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="2.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F48">
@@ -834,7 +841,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="2.8, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="2.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D48">
@@ -951,7 +958,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.3, 3, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, 2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F55">
@@ -960,7 +967,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.3, 3.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-2.5, 3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D55">
@@ -969,7 +976,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.3, -3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-2.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F56">
@@ -978,7 +985,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-2.3, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-2.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D56">
@@ -1059,7 +1066,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 11.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F61">
@@ -1068,7 +1075,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-7.5, 13.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D61">
@@ -1077,7 +1084,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 7.9, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F62">
@@ -1086,7 +1093,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.5, 8.4, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-7.5, 8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D62">
@@ -1113,7 +1120,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.0, -3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F64">
@@ -1122,7 +1129,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.0, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-7.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D64">
@@ -1131,7 +1138,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.0, -8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F65">
@@ -1140,7 +1147,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.0, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-7.5, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D65">
@@ -1149,7 +1156,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.2, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-7.5, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F66">
@@ -1158,7 +1165,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-7.2, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-7.5, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D66">
@@ -1203,7 +1210,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 13, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F69">
@@ -1212,7 +1219,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 13.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, 13.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D69">
@@ -1221,7 +1228,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F70">
@@ -1230,7 +1237,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, 7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, 8.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D70">
@@ -1257,7 +1264,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F72">
@@ -1266,7 +1273,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -1.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, -2.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D72">
@@ -1275,7 +1282,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.2, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -7.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F73">
@@ -1284,7 +1291,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.2, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, -7.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D73">
@@ -1293,7 +1300,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.3, -13, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-12.5, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F74">
@@ -1302,7 +1309,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.3, -12.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, -12.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D74">
@@ -1320,7 +1327,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-12.5, -17, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-12.5, -17.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D75">
@@ -1383,7 +1390,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.2, 2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
+<position center="-17.5, 2.5, 0.0" distances="0.3, 0.3, 0.0" layout="2, 2, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="4">
 <foot-bot id="F79">
@@ -1392,7 +1399,7 @@
 </entity>
 </distribute>
 <distribute>
-<position center="-17.2, 3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
+<position center="-17.5, 3.0, 0.0" distances="0.3, 0.3, 0.0" layout="2, 1, 1" method="grid"/>
 <orientation method="constant" values="0.0, 0.0, 0.0"/>
 <entity max_trials="100" quantity="2">
 <foot-bot id="D79">
@@ -1472,7 +1479,7 @@
 </foot-bot>
 </entity>
 </distribute>
-  
+
   </arena> 
     
   <!-- ******************* -->
@@ -1490,12 +1497,11 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
-<!-- <visualization>
+ <visualization>
 
 <qt-opengl>
       <camera>
-        <placement idx="0" lens_focal_length="25" look_at="0, 0, 0" position="  0, 0, 10"/>
+        <placement idx="0" position="  0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
       </camera>
       <user_functions label="MPFA_qt_user_functions"/>
     </qt-opengl>

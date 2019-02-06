@@ -18,13 +18,13 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 128
+arena_width = 40
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 
-gaps = [64, 32, 16, 8]
+gaps = [20, 10, 5]
 branch =4
 results=[]
 for k in gaps:
@@ -35,8 +35,8 @@ for k in gaps:
 coord_info =open("coord_for_worldFile.xml", "w")
 coord_info_text = open("coord.xml", "w")
 
-shift = 32
-#shift = 0
+#shift = 32
+shift = 0
 count =1;
 
 for coords in results:
@@ -56,14 +56,18 @@ speed = 0.16
 num_Drobot = 1
 forageRate = 110/1800.0
 print "forageRate=", forageRate
-idx =0;
+varyCapacity = 1
+idx =0
 for coords in results[:-1]:
     for xy in coords:
 	print "nest location =[",xy[0],", ",xy[1], "]"
-        distance = np.sqrt(2*(gaps[idx]/2.0)**2)
-        print "distance=", distance
-        print (forageRate*2*distance)/speed
-        quantity = math.ceil((forageRate*2*distance)/speed)
+	if(varyCapacity):
+	    quantity = 2
+	else:
+            distance = np.sqrt(2*(gaps[idx]/2.0)**2)
+            print "distance=", distance
+            print (forageRate*2*distance)/speed
+            quantity = math.ceil((forageRate*2*distance)/speed)
     
         print "quantity", quantity
 
@@ -78,13 +82,15 @@ for coords in results[:-1]:
         count += 1  
     idx += 1    
 
-print "nest location =[",xy[0],", ",xy[1], "]"
-distance = np.sqrt(2*(gaps[-1]/2.0)**2)
-print "distance=", distance
-#print "unit=", unit
-print (forageRate*2*distance)/speed
-quantity = math.ceil((forageRate*2*distance)/speed)
-    
+if(varyCapacity):
+    quantity = 2
+else:
+    print "nest location =[",xy[0],", ",xy[1], "]"
+    distance = np.sqrt(2*(gaps[-1]/2.0)**2)
+    print "distance=", distance
+    #print "unit=", unit
+    print (forageRate*2*distance)/speed
+    quantity = math.ceil((forageRate*2*distance)/speed)
 print "quantity", quantity
 
 
