@@ -17,8 +17,9 @@ if __name__ == "__main__":
     #files = ['1_8_19_constant_speed/Random_MPFA_r16_d5_tag20_4by4.xml', '1_8_19_constant_speed/Random_MPFA_rXXX_d17_tag328_16by16.xml']
     #files = ['Widths_32_48_64_96/Test_Random_MPFA_r24_d5_tag82_8by8.xml', 'Widths_32_48_64_96/Test_Random_MPFA_r16_d5_tag328_16by16.xml', 'Widths_32_48_64_96/Test_Random_MPFA_r16_d5_tag737_24by24.xml']
     #files = ['1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag82_8by8.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag328_16by16.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag415_18by18.xml']
-    files = ['02_05_regular_arena_scale_by_4/Random_MPFA_r24_d5_tag100_10by10.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r104_d17_tag400_20by20.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r424_d65_tag1600_40by40.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r1704_d257_tag6400_80by80.xml']
-    run_count = 10
+    #files = ['02_05_regular_arena_scale_by_4/Random_MPFA_r24_d5_tag100_10by10.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r104_d17_tag400_20by20.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r424_d65_tag1600_40by40.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r1704_d257_tag6400_80by80.xml']
+    files = ['02_05_regular_arena_scale_by_4/Random_MPFA_r1704_d257_tag6400_80by80.xml']
+    run_count = 3
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)
