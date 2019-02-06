@@ -119,10 +119,12 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
            if(!BacktrackDelivery){
                size_t parent_id = Nests[i].GetParentNestIdx();    
                vector<Nest*> parentNests;
+               size_t gens = 1; //we only consider two generations of parents
                parentNests.push_back(&Nests[parent_id]);
-               while (parent_id != 0){
+               while (parent_id != 0 && gens < 2){
                    parent_id = Nests[parent_id].GetParentNestIdx();
                    parentNests.push_back(&Nests[parent_id]);
+                   gens++;
                    }//end while
                Nests[i].SetParentNestIdx_no_backtrack(parentNests); 
            }//end if

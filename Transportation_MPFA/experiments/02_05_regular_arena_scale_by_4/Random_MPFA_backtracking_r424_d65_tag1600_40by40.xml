@@ -29,7 +29,7 @@
 
       <params>
 
-        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05"/>
+        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05" QuardArena="0"/>
       </params>
 
     </MPFA_controller>
@@ -42,7 +42,7 @@
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
          <settings BacktrackDelivery="1" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
-	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="4096" FoodRadius="0.05" MaxSimCounter="1" 
+	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="1600" FoodRadius="0.05" MaxSimCounter="1" 
 	 MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="0.0, 0.0" 
 	 NestPosition_1="10, 10.0" NestPosition_10="15.0, -15" NestPosition_11="5.4, -4.6" 
 	 NestPosition_12="5.0, -15" NestPosition_13="-5.0, 15.0" NestPosition_14="-5.0, 5.7" 
@@ -72,9 +72,9 @@
 	 NestPosition_77="-12.5, -2.5" NestPosition_78="-12.1, -7.1" NestPosition_79="-17.5, -2.5" 
 	 NestPosition_8="5.4, 4.6" NestPosition_80="-17.5, -7.5" NestPosition_81="-12.1, -12.9" 
 	 NestPosition_82="-12.5, -17.5" NestPosition_83="-17.5, -12.5" NestPosition_84="-17.5, -17.5" 
-	 NestPosition_9="15.0, -5" NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
-	 PowerlawFoodUnitCount="4096" 
-	 VariableFoodPlacement="0"/>
+	 NestPosition_9="15.0, -5"
+	 NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
+	 PowerlawFoodUnitCount="1600" VaryCapacityFlag = "1" VaryForwardSpeedFlag = "0" VariableFoodPlacement="0" NumOfBranches = "4"/>
 
   </loop_functions>
 
@@ -1472,7 +1472,7 @@
 </foot-bot>
 </entity>
 </distribute>
-  
+
   </arena> 
     
   <!-- ******************* -->
@@ -1490,12 +1490,11 @@
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-
 <!-- <visualization>
 
 <qt-opengl>
       <camera>
-        <placement idx="0" lens_focal_length="25" look_at="0, 0, 0" position="  0, 0, 10"/>
+        <placement idx="0" position="  0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
       </camera>
       <user_functions label="MPFA_qt_user_functions"/>
     </qt-opengl>
