@@ -13,9 +13,8 @@ if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
     #files = ['Random_MPFA_r1192_d256_tag16384_80by80.xml', 'Random_MPFA_r296_d64_tag4096_40by40.xml', 'Random_MPFA_r16_d4_tag256_10by10.xml', 'Random_MPFA_r72_d16_tag1024_20by20.xml']
     #files = ['Random_MPFA_backtracking_r296_d64_tag64_40by40.xml', 'Random_MPFA_backtracking_r296_d64_tag256_40by40.xml', 'Random_MPFA_backtracking_r296_d64_tag1024_40by40.xml', 'Random_MPFA_backtracking_r296_d64_tag16384_40by40.xml']
-    files = ['1_8_19_constant_speed/Random_MPFA_r16_d5_tag20_4by4.xml']
-    #files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d82_tag8398_81by81.xml']
-    run_count = 5
+    files = ['02_04_19_vary_speed_constant_capacity/Random_MPFA_16by16_mapTo_rXXX_d65_tag1024_32by32.xml', '02_04_19_vary_speed_constant_capacity/Random_MPFA_64by64_mapTo_rXXX_d257_tag16384_128by128.xml', '02_04_19_vary_speed_constant_capacity/Random_MPFA_r20_d5_tag4_2by2.xml', '02_04_19_vary_speed_constant_capacity/Random_MPFA_rXXX_d17_tag64_8by8.xml']
+    run_count = 10
     
     for file in files:
         print file

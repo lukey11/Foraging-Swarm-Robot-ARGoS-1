@@ -11,8 +11,8 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
-    files = ['1_8_19_constant_speed/Random_MPFA_rXXX_d17_tag328_16by16.xml']
-    run_count = 5
+    files = ['02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r24_d5_tag100_10by10.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r104_d17_tag400_20by20.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r424_d65_tag1600_40by40.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r1704_d257_tag6400_80by80.xml']
+    run_count = 10
     
     for file in files:
         print file
@@ -22,12 +22,10 @@ if __name__ == "__main__":
         #result =[]
         for _ in range(run_count):
             print "Run "+str(count)
+	    singleRun_StartTime =  time.time()
             count = count+1
             output = subprocess.check_output(['argos3 -n -c ' + this_run.argos_xml], shell=True, stderr=subprocess.STDOUT)
-            #elemnts = output.replace('\n', ',').split(',')
-            #result.append(elemnts[-5])
-        #for ele in result:
-        #    outputFile.write(ele+' ')
-        #outputFile.close()
+	    singleRun_EndTime = time.time()
+	    print 'This run takes '+str((singleRun_EndTime-singleRun_StartTime)/60.0)+' minutes...' 
         endTime = time.time()
         print 'The total running time is '+str((endTime-startTime)/60.0)+' minutes...'

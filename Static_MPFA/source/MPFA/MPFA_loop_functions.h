@@ -5,7 +5,6 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/simulator/entity/floor_entity.h>
 #include <source/MPFA/MPFA_controller.h>
-#include <argos3/plugins/simulator/entities/cylinder_entity.h>
 
 using namespace argos;
 
@@ -116,7 +115,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		argos::Real SearchRadiusSquared;
         
         size_t VaryForwardSpeedFlag;
-
+        size_t VaryCapacityFlag;
   argos::Real NestPosition_0; //qilu 09/06/2016
   argos::Real NestPosition_1;
   argos::Real NestPosition_2;

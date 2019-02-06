@@ -5,6 +5,7 @@
 #include <source/Base/Pheromone.h>
 #include <source/Base/Nest.h> //qilu 09/06
 #include <source/MPFA/MPFA_loop_functions.h>
+#include <argos3/core/simulator/entity/floor_entity.h>
 /* Definition of the LEDs actuator */
 #include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 
@@ -31,6 +32,7 @@ class MPFA_controller : public BaseController {
 		bool IsInTheNest();
         bool IsInTargetNest();
 		Real FoodDistanceTolerance;
+        size_t QuardArena;
 
 		void SetLoopFunctions(MPFA_loop_functions* lf);
   void SetClosestNest();//qilu 07/26/2016

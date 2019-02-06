@@ -68,6 +68,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
     argos::GetNodeAttribute(settings_node, "VaryForwardSpeedFlag", VaryForwardSpeedFlag);
+    argos::GetNodeAttribute(settings_node, "VaryCapacityFlag", VaryCapacityFlag);
 	argos::GetNodeAttribute(settings_node, "OutputData", OutputData);
 	argos::GetNodeAttribute(settings_node, "DrawIDs", DrawIDs);
 	argos::GetNodeAttribute(settings_node, "DrawTrails", DrawTrails);
@@ -113,14 +114,19 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 8;
+    int unitCapacity = 4;
+    Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
     for(int i=0; i < Nests.size(); i++)
     {
         distance = sqrt(Nests[i].GetLocation().SquareLength());
-        capacity = unitCapacity*round(distance/sqrt(2*(pow(regionWidth/2.0, 2))));// is the diagonal distance of a region
+	if(VaryCapacityFlag){//vary capacity
+            capacity = unitCapacity*round(distance/unitDist);// is the diagonal distance of a region
+        }
+        else{
+            capacity = unitCapacity;
+	}
         Nests[i].SetDeliveryCapacity(capacity);
         total_capacity += capacity;
-        //argos::LOG<<"distance="<<distance<<endl;
         argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
 	    Nests[i].SetNestRadius(NestRadius, ArenaWidth, Nests.size());
     }
@@ -274,7 +280,11 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
          
-        string header = "./results/"+type+"_static_MPFA_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+         
+        ostringstream varySpeed_str;
+        varySpeed_str << VaryForwardSpeedFlag;
+         
+        string header = "./results/"+type+"_static_MPFA_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_"+ varySpeed_str.str()+"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
        /* Real total_travel_time=0;
@@ -299,7 +309,7 @@ void MPFA_loop_functions::PostExperiment() {
 		total_travel_time += SimTime-c2.GetSearchingTime();
             }*/         
         }
-        //travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
+        //travelSearchTimeDataOutput<< total_trave
         //travelSearchTimeDataOutput.close(); */   
              
         ofstream dataOutput( (header+ "iAntTagData.txt").c_str(), ios::app);
