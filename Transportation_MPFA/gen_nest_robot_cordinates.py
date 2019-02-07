@@ -18,13 +18,14 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 40
+arena_width = 128
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 
-gaps = [20, 10, 5]
+gaps = [64, 32, 16, 8]
+varyCapacity = 0 #0:constant capacity; 1:vary capacity
 branch =4
 results=[]
 for k in gaps:
@@ -35,8 +36,7 @@ for k in gaps:
 coord_info =open("coord_for_worldFile.xml", "w")
 coord_info_text = open("coord.xml", "w")
 
-#shift = 32
-shift = 0
+shift = arena_width/4.0
 count =1;
 
 for coords in results:
@@ -56,7 +56,7 @@ speed = 0.16
 num_Drobot = 1
 forageRate = 110/1800.0
 print "forageRate=", forageRate
-varyCapacity = 1
+
 idx =0
 for coords in results[:-1]:
     for xy in coords:
