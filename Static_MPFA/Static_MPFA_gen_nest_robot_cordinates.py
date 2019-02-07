@@ -17,12 +17,12 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 10
+arena_width = 32
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
-gaps = [5]
+gaps = [4]
 results=[]
 for k in gaps:
   print k
@@ -31,7 +31,7 @@ for k in gaps:
 
 coord_info =open("coord_for_worldFile.xml", "w")
 coord_info_text = open("coord.xml", "w")
-shift = 0
+shift = arena_width/4.0
 count =1;
 for coords in results:
     for xy in coords:
@@ -52,7 +52,7 @@ forageRate = 110/1800.0
 print "forageRate=", forageRate
 #unit = np.sqrt(2*((gaps[-1]/2.0)**2))
 #unit = np.sqrt(2*((1/2.0)**2))
-varyCapacity = 1
+varyCapacity = 0
 
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
