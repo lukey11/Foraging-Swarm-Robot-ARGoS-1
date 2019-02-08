@@ -324,7 +324,7 @@ void MPFA_loop_functions::PostExperiment() {
 	ostringstream varySpeed_str;
         varySpeed_str << VaryForwardSpeedFlag;
          
-        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+ varySpeed_str.str()+"_";
+        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_"+ varySpeed_str.str()+"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         
