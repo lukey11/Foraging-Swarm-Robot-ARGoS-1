@@ -23,6 +23,7 @@ max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 gaps = [4]
+varyCapacity = 0
 results=[]
 for k in gaps:
   print k
@@ -52,7 +53,6 @@ forageRate = 110/1800.0
 print "forageRate=", forageRate
 #unit = np.sqrt(2*((gaps[-1]/2.0)**2))
 #unit = np.sqrt(2*((1/2.0)**2))
-varyCapacity = 0
 
 # there are foraging and delivering robots in each region
 for xy in results[-1]:

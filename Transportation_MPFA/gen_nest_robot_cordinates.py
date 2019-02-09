@@ -18,14 +18,15 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 128
+arena_width = 20
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 
-gaps = [64, 32, 16, 8]
-varyCapacity = 0 #0:constant capacity; 1:vary capacity
+gaps = [10, 5]
+varyCapacity = 1 #0:constant capacity; 1:vary capacity
+shift =0;
 branch =4
 results=[]
 for k in gaps:
@@ -36,7 +37,8 @@ for k in gaps:
 coord_info =open("coord_for_worldFile.xml", "w")
 coord_info_text = open("coord.xml", "w")
 
-shift = arena_width/4.0
+#shift = arena_width/4.0
+
 count =1;
 
 for coords in results:
@@ -97,15 +99,17 @@ print "quantity", quantity
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0]-shift+0.5)+ ", " + str(xy[1]-shift+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift)+ ", " + str(xy[1]-shift) + ", 0.0\"/>\n")
+    #coord_info.write("<position max=\"" + str(xy[0]-shift+0.5)+ ", " + str(xy[1]-shift+0.5) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift)+ ", " + str(xy[1]-shift) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/5.0)+ ", " + str(xy[1]-shift+gaps[-1]/5.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/5.0)+ ", " + str(xy[1]-shift-gaps[-1]/5.0) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\"4\">\n")
-    coord_info.write("<foot-bot id=\"F" + str(count) + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+    coord_info.write("<foot-bot id=\"F" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
     coord_info.write("</entity>\n")
     coord_info.write("</distribute>\n\n")
     
     coord_info.write("<distribute>\n")
-    coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
+    #coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
+    coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/5.0)+ ", " + str(xy[1]-shift+gaps[-1]/5.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/5.0)+ ", " + str(xy[1]-shift-gaps[-1]/5.0) + ", 0.0\"/>\n")
     coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
     coord_info.write("<entity max_trials=\"100\" quantity=\""  + str(int(quantity))  +  "\">\n")
     coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")

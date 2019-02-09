@@ -17,7 +17,8 @@ if __name__ == "__main__":
     #files = ['Random_MPFA_backtracking_r24_d4_tag256_10by10.xml', 'Random_MPFA_backtracking_r104_d16_tag1024_20by20.xml', 'Random_MPFA_backtracking_r424_d64_tag4096_40by40.xml', 'Random_MPFA_backtracking_r1704_d256_tag16384_80by80.xml']
     #files = ['02_04_19_constant_speed_constant_capacity/Random_MPFA_16by16_mapTo_rXXX_d65_tag1024_32by32.xml', '02_04_19_constant_speed_constant_capacity/Random_MPFA_64by64_mapTo_rXXX_d257_tag16384_128by128.xml', '02_04_19_constant_speed_constant_capacity/Random_MPFA_r20_d5_tag4_2by2.xml', '02_04_19_constant_speed_constant_capacity/Random_MPFA_rXXX_d17_tag64_8by8.xml']
     #files = ['02_04_19_constant_speed_constant_capacity/Random_MPFA_16by16_mapTo_r106_d65_tag1024_32by32.xml', '02_04_19_constant_speed_constant_capacity/Random_MPFA_r20_d5_tag4_2by2.xml', '02_04_19_constant_speed_constant_capacity/Random_MPFA_r104_d17_tag64_8by8.xml']
-    files = ['02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r24_d5_tag100_10by10.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r104_d17_tag400_20by20.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r424_d65_tag1600_40by40.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r1704_d257_tag6400_80by80.xml']
+    #files = ['02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r24_d5_tag100_10by10.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r104_d17_tag400_20by20.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r424_d65_tag1600_40by40.xml', '02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r1704_d257_tag6400_80by80.xml']
+    files = ['02_05_regular_arena_scale_by_4/Random_MPFA_backtracking_r104_d17_tag400_20by20.xml']
     run_count = 5
     for file in files:
 	print file
