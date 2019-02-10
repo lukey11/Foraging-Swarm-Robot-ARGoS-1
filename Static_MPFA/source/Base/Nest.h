@@ -33,7 +33,7 @@ class Nest {
         CVector2	GetLocation();
         void		SetLocation();
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void        SetNestRadius(Real radius, float regionWidth, size_t numNest);
+        void        SetNestRadius(int level, Real radius, float regionWidth, size_t numNest);
         argos::Real GetNestRadius();
         argos::Real GetNestRadiusSquared();
         void  SetNestIdx(size_t idx);

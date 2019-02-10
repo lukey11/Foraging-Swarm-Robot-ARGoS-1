@@ -35,7 +35,8 @@ class Nest {
         CVector2	GetLocation();
         void		SetLocation();
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void        SetNestRadius(int level, Real radius, int backtrackFlag);
+        void      SetNestRadius(int level, Real radius, int backtrackFlag);
+        //void        SetNestRadius(Real radius, float ArenaWidth, size_t nestNum);
         argos::Real GetNestRadius();
         argos::Real GetNestRadiusSquared();
         

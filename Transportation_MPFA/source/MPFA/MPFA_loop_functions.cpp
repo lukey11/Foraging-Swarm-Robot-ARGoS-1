@@ -86,6 +86,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     argos::GetNodeAttribute(settings_node, "BacktrackDelivery", BacktrackDelivery);
     argos::GetNodeAttribute(settings_node, "NumOfBranches", numBranch);
     
+    // calculate the forage range and compensate for the robot's radius of 0.085m
+	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
+	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
+	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
+	ForageRangeX.Set(-rangeX, rangeX);
+	ForageRangeY.Set(-rangeY, rangeY);
+
+    ArenaWidth = ArenaSize[0];
     
     string PosStrRegionNest;
     size_t numNestsInPreviousLevels =0, level=0; 
@@ -95,10 +103,10 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	    PosStrRegionNest = "NestPosition_"+ to_string(i);
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
-			argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
-            Nests[i] = Nest(NestPosition);
+		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
+                Nests[i] = Nest(NestPosition);
         	Nests[i].SetNestIdx(i);
-           if(i==0)
+               if(i==0)
 	       {
 		    numNestsInPreviousLevels++;
 		    Nests[i].SetLevel(level);
@@ -155,12 +163,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         revLevel = level - it->second.GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
         if(VaryCapacityFlag){//vary capacity
-            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+            it->second.SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
         }
         else{
             it->second.SetDeliveryCapacity(initCapcity);
             }
         it->second.SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
+        //it->second.SetNestRadius(NestRadius, ArenaWidth, Nests.size());
         CapacityDataOutput<<it->second.GetDeliveryCapacity()<<" ";
     }
             
@@ -179,14 +188,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
 
  
-	// calculate the forage range and compensate for the robot's radius of 0.085m
-	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
-	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
-	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
-	ForageRangeX.Set(-rangeX, rangeX);
-	ForageRangeY.Set(-rangeY, rangeY);
-
-    ArenaWidth = ArenaSize[0];
+    
 	// Send a pointer to this loop functions object to each controller.
 	argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	argos::CSpace::TMapPerType::iterator it;
