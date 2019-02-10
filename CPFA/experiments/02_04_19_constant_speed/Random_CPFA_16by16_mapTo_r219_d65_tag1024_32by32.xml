@@ -43,8 +43,8 @@
 
          <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
          DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="256" 
-	 FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestPosition="-7.5, -7.5"  
-	 NestElevation="0.001" NestRadius="0.80" NumberOfClusters="4" OutputData="0" 
+	 FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestPosition="-7.8, -7.8"  
+	 NestElevation="0.001" NestRadius="1.0" NumberOfClusters="4" OutputData="0" 
 	 PowerlawFoodUnitCount="256" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0"/>
 
   </loop_functions>
@@ -78,7 +78,7 @@
     
    <!--Distribute foraging robots --> 
 <distribute>
-<position max="5.0, 5.0, 0.0" method="uniform" min="-5.0, -5.0, 0.0"/>
+<position max="-2.0, -2.0, 0.0" method="uniform" min="-7.0, -7.0, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
 <entity max_trials="100" quantity="219">
 <foot-bot id="F0-"><controller config="CPFA"/></foot-bot>
@@ -104,7 +104,7 @@
   <!-- ****************** -->
 
 
-<!--<visualization>
+<!-- <visualization>
 
 <qt-opengl>
       <camera>

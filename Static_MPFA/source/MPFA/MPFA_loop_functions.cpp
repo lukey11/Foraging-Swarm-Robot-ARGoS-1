@@ -101,8 +101,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	    PosStrRegionNest = "NestPosition_"+ to_string(i);
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
-			argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
-			Nests.push_back(Nest(NestPosition));
+		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
+		Nests.push_back(Nest(NestPosition));
         	Nests[i].SetNestIdx(i);
     
          }// end if
@@ -110,7 +110,16 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
      
      float regionWidth = ArenaWidth/sqrt((Nests.size()-1));
      argos::LOG<<"regionWidth="<<regionWidth<<endl;
-     
+     level = log(Nests.size()-1)/log(4);
+    argos::LOG<< "level="<<level<<endl;         
+         ostringstream arena_width_str;
+    arena_width_str << GetSpace().GetArenaSize()[0];
+         
+    string header = "./results/MPFA_" +arena_width_str.str()+"by"+arena_width_str.str()+"_";
+    
+    size_t initCapcity = 4;
+    ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
+
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
@@ -120,17 +129,19 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     {
         distance = sqrt(Nests[i].GetLocation().SquareLength());
 	if(VaryCapacityFlag){//vary capacity
-            capacity = unitCapacity*round(distance/unitDist);// is the diagonal distance of a region
+            capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
         }
         else{
             capacity = unitCapacity;
-	}
+	    }
         Nests[i].SetDeliveryCapacity(capacity);
         total_capacity += capacity;
         argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
-	    Nests[i].SetNestRadius(NestRadius, ArenaWidth, Nests.size());
+	    Nests[i].SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
     }
     argos::LOG<< "total_capacity="<<total_capacity<<endl;         
+	CapacityDataOutput<<"\n";
+    CapacityDataOutput.close();
 		
     //NestRadiusSquared = NestRadius*NestRadius;
 	FoodRadiusSquared = FoodRadius*FoodRadius;
