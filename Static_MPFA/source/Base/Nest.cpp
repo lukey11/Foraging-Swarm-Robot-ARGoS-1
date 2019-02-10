@@ -55,7 +55,7 @@ void Nest::SetNestRadius(int level, Real radius, float ArenaWidth, size_t nestNu
         //NestRadius = radius * (1+log(nestNum-1)/log(4));
         //NestRadius = radius * (regionWidth/4.0) * (1+log(nestNum-1)/log(4));
         //NestRadius = pow(2, 1+log(nestNum-1)/log(4)) * radius;
-	argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
+	//argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
     }
     else
     {
