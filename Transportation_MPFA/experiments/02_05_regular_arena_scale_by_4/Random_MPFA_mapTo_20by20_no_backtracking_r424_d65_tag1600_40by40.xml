@@ -1,91 +1,118 @@
+<?xml version="1.0" ?><argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="0"/>
+    <experiment length="6000" random_seed="0" ticks_per_second="32"/>
+  </framework>
+
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+
+    <MPFA_controller id="MPFA" library="build/source/MPFA/libMPFA_controller">
+      <actuators>
+        <differential_steering implementation="default"/>
+        <leds implementation="default" medium="leds"/> 
+      </actuators>
+
+      <sensors>
+        <footbot_proximity implementation="default" show_rays="true"/>
+
+	<positioning implementation="default"/>	
+
+        <footbot_motor_ground implementation="rot_z_only"/>
+      </sensors>
+
+      <params>
+
+        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05" QuardArena="0"/>
+      </params>
+
+    </MPFA_controller>
+    
+  </controllers>
+
+  <loop_functions label="MPFA_loop_functions" library="build/source/MPFA/libMPFA_loop_functions">
+
+    <!-- evolvable parameters -->
+        <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
+
+         <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
+	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="400" FoodRadius="0.05" MaxSimCounter="1" 
+	 MaxSimTimeInSeconds="1800" NestElevation="0.001" 
+     
+     NestPosition_0="-9.8, -9.8" 
 NestPosition_1="0.0, 0.0"
-NestPosition_2="0.0, -20.0"
-NestPosition_3="-20.0, 0.0"
-NestPosition_4="-20.0, -20.0"
-NestPosition_5="5.0, 5.0"
-NestPosition_6="5.0, -5.0"
-NestPosition_7="5.0, -15.0"
-NestPosition_8="5.0, -25.0"
-NestPosition_9="-5.0, 5.0"
-NestPosition_10="-5.0, -5.0"
-NestPosition_11="-5.0, -15.0"
-NestPosition_12="-5.0, -25.0"
-NestPosition_13="-15.0, 5.0"
-NestPosition_14="-15.0, -5.0"
-NestPosition_15="-15.0, -15.0"
-NestPosition_16="-15.0, -25.0"
-NestPosition_17="-25.0, 5.0"
-NestPosition_18="-25.0, -5.0"
-NestPosition_19="-25.0, -15.0"
-NestPosition_20="-25.0, -25.0"
+
+NestPosition_5="5.5, 5.0"
+NestPosition_6="5.5, -5.0"
+
+NestPosition_7="-5.5, 5.0"
+NestPosition_8="-5.5, -5.0"
+
 NestPosition_21="7.5, 7.5"
 NestPosition_22="7.5, 2.5"
-NestPosition_23="7.5, -2.5"
-NestPosition_24="7.5, -7.5"
-NestPosition_25="7.5, -12.5"
-NestPosition_26="7.5, -17.5"
-NestPosition_27="7.5, -22.5"
-NestPosition_28="7.5, -27.5"
-NestPosition_29="2.5, 7.5"
-NestPosition_30="2.5, 2.5"
-NestPosition_31="2.5, -2.5"
-NestPosition_32="2.5, -7.5"
-NestPosition_33="2.5, -12.5"
-NestPosition_34="2.5, -17.5"
-NestPosition_35="2.5, -22.5"
-NestPosition_36="2.5, -27.5"
-NestPosition_37="-2.5, 7.5"
-NestPosition_38="-2.5, 2.5"
-NestPosition_39="-2.5, -2.5"
-NestPosition_40="-2.5, -7.5"
-NestPosition_41="-2.5, -12.5"
-NestPosition_42="-2.5, -17.5"
-NestPosition_43="-2.5, -22.5"
-NestPosition_44="-2.5, -27.5"
-NestPosition_45="-7.5, 7.5"
-NestPosition_46="-7.5, 2.5"
-NestPosition_47="-7.5, -2.5"
-NestPosition_48="-7.5, -7.5"
-NestPosition_49="-7.5, -12.5"
-NestPosition_50="-7.5, -17.5"
-NestPosition_51="-7.5, -22.5"
-NestPosition_52="-7.5, -27.5"
-NestPosition_53="-12.5, 7.5"
-NestPosition_54="-12.5, 2.5"
-NestPosition_55="-12.5, -2.5"
-NestPosition_56="-12.5, -7.5"
-NestPosition_57="-12.5, -12.5"
-NestPosition_58="-12.5, -17.5"
-NestPosition_59="-12.5, -22.5"
-NestPosition_60="-12.5, -27.5"
-NestPosition_61="-17.5, 7.5"
-NestPosition_62="-17.5, 2.5"
-NestPosition_63="-17.5, -2.5"
-NestPosition_64="-17.5, -7.5"
-NestPosition_65="-17.5, -12.5"
-NestPosition_66="-17.5, -17.5"
-NestPosition_67="-17.5, -22.5"
-NestPosition_68="-17.5, -27.5"
-NestPosition_69="-22.5, 7.5"
-NestPosition_70="-22.5, 2.5"
-NestPosition_71="-22.5, -2.5"
-NestPosition_72="-22.5, -7.5"
-NestPosition_73="-22.5, -12.5"
-NestPosition_74="-22.5, -17.5"
-NestPosition_75="-22.5, -22.5"
-NestPosition_76="-22.5, -27.5"
-NestPosition_77="-27.5, 7.5"
-NestPosition_78="-27.5, 2.5"
-NestPosition_79="-27.5, -2.5"
-NestPosition_80="-27.5, -7.5"
-NestPosition_81="-27.5, -12.5"
-NestPosition_82="-27.5, -17.5"
-NestPosition_83="-27.5, -22.5"
-NestPosition_84="-27.5, -27.5"
+NestPosition_23="2.5, 7.5"
+NestPosition_24="2.5, 2.5"
+
+NestPosition_25="7.5, -2.5"
+NestPosition_26="7.5, -7.5"
+NestPosition_27="2.5, -2.5"
+NestPosition_28="2.5, -7.5"
+
+NestPosition_29="-2.5, 7.5"
+NestPosition_30="-2.5, 2.5"
+NestPosition_31="-7.5, 7.5"
+NestPosition_32="-7.5, 2.5"
+
+NestPosition_33="-2.5, -2.5"
+NestPosition_34="-2.5, -7.5"
+NestPosition_35="-7.5, -2.5"
+NestPosition_36="-7.5, -7.5"
+
+
+NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
+	 PowerlawFoodUnitCount="400" VaryCapacityFlag = "1" VaryForwardSpeedFlag = "0" VariableFoodPlacement="0" NumOfBranches = "4"/>
+
+  </loop_functions>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena center="0,0,0.5" size="20.0, 20.0, 1">
+
+    <floor id="floor" pixels_per_meter="10" source="loop_functions"/>
+    
+    <!-- Place four boxes in a square to delimit the arena -->
+    <box id="wall_north1" movable="false" size="20,0.05,0.5">
+      <body orientation="0,0,0" position="0,10,0"/>
+    </box> 
+    
+    
+    <box id="wall_south" movable="false" size="20,0.05,0.5">
+      <body orientation="0,0,0" position="0,-10,0"/>
+    </box>
+    
+    <box id="wall_east" movable="false" size="0.05,20,0.5">
+      <body orientation="0,0,0" position="10,0,0"/>
+    </box>
+    
+    
+    <box id="wall_west" movable="false" size="0.05,20,0.5">
+      <body orientation="0,0,0" position="-10,0,0"/>
+    </box>
+    
+    
+   <!--Distribute foraging robots -->   
+
 <distribute>
 <position max="0.833333333333, 0.833333333333, 0.0" method="uniform" min="-0.833333333333, -0.833333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D0-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -94,7 +121,7 @@ NestPosition_84="-27.5, -27.5"
 <distribute>
 <position max="5.83333333333, 5.83333333333, 0.0" method="uniform" min="4.16666666667, 4.16666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D4-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -102,7 +129,7 @@ NestPosition_84="-27.5, -27.5"
 <distribute>
 <position max="5.83333333333, -4.16666666667, 0.0" method="uniform" min="4.16666666667, -5.83333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D5-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -111,7 +138,7 @@ NestPosition_84="-27.5, -27.5"
 <distribute>
 <position max="-4.16666666667, 5.83333333333, 0.0" method="uniform" min="-5.83333333333, 4.16666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D8-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -119,7 +146,7 @@ NestPosition_84="-27.5, -27.5"
 <distribute>
 <position max="-4.16666666667, -4.16666666667, 0.0" method="uniform" min="-5.83333333333, -5.83333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D9-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -381,3 +408,35 @@ NestPosition_84="-27.5, -27.5"
 </entity>
 </distribute>
 
+
+
+
+  </arena> 
+    
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <dynamics2d id="dyn2d"/>
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media><led id="leds"/></media>
+  <!-- ****************** -->
+  <!-- * Visualization * -->
+  <!-- ****************** -->
+
+<!-- <visualization>
+
+<qt-opengl>
+      <camera>
+        <placement idx="0" position="  0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
+      </camera>
+      <user_functions label="MPFA_qt_user_functions"/>
+    </qt-opengl>
+
+  </visualization> -->
+  
+</argos-configuration>
