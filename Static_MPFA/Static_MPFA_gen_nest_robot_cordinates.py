@@ -17,13 +17,16 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 32
+arena_width = 80
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
-gaps = [4]
-varyCapacity = 0
+gaps = [5]
+varyCapacity = 1
+#shift = arena_width/4.0
+shift = 0
+
 results=[]
 for k in gaps:
   print k
@@ -32,7 +35,7 @@ for k in gaps:
 
 coord_info =open("coord_for_worldFile.xml", "w")
 coord_info_text = open("coord.xml", "w")
-shift = arena_width/4.0
+
 count =1;
 for coords in results:
     for xy in coords:
@@ -68,7 +71,7 @@ for xy in results[-1]:
     print "nest location =[",xy[0],", ",xy[1], "]"
         
     if(varyCapacity):
-        quantity = 2
+        quantity = 4
     else:
         distance = np.sqrt(xy[0]**2 + xy[1]**2)
         print "distance=", distance
