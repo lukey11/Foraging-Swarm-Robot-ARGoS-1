@@ -41,9 +41,9 @@
     <!-- evolvable parameters -->
         <MPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
 
-         <settings BacktrackDelivery="0" ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
+         <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
          DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="256" FoodRadius="0.05" MaxSimCounter="1" 
-         MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="-7.7, -7.7" 
+         MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="-7.9, -7.9" 
          NestPosition_1="6.0, 6.0"
 NestPosition_2="6.0, 2.0"
 NestPosition_3="6.0, -2.0"

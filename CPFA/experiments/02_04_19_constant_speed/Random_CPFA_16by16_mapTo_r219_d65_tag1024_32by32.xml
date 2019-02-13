@@ -44,7 +44,7 @@
          <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
          DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="256" 
 	 FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestPosition="-7.8, -7.8"  
-	 NestElevation="0.001" NestRadius="1.0" NumberOfClusters="4" OutputData="0" 
+	 NestElevation="0.001" NestRadius="0.8" NumberOfClusters="4" OutputData="0" 
 	 PowerlawFoodUnitCount="256" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0"/>
 
   </loop_functions>
@@ -104,7 +104,7 @@
   <!-- ****************** -->
 
 
-<!-- <visualization>
+<visualization>
 
 <qt-opengl>
       <camera>

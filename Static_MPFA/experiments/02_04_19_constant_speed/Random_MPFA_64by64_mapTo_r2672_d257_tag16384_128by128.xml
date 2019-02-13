@@ -43,7 +43,7 @@
 
          <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
          DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="4096" FoodRadius="0.05" MaxSimCounter="1" 
-         MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="-31.5, -31.5" 
+         MaxSimTimeInSeconds="1800" NestElevation="0.001" NestPosition_0="-31.9, -31.9" 
 NestPosition_1="28.0, 28.0"
 NestPosition_2="28.0, 20.0"
 NestPosition_3="28.0, 12.0"
