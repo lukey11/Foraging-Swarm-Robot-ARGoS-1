@@ -13,8 +13,7 @@ if __name__ == "__main__":
     #files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
     #files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
     #files = ['Random_CPFA_r296_tag64_40by40.xml', 'Random_CPFA_r296_tag256_40by40.xml', 'Random_CPFA_r296_tag1024_40by40.xml', 'Random_CPFA_r296_tag16384_40by40.xml' ]
-    #files = ['02_04_19_constant_speed/Random_CPFA_16by16_mapTo_r219_d65_tag1024_32by32.xml', '02_04_19_constant_speed/Random_CPFA_64by64_mapTo_r2672_d257_tag16384_128by128.xml']
-    files = ['02_04_19_constant_speed/Random_CPFA_64by64_mapTo_r2672_d257_tag16384_128by128.xml']
+    files = ['02_04_19_constant_speed/Random_CPFA_16by16_mapTo_r219_d65_tag1024_32by32.xml', '02_04_19_constant_speed/Random_CPFA_64by64_mapTo_r2672_d257_tag16384_128by128.xml', '02_04_19_constant_speed/Random_CPFA_r20_d5_tag4_2by2.xml', '02_04_19_constant_speed/Random_CPFA_r112_d17_tag64_8by8.xml']
     run_count = 5
     for file in files:
         print file 

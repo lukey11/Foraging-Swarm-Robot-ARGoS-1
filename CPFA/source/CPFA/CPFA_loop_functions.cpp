@@ -232,7 +232,15 @@ void CPFA_loop_functions::PostExperiment() {
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
         
-        string header = "./results/"+ type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        ostringstream quardArena_str;
+        if(abs(NestPosition.GetX())>=1){ //the central nest is not in the center, this is a quard arena
+             quardArena_str << 1;
+         }
+         else{
+             quardArena_str << 0;
+        }
+        
+        string header = "./results/"+ type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_quard arena_" + quardArena_str.str() +"_";
        
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
        
