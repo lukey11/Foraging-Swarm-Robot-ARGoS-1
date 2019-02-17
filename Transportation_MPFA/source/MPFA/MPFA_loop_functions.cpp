@@ -168,7 +168,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         else{
             it->second.SetDeliveryCapacity(initCapcity);
             }
-        it->second.SetNestRadius(revLevel, NestRadius, BacktrackDelivery);
+        it->second.SetNestRadius(revLevel, NestRadius);
         //it->second.SetNestRadius(NestRadius, ArenaWidth, Nests.size());
         CapacityDataOutput<<it->second.GetDeliveryCapacity()<<" ";
     }
@@ -193,6 +193,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	argos::CSpace::TMapPerType::iterator it;
     Num_robots = footbots.size();
+    argos::LOG<<"Number of robots="<<Num_robots<<endl;
 	for(it = footbots.begin(); it != footbots.end(); it++) {
    	    argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 	    BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
@@ -319,7 +320,7 @@ void MPFA_loop_functions::PostExperiment() {
     
         ostringstream num_robots_str;
         num_robots_str <<  Num_robots;
-   
+         
         ostringstream arena_width_str;
         arena_width_str << ArenaWidth;
         

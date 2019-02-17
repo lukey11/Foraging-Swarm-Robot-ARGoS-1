@@ -17,15 +17,16 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 40
+arena_width = 20
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
-gaps = [5]
-varyCapacity = 1
-shift = arena_width/4.0
-#shift = 0
+gaps = [8]
+varyCapacity = 0
+#shift = arena_width/4.0
+shift = 0
+delivery_robots =468
 
 results=[]
 for k in gaps:
@@ -57,6 +58,18 @@ print "forageRate=", forageRate
 #unit = np.sqrt(2*((gaps[-1]/2.0)**2))
 #unit = np.sqrt(2*((1/2.0)**2))
 
+delierying_robot =0
+foraging_robot =0
+
+
+#calculate the distribution of foraging robots
+total_distance = 0
+for xy in results[-1]:
+    distance = np.sqrt(xy[0]**2 + xy[1]**2)
+    total_distance += distance
+    
+
+
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
     coord_info.write("<distribute>\n")
@@ -70,17 +83,22 @@ for xy in results[-1]:
  
     print "nest location =[",xy[0],", ",xy[1], "]"
         
-    if(varyCapacity):
+    if varyCapacity:
         quantity = 4
     else:
         distance = np.sqrt(xy[0]**2 + xy[1]**2)
         print "distance=", distance
-        print (forageRate*2*distance)/speed
-        quantity = math.ceil((forageRate*2*distance)/speed)
-    
+        #print (forageRate*2*distance)/speed
+        print (distance/total_distance)*delivery_robots
+        #quantity = math.ceil((distance/total_distance)*delivery_robots)
+        quantity = round((distance/total_distance)*delivery_robots)
+        if quantity == 0:
+            quantity = 1    
     print "quantity", quantity
-    total_robot += quantity
+    foraging_robot += 4
     
+    
+
     coord_info.write("<distribute>\n")
     coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
     #coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
@@ -91,6 +109,13 @@ for xy in results[-1]:
     coord_info.write("</distribute>\n\n")
     count += 1  
     
+    delierying_robot += quantity
+    total_robot += 4+quantity
+
+print "foraging_robot=", foraging_robot
+print "delierying_robot=", delierying_robot
+print "total robot =", total_robot
+print total_robot == delierying_robot+foraging_robot
 coord_info.close() 
 
 print 'total delivering robot=', total_robot

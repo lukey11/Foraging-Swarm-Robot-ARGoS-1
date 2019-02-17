@@ -74,7 +74,7 @@ NestPosition_33="-1.8, -2.2"
 NestPosition_34="-2.0, -6.0"
 NestPosition_35="-6.0, -2.0"
 NestPosition_36="-5.8, -6.1"
-NestRadius="0.25" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="256" VariableFoodPlacement="0" VaryCapacityFlag = "0" NumOfBranches = "4" VaryForwardSpeedFlag = "0"/>
+NestRadius="0.2" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="256" VariableFoodPlacement="0" VaryCapacityFlag = "0" NumOfBranches = "4" VaryForwardSpeedFlag = "0"/>
 
   </loop_functions>
 
@@ -422,7 +422,7 @@ NestRadius="0.25" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="256
   <!-- ****************** -->
 
 
-<!-- <visualization>
+ <visualization>
 
 <qt-opengl>
       <camera>

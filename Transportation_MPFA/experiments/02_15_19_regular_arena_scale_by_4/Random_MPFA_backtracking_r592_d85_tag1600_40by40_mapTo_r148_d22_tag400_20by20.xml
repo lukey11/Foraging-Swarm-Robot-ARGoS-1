@@ -72,7 +72,7 @@ NestPosition_33="-2.5, -2.5"
 NestPosition_34="-2.5, -7.5"
 NestPosition_35="-7.5, -2.5"
 NestPosition_36="-7.5, -7.5"
-	 NestRadius="0.25" NumberOfClusters="64" OutputData="0" 
+	 NestRadius="0.2" NumberOfClusters="64" OutputData="0" 
 	 PowerlawFoodUnitCount="400" VaryCapacityFlag = "1" VaryForwardSpeedFlag = "0" VariableFoodPlacement="0" NumOfBranches = "4"/>
 
   </loop_functions>

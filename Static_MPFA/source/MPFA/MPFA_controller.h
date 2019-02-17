@@ -32,7 +32,7 @@ class MPFA_controller : public BaseController {
 		bool IsInTheNest();
         bool IsInTargetNest();
 		Real FoodDistanceTolerance;
-        size_t QuardArena;
+        //size_t QuardArena;
 
 		void SetLoopFunctions(MPFA_loop_functions* lf);
   void SetClosestNest();//qilu 07/26/2016

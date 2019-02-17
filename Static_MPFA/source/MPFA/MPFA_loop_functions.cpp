@@ -111,6 +111,10 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
      float regionWidth = ArenaWidth/sqrt((Nests.size()-1));
      argos::LOG<<"regionWidth="<<regionWidth<<endl;
      level = log(Nests.size()-1)/log(4);
+     if(abs(Nests[0].GetLocation().GetX())< -1)
+     {
+         level++;
+         }
     argos::LOG<< "level="<<level<<endl;         
          ostringstream arena_width_str;
     arena_width_str << GetSpace().GetArenaSize()[0];
@@ -158,6 +162,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
     Num_robots = footbots.size();
+    argos::LOG<<"Number of robots="<<Num_robots<<endl;
 	   for(it = footbots.begin(); it != footbots.end(); it++) {
    	   	argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 		      BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());

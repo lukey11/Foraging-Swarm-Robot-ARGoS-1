@@ -42,7 +42,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings, "ResultsDirectoryPath",      results_path);
 	argos::GetNodeAttribute(settings, "DestinationNoiseStdev",      DestinationNoiseStdev);
 	argos::GetNodeAttribute(settings, "PositionNoiseStdev",      PositionNoiseStdev);
-        argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
+    //    argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
 
 	argos::CVector2 p(GetPosition());
 	SetStartPosition(argos::CVector3(p.GetX(), p.GetY(), 0.0));
@@ -225,7 +225,7 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     //the speed is arena size power to 1/6 or is arena width power to 1/3
     if(lf->VaryForwardSpeedFlag == 1)
     {
-        if(QuardArena)
+        if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
         {
             RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
         }
@@ -331,15 +331,7 @@ void MPFA_controller::Delivering(){
             
             //TargetNest->num_collected_tags++;
             SetIsHeadingToNest(true);
-	        //argos::CVector3 p = GetStartPosition();
-	        //SetTarget(argos::CVector2(p.GetX(), p.GetY()));
-            argos::Real randomNumberX = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
-            argos::Real randomNumberY = RNG->Uniform(argos::CRange<argos::Real>(-1.0, 1.0));
-            argos::Real x, y;
-            x = ClosestNest->GetNestRadius()*randomNumberX;
-            y = ClosestNest->GetNestRadius()*randomNumberY;
-            //argos::LOG<<"closest randomNumber="<<x<< ", "<< y <<endl;
-            SetTarget(ClosestNest->GetLocation()+argos::CVector2(x, y)); //minor shift for mitigating congestions at the same location
+	        SetTarget(ClosestNest->GetLocation()); 
             //argos::LOG<<"ClosestNest="<<ClosestNest->GetLocation()<<endl;
             MPFA_state = DEPOT_RETURNING;  
             numHeldFood = 0;   

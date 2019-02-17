@@ -43,7 +43,7 @@ void MPFA_controller::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings, "ResultsDirectoryPath",      results_path);
 	argos::GetNodeAttribute(settings, "DestinationNoiseStdev",      DestinationNoiseStdev);
 	argos::GetNodeAttribute(settings, "PositionNoiseStdev",      PositionNoiseStdev);
-    argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
+    //argos::GetNodeAttribute(settings, "QuardArena",      QuardArena);
 
 	argos::CVector2 p(GetPosition());
 	SetStartPosition(argos::CVector3(p.GetX(), p.GetY(), 0.0));
@@ -218,7 +218,7 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     //argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
     if(lf->VaryForwardSpeedFlag == 1)
     {
-        if(QuardArena)
+        if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
         {
             RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
         }
@@ -226,10 +226,10 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
             RobotForwardSpeed *= pow((lf->ArenaWidth/basicWidth), 1/3.0);
         //argos::LOG<<"RobotForwardSpeed="<<RobotForwardSpeed<<endl;
         }
-        }
+    }
 
 	// Initialize the SiteFidelityPosition
-SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
+    SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016
 
 	// Create the output file here because it needs LoopFunctions
 		

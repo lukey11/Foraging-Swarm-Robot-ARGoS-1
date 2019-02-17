@@ -102,11 +102,22 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	ForageRangeY.Set(-rangeY, rangeY);
 
         ArenaWidth = ArenaSize[0];
+        
+        if(abs(NestPosition.GetX()) < -1) //quad arena
+        {
+            NestRadius *= 1 + log(ArenaWidth)/log(2);
+        }
+        else
+        {
+            NestRadius *= log(ArenaWidth)/log(2);
+        }
+        argos::LOG<<"NestRadius="<<NestRadius<<endl;
 	   // Send a pointer to this loop functions object to each controller.
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
     
     Num_robots = footbots.size();
+    argos::LOG<<"Number of robots="<<Num_robots<<endl;
 	   for(it = footbots.begin(); it != footbots.end(); it++) {
    	   	argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 		      BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());

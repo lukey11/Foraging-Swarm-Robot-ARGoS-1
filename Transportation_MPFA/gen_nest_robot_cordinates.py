@@ -18,14 +18,15 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 40
+arena_width = 64
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 
-gaps = [20, 10, 5]
-varyCapacity = 1 #0:constant capacity; 1:vary capacity
+gaps = [32, 16, 8, 4]
+#gaps = [4, 2]
+varyCapacity = 0 #0:constant capacity; 1:vary capacity
 shift =arena_width/4.0
 #shift =0
 branch =4
@@ -60,6 +61,10 @@ num_Drobot = 1
 forageRate = 110/1800.0
 print "forageRate=", forageRate
 
+delierying_robot =0
+foraging_robot =0
+
+
 idx =0
 for coords in results[:-1]:
     for xy in coords:
@@ -70,10 +75,11 @@ for coords in results[:-1]:
             distance = np.sqrt(2*(gaps[idx]/2.0)**2)
             print "distance=", distance
             print (forageRate*2*distance)/speed
-            quantity = math.ceil((forageRate*2*distance)/speed)
+            quantity = round((forageRate*2*distance)/speed)
     
         print "quantity", quantity
-
+        delierying_robot += quantity
+        total_robot += quantity
 	coord_info.write("<distribute>\n")
         #coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
         coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
@@ -93,9 +99,9 @@ else:
     print "distance=", distance
     #print "unit=", unit
     print (forageRate*2*distance)/speed
-    quantity = math.ceil((forageRate*2*distance)/speed)
+    #quantity = math.ceil((forageRate*2*distance)/speed)
+    quantity = round((forageRate*2*distance)/speed)
 print "quantity", quantity
-
 
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
@@ -118,6 +124,14 @@ for xy in results[-1]:
     coord_info.write("</distribute>\n\n")
     count += 1  
 
+    delierying_robot += quantity
+    foraging_robot += 4
+    total_robot += 4+quantity
+
+print "foraging_robot=", foraging_robot
+print "delierying_robot=", delierying_robot
+print "total robot =", total_robot
+print total_robot == delierying_robot+foraging_robot
 coord_info.close() 
 
 
