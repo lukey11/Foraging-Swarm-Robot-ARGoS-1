@@ -82,8 +82,7 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
     argos::GetNodeAttribute(settings_node, "NestPosition", NestPosition);
-    NestRadiusSquared = NestRadius*NestRadius;
-	FoodRadiusSquared = FoodRadius*FoodRadius;
+    FoodRadiusSquared = FoodRadius*FoodRadius;
 
     //Number of distributed foods
     if (FoodDistribution == 1){
@@ -125,7 +124,10 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         c2.SetLoopFunctions(this);
 	    }
      
-	SetFoodDistribution();
+     
+   NestRadiusSquared = NestRadius*NestRadius;
+	
+    SetFoodDistribution();
   
  ForageList.clear(); 
  last_time_in_minutes=0;

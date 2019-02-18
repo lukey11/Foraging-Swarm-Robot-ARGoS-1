@@ -132,13 +132,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     for(int i=0; i < Nests.size(); i++)
     {
         distance = sqrt(Nests[i].GetLocation().SquareLength());
-	if(VaryCapacityFlag){//vary capacity
+	    if(VaryCapacityFlag){//vary capacity
             capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
         }
         else{
             capacity = unitCapacity;
 	    }
         Nests[i].SetDeliveryCapacity(capacity);
+        CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
         argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
 	    Nests[i].SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
