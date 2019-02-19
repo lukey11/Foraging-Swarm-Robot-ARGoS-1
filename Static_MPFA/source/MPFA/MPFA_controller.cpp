@@ -223,7 +223,7 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     Real basicWidth = 2.0;
     //argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
     //the speed is arena size power to 1/6 or is arena width power to 1/3
-    if(lf->VaryForwardSpeedFlag == 1)
+    if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
         if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
         {

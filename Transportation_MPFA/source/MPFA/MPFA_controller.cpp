@@ -215,8 +215,8 @@ bool MPFA_controller::IsInTheNest() {
 void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
     Real basicWidth = 2.0;
-    //argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
-    if(lf->VaryForwardSpeedFlag == 1)
+    
+    if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
         if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
         {
