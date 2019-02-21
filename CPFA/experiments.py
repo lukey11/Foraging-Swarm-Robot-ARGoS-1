@@ -13,8 +13,9 @@ if __name__ == "__main__":
     #files = ['Random_CPFA_r2_tag64_5by5.xml', 'Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml']
     #files = ['Random_CPFA_r16_tag256_10by10.xml', 'Random_CPFA_r72_tag1024_20by20.xml', 'Random_CPFA_r296_tag4096_40by40.xml', 'Random_CPFA_r1192_tag16384_80by80.xml']
     #files = ['Random_CPFA_r296_tag64_40by40.xml', 'Random_CPFA_r296_tag256_40by40.xml', 'Random_CPFA_r296_tag1024_40by40.xml', 'Random_CPFA_r296_tag16384_40by40.xml' ]
-    files = ['02_15_19_constant_speed/Random_CPFA_r724_d85_tag4096_64by64_mapTo_r181_d22_tag1024_32by32.xml', '02_15_19_constant_speed/Random_CPFA_r112_d21_tag256_16by16.xml', '02_15_19_constant_speed/Random_CPFA_r24_d5_tag16_4by4.xml', '02_15_19_constant_speed/Random_CPFA_r4_d1_tag1_1by1.xml']
-    run_count = 5
+    #files = ['02_15_19_constant_speed/Random_CPFA_r724_d85_tag4096_64by64_mapTo_r181_d22_tag1024_32by32.xml', '02_15_19_constant_speed/Random_CPFA_r112_d21_tag256_16by16.xml', '02_15_19_constant_speed/Random_CPFA_r24_d5_tag16_4by4.xml', '02_15_19_constant_speed/Random_CPFA_r4_d1_tag1_1by1.xml']
+    files = ['02_15_19_constant_speed/Random_CPFA_r724_d85_tag4096_64by64_mapTo_r181_d22_tag1024_32by32.xml', '02_15_19_constant_speed/Random_CPFA_r112_d21_tag256_16by16.xml', '02_15_19_constant_speed/Random_CPFA_r24_d5_tag16_4by4.xml']
+    run_count = 20
     for file in files:
         print file 
         this_run = Random_Argos("./experiments/"+file)

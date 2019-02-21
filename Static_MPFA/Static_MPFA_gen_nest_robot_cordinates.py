@@ -22,12 +22,26 @@ arena_width = 64
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
+#parameters
+############################################################
 gaps = [4]
 varyCapacity = 0
-#shift = arena_width/4.0
-shift = 0
-delivery_robots =980
+quad = 1
+if quad:
+    shift =arena_width/4.0
+else:
+    shift =0
 
+varySpeed = 1
+if varySpeed:
+    speed = 0.16 * pow(arena_width, 0.333) 
+else:
+    speed = 0.16
+print 'speed=', speed
+
+delivery_robots =360
+
+##############################################################
 results=[]
 for k in gaps:
   print k
@@ -51,7 +65,6 @@ coord_info_text.close()
 count =0
 
 total_robot=0
-speed = 0.16
 num_Drobot = 1
 forageRate = 110/1800.0
 print "forageRate=", forageRate

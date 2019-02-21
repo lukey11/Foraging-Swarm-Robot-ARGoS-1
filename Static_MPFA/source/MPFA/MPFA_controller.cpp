@@ -220,7 +220,7 @@ bool MPFA_controller::IsInTheNest() {
 void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
     //the basic arena width 
-    Real basicWidth = 2.0;
+    Real basicWidth = 1.0;
     //argos::LOG<<"arena width="<<lf->ArenaWidth<<endl;
     //the speed is arena size power to 1/6 or is arena width power to 1/3
     if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
@@ -228,10 +228,11 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
         if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
         {
             RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
+            //argos::LOG<<"1.quard RobotForwardSpeed="<<RobotForwardSpeed<<endl;
         }
         else{
             RobotForwardSpeed *= pow((lf->ArenaWidth/basicWidth), 1/3.0);
-        //argos::LOG<<"RobotForwardSpeed="<<RobotForwardSpeed<<endl;
+            //argos::LOG<<"2. full RobotForwardSpeed="<<RobotForwardSpeed<<endl;
         }
     }
 

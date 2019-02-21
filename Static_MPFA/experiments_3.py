@@ -20,8 +20,8 @@ if __name__ == "__main__":
     #files = ['02_05_regular_arena_scale_by_4/Random_MPFA_r24_d5_tag100_10by10.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r104_d17_tag400_20by20.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r424_d65_tag1600_40by40.xml','02_05_regular_arena_scale_by_4/Random_MPFA_r1704_d257_tag6400_80by80.xml']
     #files = ['02_15_19_vary_speed/Random_MPFA_r2004_d257_tag4096_64by64_mapTo_r501_d65_tag1024_32by32.xml', '02_15_19_vary_speed/Random_MPFA_r92_d17_tag64_8by8.xml', '02_15_19_vary_speed/Random_MPFA_r4_d1_tag1_1by1.xml']
     #files = ['02_15_19_vary_speed/no_delivery_Random_MPFA_r724_d85_tag4096_64by64.xml', '02_15_19_vary_speed/Random_MPFA_r724_d85_tag4096_64by64.xml']
-    files = ['02_15_19_vary_speed/no_delivery_Random_MPFA_r2004_d257_tag4096_64by64_mapTo_r500_d65_tag1024_32by32.xml', '02_15_19_vary_speed/Random_MPFA_r2004_d257_tag4096_64by64_mapTo_r501_d65_tag1024_32by32.xml']
-    run_count = 2
+    files = ['02_15_19_regular/no_delivery_Random_MPFA_r24_d5_tag100_10by10.xml', '02_15_19_regular/no_delivery_Random_MPFA_r104_d17_tag400_20by20.xml', '02_15_19_regular/no_delivery_Random_MPFA_r592_d65_tag1600_40by40_mapTo_r148_tag400_20by20.xml', '02_15_19_regular/no_delivery_Random_MPFA_r2384_d257_tag6400_80by80_mapTo_r596_tag1600_40by40.xml', '02_15_19_regular/Random_MPFA_r24_d5_tag100_10by10.xml', '02_15_19_regular/Random_MPFA_r104_d17_tag400_20by20.xml', '02_15_19_regular/Random_MPFA_r592_d65_tag1600_40by40_mapTo_r148_tag400_20by20.xml', '02_15_19_regular/Random_MPFA_r2384_d257_tag6400_80by80_mapTo_r596_tag1600_40by40.xml']
+    run_count = 20
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)

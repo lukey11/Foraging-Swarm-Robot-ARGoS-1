@@ -335,7 +335,7 @@ void MPFA_loop_functions::PostExperiment() {
              quardArena_str << 0;
              }
         
-        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_constant_speed_"+ varySpeed_str.str()+"_quard arena_" + quardArena_str.str() +"_";
+        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_constant_speed_"+ varySpeed_str.str()+"_quard_arena_" + quardArena_str.str() +"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         

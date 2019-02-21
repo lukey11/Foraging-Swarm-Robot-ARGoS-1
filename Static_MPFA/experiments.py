@@ -19,8 +19,8 @@ if __name__ == "__main__":
     #files = ['1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag82_8by8.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag328_16by16.xml', '1_8_19_constant_speed/Test_no_deliver_Random_MPFA_r16_d5_tag415_18by18.xml']
     #files = ['02_04_19_vary_speed/Random_MPFA_rXXX_d17_tag64_8by8.xml', '02_04_19_vary_speed/Random_MPFA_r20_d5_tag4_2by2.xml', '02_04_19_vary_speed/Random_MPFA_64by64_mapTo_rXXX_d257_tag16384_128by128.xml', '02_04_19_vary_speed/Random_MPFA_16by16_mapTo_rXXX_d65_tag1024_32by32.xml']
     #files = ['02_04_19_constant_speed/no_delivery_Random_MPFA_16by16_mapTo_r256_d65_tag1024_32by32.xml', '02_04_19_constant_speed/no_delivery_Random_MPFA_64by64_mapTo_r1024_d257_tag16384_128by128.xml', '02_04_19_constant_speed/no_delivery_Random_MPFA_r64_d17_tag64_8by8.xml', '02_04_19_constant_speed/Random_MPFA_16by16_mapTo_r219_d65_tag1024_32by32.xml', '02_04_19_constant_speed/Random_MPFA_64by64_mapTo_r2672_d257_tag16384_128by128.xml','02_04_19_constant_speed/Random_MPFA_r112_d17_tag64_8by8.xml']
-    files = ['02_15_19_constant_speed/Random_MPFA_r716_d85_tag4096_64by64_mapTo_r179_d22_tag1024_32by32.xml', '02_15_19_constant_speed/Random_MPFA_r108_d21_tag256_16by16.xml', '02_15_19_constant_speed/Random_MPFA_r24_d5_tag16_4by4.xml', '02_15_19_constant_speed/Random_MPFA_r4_d1_tag1_1by1.xml']
-    run_count = 5
+    files = ['02_15_19_constant_speed/Random_MPFA_r716_d85_tag4096_64by64_mapTo_r179_d22_tag1024_32by32.xml', '02_15_19_constant_speed/Random_MPFA_r108_d21_tag256_16by16.xml', '02_15_19_constant_speed/Random_MPFA_r24_d5_tag16_4by4.xml', '02_15_19_constant_speed/Random_MPFA_r4_d1_tag1_1by1.xml', '02_15_19_constant_speed/no_delivery_Random_MPFA_r716_d85_tag4096_64by64_mapTo_r64_d22_tag1024_32by32.xml', '02_15_19_constant_speed/no_delivery_Random_MPFA_r64_d21_tag256_16by16.xml', '02_15_19_constant_speed/no_delivery_Random_MPFA_r16_d5_tag16_4by4.xml', '02_15_19_constant_speed/no_delivery_Random_MPFA_r4_d1_tag1_1by1.xml']
+    run_count = 20
     for file in files:
         print file
         this_run = Random_Argos("./experiments/"+file)

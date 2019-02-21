@@ -214,7 +214,7 @@ bool MPFA_controller::IsInTheNest() {
 
 void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
 	LoopFunctions = lf;
-    Real basicWidth = 2.0;
+    Real basicWidth = 1.0;
     
     if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
