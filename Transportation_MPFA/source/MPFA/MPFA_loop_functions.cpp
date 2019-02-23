@@ -151,10 +151,10 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
     if (Nests.size() == 1) level =0;
     
-    ostringstream arena_width_str;
-    arena_width_str << GetSpace().GetArenaSize()[0];
+    ostringstream arena_width;
+    arena_width << GetSpace().GetArenaSize()[0];
          
-    string header = "./results/MPFA_transport_" +arena_width_str.str()+"by"+arena_width_str.str()+"_";
+    string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
     size_t initCapcity = 4;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
@@ -194,11 +194,18 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::CSpace::TMapPerType::iterator it;
     Num_robots = footbots.size();
     argos::LOG<<"Number of robots="<<Num_robots<<endl;
-	for(it = footbots.begin(); it != footbots.end(); it++) {
+    for(it = footbots.begin(); it != footbots.end(); it++) {
    	    argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 	    BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
 	    MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
         c2.SetLoopFunctions(this);
+        if(c2.GetId().compare(0, 1, "D")==0){ //check wether there are delivering robots or not 
+            DeliveryFlag = 1;
+        }
+        else
+        {
+            DeliveryFlag = 0;
+            }
 	}
     SetFoodDistribution();
  ForageList.clear(); //qilu 09/13/2016
@@ -311,31 +318,34 @@ void MPFA_loop_functions::PostExperiment() {
          else  backtrack = "with_backtrack";
          
          
-         ostringstream num_tag_str;         
-         num_tag_str << FoodItemCount;
+         ostringstream num_tag;         
+         num_tag << FoodItemCount;
 	 
 
-        ostringstream num_nests_str;
-        num_nests_str <<  Nests.size();
+        ostringstream num_nests;
+        num_nests <<  Nests.size();
     
-        ostringstream num_robots_str;
-        num_robots_str <<  Num_robots;
+        ostringstream num_robots;
+        num_robots <<  Num_robots;
          
-        ostringstream arena_width_str;
-        arena_width_str << ArenaWidth;
+        ostringstream arena_width;
+        arena_width << ArenaWidth;
         
-	ostringstream varySpeed_str;
-        varySpeed_str << VaryForwardSpeedFlag;
+	ostringstream varySpeed;
+        varySpeed << VaryForwardSpeedFlag;
         
-        ostringstream quardArena_str;
+        ostringstream quardArena;
         if(abs(Nests[0].GetLocation().GetX())>=1){ //the central nest is not in the center, this is a quard arena
-             quardArena_str << 1;
+             quardArena << 1;
          }
          else{
-             quardArena_str << 0;
+             quardArena << 0;
              }
         
-        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_constant_speed_"+ varySpeed_str.str()+"_quard_arena_" + quardArena_str.str() +"_";
+        ostringstream delivery;
+        delivery << DeliveryFlag;
+        
+        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_constant_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         

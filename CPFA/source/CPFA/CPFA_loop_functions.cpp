@@ -236,24 +236,24 @@ void CPFA_loop_functions::PostExperiment() {
         else if (FoodDistribution == 1) type = "cluster";
         else type = "powerlaw";
             
-        ostringstream num_tag_str;
-        num_tag_str << FoodItemCount; 
+        ostringstream num_tag;
+        num_tag << FoodItemCount; 
               
-        ostringstream num_robots_str;
-        num_robots_str <<  Num_robots;
+        ostringstream num_robots;
+        num_robots <<  Num_robots;
    
-        ostringstream arena_width_str;
-        arena_width_str << ArenaWidth;
+        ostringstream arena_width;
+        arena_width << ArenaWidth;
         
-        ostringstream quardArena_str;
+        ostringstream quardArena;
         if(abs(NestPosition.GetX())>=1){ //the central nest is not in the center, this is a quard arena
-             quardArena_str << 1;
+             quardArena << 1;
          }
          else{
-             quardArena_str << 0;
+             quardArena << 0;
         }
         
-        string header = "./results/"+ type+"_CPFA_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_quard arena_" + quardArena_str.str() +"_";
+        string header = "./results/"+ type+"_CPFA_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_quard_arena_" + quardArena.str() +"_";
        
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
        
