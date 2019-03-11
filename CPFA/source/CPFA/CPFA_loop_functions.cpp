@@ -104,11 +104,11 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         
         if(abs(NestPosition.GetX()) < -1) //quad arena
         {
-            NestRadius *= 1 + log(ArenaWidth)/log(2);
+            NestRadius *= sqrt(1 + log(ArenaWidth)/log(2));
         }
         else
         {
-            NestRadius *= log(ArenaWidth)/log(2);
+            NestRadius *= sqrt(log(ArenaWidth)/log(2));
         }
         argos::LOG<<"NestRadius="<<NestRadius<<endl;
 	   // Send a pointer to this loop functions object to each controller.

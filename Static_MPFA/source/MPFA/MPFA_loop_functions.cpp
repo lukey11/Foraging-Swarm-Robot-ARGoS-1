@@ -40,6 +40,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
         NumDistributedFood(0),
 	score(0),
+    DeliveryFlag(0),
 	PrintFinalScore(0)
 {}
 
@@ -168,15 +169,11 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
    	   	  argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 		  BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
 		  MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
-          argos::LOG<< "Robot ID="<<c2.GetId()<<endl;
+          //argos::LOG<< "Robot ID="<<c2.GetId()<<endl;
           c2.SetLoopFunctions(this);
           if(c2.GetId().compare(0, 1, "D")==0){ //check wether there are delivering robots or not 
               DeliveryFlag = 1;
           }
-          else
-          {
-            DeliveryFlag = 0;
-            }
 	    }
     SetFoodDistribution();
   
@@ -462,7 +459,7 @@ void MPFA_loop_functions::GaussianFoodDistribution() {
 void MPFA_loop_functions::ClusterFoodDistribution() {
 FoodList.clear();
     FoodColoringList.clear();
-	assert(FoodItemCount = NumberOfClusters*ClusterWidthX*ClusterWidthY);
+	assert(FoodItemCount == NumberOfClusters*ClusterWidthX*ClusterWidthY);
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
 	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterWidthY;
 	size_t          foodPlaced = 0;

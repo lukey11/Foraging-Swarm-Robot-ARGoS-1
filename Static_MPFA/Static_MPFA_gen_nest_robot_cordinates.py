@@ -17,7 +17,7 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 64
+arena_width = 16
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
@@ -26,20 +26,22 @@ min_x, min_y = -max_x, -max_y;
 ############################################################
 gaps = [4]
 varyCapacity = 0
-quad = 1
+varySpeed = 0
+quad = 0
+delivery_robots =100
 if quad:
     shift =arena_width/4.0
 else:
     shift =0
 
-varySpeed = 1
+
 if varySpeed:
     speed = 0.16 * pow(arena_width, 0.333) 
 else:
     speed = 0.16
 print 'speed=', speed
 
-delivery_robots =360
+
 
 ##############################################################
 results=[]

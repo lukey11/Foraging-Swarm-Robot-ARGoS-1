@@ -18,7 +18,7 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 64
+arena_width = 4
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
@@ -26,16 +26,18 @@ min_x, min_y = -max_x, -max_y;
 #parameters
 ############################################################
 #gaps = [32, 16, 8, 4]
-gaps = [32, 16, 8, 4]
+gaps = [2]
+#gaps = [4, 2]
 varyCapacity = 0 #0:constant capacity; 1:vary capacity
-quad = 1
+varySpeed = 0
+quad = 0
 
 if quad:
     shift =arena_width/4.0
 else:
     shift =0
 
-varySpeed = 1
+
 if varySpeed:
     speed = 0.16 * pow(arena_width, 0.333) 
 else:
@@ -79,16 +81,23 @@ foraging_robot =0
 
 
 idx =0
+level = len(gaps)
+
 for coords in results[:-1]:
+    print "idx=", idx
     for xy in coords:
-	print "nest location =[",xy[0],", ",xy[1], "]"
+	print " nest location =[",xy[0],", ",xy[1], "]"
 	if(varyCapacity):
 	    quantity = 4
 	else:
             distance = np.sqrt(2*(gaps[idx]/2.0)**2)
             print "distance=", distance
-            print (forageRate*2*distance)/speed
-            quantity = round((forageRate*2*distance)/speed)
+            quantity = round((forageRate*2*distance*branch**(level-idx-1))/speed)
+            print "measured quantity=", quantity
+            maxQuantity = round(2*distance/0.5)
+            print "maxQuantity=", maxQuantity 
+            if quantity > maxQuantity:
+                quantity = maxQuantity
     
         print "quantity", quantity
         delierying_robot += quantity
@@ -114,6 +123,9 @@ else:
     print (forageRate*2*distance)/speed
     #quantity = math.ceil((forageRate*2*distance)/speed)
     quantity = round((forageRate*2*distance)/speed)
+    print "quantity", quantity
+    if quantity == 0:
+        quantity = 1
 print "quantity", quantity
 
 # there are foraging and delivering robots in each region

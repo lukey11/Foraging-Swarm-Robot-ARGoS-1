@@ -1,0 +1,10 @@
+XMLBlock settings
+Files Random_MPFA_backtracking_r1192_d256_tag16384_80by80 Random_MPFA_r1192_d256_tag16384_80by80
+FoodDistribution 0
+MaxSimTimeInSeconds 1800
+FoodItemCount 16384
+PowerlawFoodUnitCount 16384
+NumberOfClusters 256
+ClusterWidthX 8
+ClusterWidthY 8
+NestRadius 0.25
