@@ -172,15 +172,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	}
     
     Real basicWidth = 1.0;
+    int ActualArenaWidth = ArenaWidth;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
     if(VaryForwardSpeedFlag == 1)
     {
-        if(Nests[0].GetLocation().GetX() < -1)
-        {
-            RobotDeliverySpeed *= pow(ArenaWidth*2/basicWidth, 1/3.0);
-        }
-        else{
-            RobotDeliverySpeed *= pow(ArenaWidth/basicWidth, 1/3.0);
-        }
+	RobotDeliverySpeed *= pow(ActualArenaWidth/basicWidth, 1/3.0);
     }
     
     ostringstream arena_width;
@@ -210,8 +209,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         //argos::LOG<<"distance="<<distance<<endl;
         revLevel = level - currentNest->GetLevel();
         if(VaryCapacityFlag){//vary capacity
-            currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
-            currentNest->SetDeliveryRobot(4);
+            if(currentNest->GetNestIdx() != 0)
+            {
+              currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+              currentNest->SetDeliveryRobot(4);
+              totalDelivery += 4;
+              //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", num="<<4 <<endl;
+            }
         }
         else{
             currentNest->SetDeliveryCapacity(initCapcity);
@@ -239,8 +243,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         currentNest->SetNestRadius(revLevel, NestRadius);
         CapacityDataOutput<<currentNest->GetDeliveryCapacity()<<" ";
     }
-    argos::LOG<<"totalDelivery="<<totalDelivery<<endl;
-    argos::LOG<<"total robots="<<totalDelivery+Num_robots<<endl;
+    argos::LOG<<"total Delivery="<<totalDelivery<<endl;
+    argos::LOG<<"total Foraging="<<Num_robots<<endl;
 	CapacityDataOutput<<"\n";
     CapacityDataOutput.close();
         

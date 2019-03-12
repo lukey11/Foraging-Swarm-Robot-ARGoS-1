@@ -209,7 +209,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     argos::Real total_distance=0;
     Nest* currentNest;
     size_t numRobot =0;
-    size_t total_delivery = 0;
+    size_t totalDelivery = 0;
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
         distance = it->second.GetLocation().Length();
         total_distance += distance;
@@ -223,33 +223,24 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         {
             numRobot = round((distance/total_distance)*TotalDeliveryRobots);
         }
-        //argos::LOG<<"numRobot="<<numRobot<<endl;
-        /*if(VaryCapacityFlag){//vary capacity
-            currentNest->SetDeliveryRobot(4);
-            argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<4<<endl;
-            total_delivery += 4;
-        }
-        else
-        {*/
             if(numRobot ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot
-                total_delivery++;
+                totalDelivery++;
                 //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<1<<endl;
             }
             else
             {
                 currentNest->SetDeliveryRobot(numRobot);
-                total_delivery += numRobot;
+                totalDelivery += numRobot;
                 //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<numRobot<<endl;
             } 
         
-        //}
         currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
     }
-    argos::LOG<<"total_delivery="<<total_delivery<<endl;
-    argos::LOG<<"TotalDeliveryRobots="<<TotalDeliveryRobots<<endl;
-    assert(TotalDeliveryRobots - total_delivery <=10);
+    argos::LOG<<"total_delivery="<<totalDelivery<<endl;
+    argos::LOG<<"Expected Delivery Robots="<<TotalDeliveryRobots<<endl;
+    assert(TotalDeliveryRobots - totalDelivery <=10);
 
     SetFoodDistribution();
   
