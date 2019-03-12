@@ -215,11 +215,16 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         currentNest = &(it->second);
         distance = currentNest->GetLocation().Length();
         argos::LOG<<"distance="<<distance<<endl;
+        
         if(VaryCapacityFlag){//vary capacity
             currentNest->SetDeliveryRobot(4);
         }
         else{
-            numRobot = round((distance/total_distance)*TotalDeliveryRobots);
+            if(total_distance != 0)
+            {
+                numRobot = round((distance/total_distance)*TotalDeliveryRobots);
+            }
+            
             if(numRobot ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot
@@ -232,10 +237,12 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
                 total_delivery += numRobot;
                 //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<numRobot<<endl;
             } 
+        
         }
         currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
     }
     argos::LOG<<"total_delivery="<<total_delivery<<endl;
+    argos::LOG<<"TotalDeliveryRobots="<<TotalDeliveryRobots<<endl;
     assert(TotalDeliveryRobots - total_delivery <=10);
 
     SetFoodDistribution();
