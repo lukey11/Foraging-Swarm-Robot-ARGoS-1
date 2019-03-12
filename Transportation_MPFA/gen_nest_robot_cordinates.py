@@ -18,16 +18,17 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width = 4
+arena_width =16
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 #parameters
 ############################################################
-#gaps = [32, 16, 8, 4]
-gaps = [2]
-#gaps = [4, 2]
+#gaps = [32, 16, 8]
+#gaps = [4,2]
+#gaps = [32, 16, 8,4]
+gaps = [8, 4]
 varyCapacity = 0 #0:constant capacity; 1:vary capacity
 varySpeed = 0
 quad = 0
@@ -92,9 +93,9 @@ for coords in results[:-1]:
 	else:
             distance = np.sqrt(2*(gaps[idx]/2.0)**2)
             print "distance=", distance
-            quantity = round((forageRate*2*distance*branch**(level-idx-1))/speed)
+            quantity = math.ceil((forageRate*2*distance*branch**(level-idx-1))/speed)
             print "measured quantity=", quantity
-            maxQuantity = round(2*distance/0.5)
+            maxQuantity = round(distance/1.01)
             print "maxQuantity=", maxQuantity 
             if quantity > maxQuantity:
                 quantity = maxQuantity
@@ -122,7 +123,7 @@ else:
     #print "unit=", unit
     print (forageRate*2*distance)/speed
     #quantity = math.ceil((forageRate*2*distance)/speed)
-    quantity = round((forageRate*2*distance)/speed)
+    quantity = math.ceil((forageRate*2*distance)/speed)
     print "quantity", quantity
     if quantity == 0:
         quantity = 1

@@ -172,15 +172,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	}
     
     Real basicWidth = 1.0;
+    int ActualArenaWidth = ArenaWidth;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
     if(VaryForwardSpeedFlag == 1)
     {
-        if(abs(Nests[0].GetLocation().GetX()) < -1)
-        {
-            RobotDeliverySpeed *= pow(ArenaWidth*2/basicWidth, 1/3.0);
-        }
-        else{
-            RobotDeliverySpeed *= pow(ArenaWidth/basicWidth, 1/3.0);
-        }
+	RobotDeliverySpeed *= pow(ActualArenaWidth/basicWidth, 1/3.0);
     }
     
     ostringstream arena_width;
@@ -195,7 +194,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     Nest* currentNest;
     Nest* TargetNest;
     size_t numDelivery =0;
-        
+    size_t maxDelivery = 0;
+    size_t totalDelivery =0;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
@@ -207,29 +207,44 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         
         distance = (TargetNest->GetLocation() - currentNest->GetLocation()).Length();
         //argos::LOG<<"distance="<<distance<<endl;
-        revLevel = level - it->second.GetLevel();
+        revLevel = level - currentNest->GetLevel();
         if(VaryCapacityFlag){//vary capacity
-            currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
-            currentNest->SetDeliveryRobot(4);
+            if(currentNest->GetNestIdx() != 0)
+            {
+              currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+              currentNest->SetDeliveryRobot(4);
+              totalDelivery += 4;
+              //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", num="<<4 <<endl;
+            }
         }
         else{
             currentNest->SetDeliveryCapacity(initCapcity);
-            numDelivery = round((forageRate*2*distance)/RobotDeliverySpeed);
+            numDelivery = ceil((forageRate*2*distance*pow(numBranch, revLevel))/RobotDeliverySpeed);
+            //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", revLevel="<<revLevel<< ", numDelivery="<<numDelivery<<endl;
+            maxDelivery = round(distance/1.01);
+            if(numDelivery > maxDelivery)
+            {
+                 numDelivery = maxDelivery;   
+            }
             if(numDelivery ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot
+                totalDelivery++;
+                //argos::LOG<<"num=1"<<endl;
             }
             else
             {
                 currentNest->SetDeliveryRobot(numDelivery);
+                totalDelivery += numDelivery;
+                //argos::LOG<<"num="<<numDelivery <<endl;
             } 
         }
         currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
         currentNest->SetNestRadius(revLevel, NestRadius);
-        //it->second.SetNestRadius(NestRadius, ArenaWidth, Nests.size());
         CapacityDataOutput<<currentNest->GetDeliveryCapacity()<<" ";
     }
-            
+    argos::LOG<<"total Delivery="<<totalDelivery<<endl;
+    argos::LOG<<"total Foraging="<<Num_robots<<endl;
 	CapacityDataOutput<<"\n";
     CapacityDataOutput.close();
         
@@ -442,7 +457,7 @@ void MPFA_loop_functions::PostExperiment() {
         varySpeed << VaryForwardSpeedFlag;
         
         ostringstream quardArena;
-        if(abs(Nests[0].GetLocation().GetX())>=1){ //the central nest is not in the center, this is a quard arena
+        if(Nests[0].GetLocation().GetX() < -1){ //the central nest is not in the center, this is a quard arena
              quardArena << 1;
          }
          else{

@@ -104,7 +104,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 <distribute>
 <position max="3.33333333333, 3.33333333333, 0.0" method="uniform" min="2.66666666667, 2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D0-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -152,7 +152,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 <distribute>
 <position max="3.33333333333, -2.66666666667, 0.0" method="uniform" min="2.66666666667, -3.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D3-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -296,7 +296,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 <distribute>
 <position max="-2.66666666667, 3.33333333333, 0.0" method="uniform" min="-3.33333333333, 2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D12-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -344,7 +344,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="64"
 <distribute>
 <position max="-2.66666666667, -2.66666666667, 0.0" method="uniform" min="-3.33333333333, -3.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D15-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>

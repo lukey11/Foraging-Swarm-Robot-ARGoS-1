@@ -103,7 +103,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
 		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
-		Nests.push_back(Nest(NestPosition));
+		Nests[i] = Nest(NestPosition);
         	Nests[i].SetNestIdx(i);
     
          }// end if
@@ -112,7 +112,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
      float regionWidth = ArenaWidth/sqrt((Nests.size()-1));
      argos::LOG<<"regionWidth="<<regionWidth<<endl;
      level = log(Nests.size()-1)/log(4);
-     if(abs(Nests[0].GetLocation().GetX())< -1)
+     if(Nests[0].GetLocation().GetX()< -1)
      {
          level++;
          }
@@ -130,20 +130,20 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     int capacity, total_capacity=0; 
     int unitCapacity = 4;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
-    for(int i=0; i < Nests.size(); i++)
+    for(map<int, Nest>::iterator it= Nests.begin(); it!= Nests.end(); it++)
     {
-        distance = sqrt(Nests[i].GetLocation().SquareLength());
+        distance = sqrt(it->second.GetLocation().SquareLength());
 	    if(VaryCapacityFlag){//vary capacity
             capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
         }
         else{
             capacity = unitCapacity;
 	    }
-        Nests[i].SetDeliveryCapacity(capacity);
+        it->second.SetDeliveryCapacity(capacity);
         CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
-        argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
-	    Nests[i].SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
+        argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
+	    it->second.SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
     }
     argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 	CapacityDataOutput<<"\n";
@@ -307,7 +307,7 @@ void MPFA_loop_functions::PostExperiment() {
         varySpeed << VaryForwardSpeedFlag;
          
         ostringstream quardArena;
-        if(abs(Nests[0].GetLocation().GetX())>=1){ //the central nest is not in the center, this is a quard arena
+        if(Nests[0].GetLocation().GetX()< -1){ //the central nest is not in the center, this is a quard arena
              quardArena << 1;
          }
          else{

@@ -29,13 +29,14 @@ min_x, min_y = -max_x, -max_y;
 gaps = [4, 2]
 varyCapacity = 0 #0:constant capacity; 1:vary capacity
 quad = 0
+varySpeed = 1
 
 if quad:
     shift =arena_width/4.0
 else:
     shift =0
 
-varySpeed = 1
+
 if varySpeed:
     speed = 0.16 * pow(arena_width, 0.333) 
 else:
@@ -87,8 +88,12 @@ for coords in results[:-1]:
 	else:
             distance = np.sqrt(2*(gaps[idx]/2.0)**2)
             print "distance=", distance
-            print (forageRate*2*distance)/speed
-            quantity = round((forageRate*2*distance)/speed)
+            quantity = math.ceil((forageRate*2*distance*branch**(level-idx-1))/speed)
+            print "measured quantity=", quantity
+            maxQuantity = round(distance/0.5)
+            print "maxQuantity=", maxQuantity 
+            if quantity > maxQuantity:
+                quantity = maxQuantity
     
         print "quantity", quantity
         delierying_robot += quantity
@@ -112,7 +117,7 @@ else:
     #print "unit=", unit
     print (forageRate*2*distance)/speed
     #quantity = math.ceil((forageRate*2*distance)/speed)
-    quantity = round((forageRate*2*distance)/speed)
+    quantity = math.ceil((forageRate*2*distance)/speed)
     if quantity == 0:
         quantity = 1 
 print "quantity", quantity
