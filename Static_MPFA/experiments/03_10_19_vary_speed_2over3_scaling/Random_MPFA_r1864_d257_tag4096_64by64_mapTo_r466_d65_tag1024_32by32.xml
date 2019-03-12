@@ -156,7 +156,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="15, 15, 0.0" method="uniform" min="13, 13, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="10">
+<entity max_trials="100" quantity="6">
 <foot-bot id="D0-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -172,7 +172,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, 10.6666666667, 0.0" method="uniform" min="13.3333333333, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="9">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D1-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -188,7 +188,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, 6.66666666667, 0.0" method="uniform" min="13.3333333333, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="9">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D2-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -204,7 +204,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, 2.66666666667, 0.0" method="uniform" min="13.3333333333, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D3-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -220,7 +220,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, -1.33333333333, 0.0" method="uniform" min="13.3333333333, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D4-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -236,7 +236,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, -5.33333333333, 0.0" method="uniform" min="13.3333333333, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D5-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -252,7 +252,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, -9.33333333333, 0.0" method="uniform" min="13.3333333333, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D6-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -268,7 +268,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="14.6666666667, -13.3333333333, 0.0" method="uniform" min="13.3333333333, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D7-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -284,7 +284,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, 14.6666666667, 0.0" method="uniform" min="9.33333333333, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="9">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D16-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -300,7 +300,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, 10.6666666667, 0.0" method="uniform" min="9.33333333333, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D17-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -316,7 +316,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, 6.66666666667, 0.0" method="uniform" min="9.33333333333, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D18-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -332,7 +332,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, 2.66666666667, 0.0" method="uniform" min="9.33333333333, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D19-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -348,7 +348,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10, -1.33333333333, 0.0" method="uniform" min="9.33333333333, -2.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D20-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -365,7 +365,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.3666666667, -5, 0.0" method="uniform" min="9.6, -6, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D21-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -381,7 +381,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, -9.33333333333, 0.0" method="uniform" min="9.33333333333, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D22-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -397,7 +397,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="10.6666666667, -13.3333333333, 0.0" method="uniform" min="9.33333333333, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D23-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -414,7 +414,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, 14.6666666667, 0.0" method="uniform" min="5.33333333333, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="9">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D32-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -430,7 +430,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, 10.6666666667, 0.0" method="uniform" min="5.33333333333, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D33-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -446,7 +446,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, 6.66666666667, 0.0" method="uniform" min="5.33333333333, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D34-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -462,7 +462,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, 2.66666666667, 0.0" method="uniform" min="5.33333333333, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D35-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -478,7 +478,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, -1.33333333333, 0.0" method="uniform" min="5.33333333333, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D36-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -494,7 +494,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, -5.33333333333, 0.0" method="uniform" min="5.33333333333, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D37-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -510,7 +510,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, -9.33333333333, 0.0" method="uniform" min="5.33333333333, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D38-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -526,7 +526,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="6.66666666667, -13.3333333333, 0.0" method="uniform" min="5.33333333333, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D39-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -542,7 +542,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, 14.6666666667, 0.0" method="uniform" min="1.33333333333, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="5">
 <foot-bot id="D48-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -558,7 +558,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, 10.6666666667, 0.0" method="uniform" min="1.33333333333, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D49-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -574,7 +574,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, 6.66666666667, 0.0" method="uniform" min="1.33333333333, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D50-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -590,7 +590,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, 2.66666666667, 0.0" method="uniform" min="1.33333333333, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D51-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -606,7 +606,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, -1.33333333333, 0.0" method="uniform" min="1.33333333333, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D52-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -622,7 +622,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, -5.33333333333, 0.0" method="uniform" min="1.33333333333, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D53-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -638,7 +638,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, -9.33333333333, 0.0" method="uniform" min="1.33333333333, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D54-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -654,7 +654,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="2.66666666667, -13.3333333333, 0.0" method="uniform" min="1.33333333333, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D55-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -670,7 +670,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, 14.6666666667, 0.0" method="uniform" min="-2.66666666667, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="8">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D64-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -686,7 +686,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, 10.6666666667, 0.0" method="uniform" min="-2.66666666667, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D65-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -702,7 +702,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, 6.66666666667, 0.0" method="uniform" min="-2.66666666667, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D66-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -718,7 +718,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, 2.66666666667, 0.0" method="uniform" min="-2.66666666667, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D67-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -734,7 +734,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, -1.33333333333, 0.0" method="uniform" min="-2.66666666667, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D68-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -750,7 +750,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, -5.33333333333, 0.0" method="uniform" min="-2.66666666667, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D69-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -766,7 +766,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, -9.33333333333, 0.0" method="uniform" min="-2.66666666667, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D70-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -782,7 +782,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-1.33333333333, -13.3333333333, 0.0" method="uniform" min="-2.66666666667, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D71-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -798,7 +798,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, 14.6666666667, 0.0" method="uniform" min="-6.66666666667, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D80-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -814,7 +814,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, 10.6666666667, 0.0" method="uniform" min="-6.66666666667, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D81-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -830,7 +830,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, 6.66666666667, 0.0" method="uniform" min="-6.66666666667, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D82-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -846,7 +846,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, 2.66666666667, 0.0" method="uniform" min="-6.66666666667, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D83-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -862,7 +862,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, -1.33333333333, 0.0" method="uniform" min="-6.66666666667, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D84-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -878,7 +878,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, -5.33333333333, 0.0" method="uniform" min="-6.66666666667, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D85-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -894,7 +894,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, -9.33333333333, 0.0" method="uniform" min="-6.66666666667, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D86-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -910,7 +910,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-5.33333333333, -13.3333333333, 0.0" method="uniform" min="-6.66666666667, -14.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="1">
 <foot-bot id="D87-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -925,7 +925,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, 14.6666666667, 0.0" method="uniform" min="-10.6666666667, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D96-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -941,7 +941,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, 10.6666666667, 0.0" method="uniform" min="-10.6666666667, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D97-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -957,7 +957,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, 6.66666666667, 0.0" method="uniform" min="-10.6666666667, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D98-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -973,7 +973,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, 2.66666666667, 0.0" method="uniform" min="-10.6666666667, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D99-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -989,7 +989,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, -1.33333333333, 0.0" method="uniform" min="-10.6666666667, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D100-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1005,7 +1005,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, -5.33333333333, 0.0" method="uniform" min="-10.6666666667, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D101-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1021,7 +1021,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-9.33333333333, -9.33333333333, 0.0" method="uniform" min="-10.6666666667, -10.6666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="1">
 <foot-bot id="D102-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1053,7 +1053,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, 14.6666666667, 0.0" method="uniform" min="-14.6666666667, 13.3333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="7">
+<entity max_trials="100" quantity="4">
 <foot-bot id="D112-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1069,7 +1069,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, 10.6666666667, 0.0" method="uniform" min="-14.6666666667, 9.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="6">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D113-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1085,7 +1085,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, 6.66666666667, 0.0" method="uniform" min="-14.6666666667, 5.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="5">
+<entity max_trials="100" quantity="3">
 <foot-bot id="D114-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1101,7 +1101,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, 2.66666666667, 0.0" method="uniform" min="-14.6666666667, 1.33333333333, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="4">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D115-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1117,7 +1117,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, -1.33333333333, 0.0" method="uniform" min="-14.6666666667, -2.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="3">
+<entity max_trials="100" quantity="2">
 <foot-bot id="D116-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -1133,7 +1133,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
 <distribute>
 <position max="-13.3333333333, -5.33333333333, 0.0" method="uniform" min="-14.6666666667, -6.66666666667, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="2">
+<entity max_trials="100" quantity="1">
 <foot-bot id="D117-"><controller config="MPFA"/></foot-bot>
 </entity>
 </distribute>

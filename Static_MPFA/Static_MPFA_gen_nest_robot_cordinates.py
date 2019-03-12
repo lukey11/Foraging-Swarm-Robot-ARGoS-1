@@ -28,7 +28,7 @@ gaps = [4]
 varyCapacity = 0
 varySpeed = 0
 quad = 0
-delivery_robots =100
+delivery_robots =72
 if quad:
     shift =arena_width/4.0
 else:

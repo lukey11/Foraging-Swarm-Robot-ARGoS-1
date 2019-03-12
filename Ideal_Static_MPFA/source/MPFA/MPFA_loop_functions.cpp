@@ -103,8 +103,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
 		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
-		Nests.push_back(Nest(NestPosition));
-        	Nests[i].SetNestIdx(i);
+		Nests[i] = Nest(NestPosition);
+        Nests[i].SetNestIdx(i);
     
          }// end if
      }//end for
@@ -129,20 +129,20 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     int capacity, total_capacity=0; 
     int unitCapacity = 4;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
-    for(int i=0; i < Nests.size(); i++)
+    for(map<int, Nest>::iterator it= Nests.begin(); it!= Nests.end(); it++)
     {
-        distance = sqrt(Nests[i].GetLocation().SquareLength());
+        distance = sqrt(it->second.GetLocation().SquareLength());
 	    if(VaryCapacityFlag){//vary capacity
             capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
         }
         else{
             capacity = unitCapacity;
 	    }
-        Nests[i].SetDeliveryCapacity(capacity);
+        it->second.SetDeliveryCapacity(capacity);
         CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
-        argos::LOG<<"nest id="<<Nests[i].GetNestIdx()<<", loc="<<Nests[i].GetLocation() <<", c="<<capacity<<endl;
-	    Nests[i].SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
+        argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
+	    it->second.SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
     }
     argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 	CapacityDataOutput<<"\n";
@@ -169,7 +169,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
    	   	  argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 		  BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
 		  MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
-          argos::LOG<< "Robot ID="<<c2.GetId()<<endl;
+          //argos::LOG<< "Robot ID="<<c2.GetId()<<endl;
           c2.SetLoopFunctions(this);
           if(c2.GetId().compare(0, 1, "D")==0)
           { //check wether there are delivering robots or not 
@@ -179,8 +179,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
     
     size_t TotalDeliveryRobots=0;
-    map<int, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 100}, {32, 295}, {10, 16}, {20, 80}, {40, 336}, {80, 1360}};
-    map<int, int> TotalDeliveryRobotVary {{1, 0}, {8, 32}, {32, 359}};
+    map<int, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {32, 584}, {10, 16}, {20, 80}, {40, 336}, {80, 1360}};
+    map<int, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 840}};
     
     
     Real basicWidth = 1.0;
@@ -203,34 +203,40 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //argos::LOG<<"TotalDeliveryRobots="<<TotalDeliveryRobots<<endl;
     argos::Real forageRate = 110/1800.0;
     argos::Real total_distance=0;
-    int parent_idx;
+    Nest* currentNest;
     size_t numRobot =0;
-     
-    for(vector<Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
-        distance = it->GetLocation().Length();
+    size_t total_delivery = 0;
+    for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+        distance = it->second.GetLocation().Length();
         total_distance += distance;
     }
-    
-    for(vector<Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
-        distance = it->GetLocation().Length();
+    argos::LOG<<"total dist="<<total_distance<<endl;
+    for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+        currentNest = &(it->second);
+        distance = currentNest->GetLocation().Length();
         argos::LOG<<"distance="<<distance<<endl;
         if(VaryCapacityFlag){//vary capacity
-            it->SetDeliveryRobot(4);
+            currentNest->SetDeliveryRobot(4);
         }
         else{
             numRobot = round((distance/total_distance)*TotalDeliveryRobots);
-            if(numRobot ==0 && it->GetNestIdx() != 0)
+            if(numRobot ==0 && currentNest->GetNestIdx() != 0)
             {
-                it->SetDeliveryRobot(1); //at least one delivery robot
+                currentNest->SetDeliveryRobot(1); //at least one delivery robot
+                total_delivery++;
+                //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<1<<endl;
             }
             else
             {
-                it->SetDeliveryRobot(numRobot);
+                currentNest->SetDeliveryRobot(numRobot);
+                total_delivery += numRobot;
+                //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<numRobot<<endl;
             } 
         }
-        it->SetDeliveringTime(distance/RobotDeliverySpeed);
+        currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
     }
-            
+    argos::LOG<<"total_delivery="<<total_delivery<<endl;
+    assert(TotalDeliveryRobots - total_delivery <=10);
 
     SetFoodDistribution();
   
@@ -307,28 +313,28 @@ void MPFA_loop_functions::PreStep() {
     
     argos::Real distance;
     size_t packSize;
-    int parent_idx;
-    //Nest* currentNest;
     Nest* TargetNest = &Nests[0];
+    Nest* currentNest;
     argos::Real DeliveringTime;
     argos::CVector2 placementPosition;
     size_t numDelivery = 0;
-    for(vector<Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++)
+    
+    for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++)
     {
         //argos::LOG<< "Nest id="<< it->first<<", food ="<< it->second.FoodList.size()<< endl;
-        //currentNest = &(it->second);
+        currentNest = &(it->second);
         
-        packSize = it->GetDeliveryCapacity();
+        packSize = currentNest->GetDeliveryCapacity();
         
-        DeliveringTime = it->GetDeliveringTime();    
+        DeliveringTime = currentNest->GetDeliveringTime();    
         
-        if(it->FoodDeliveryStartTime.size() > 0)//Check whether food arrived nests
+        if(currentNest->FoodDeliveryStartTime.size() > 0)//Check whether food arrived nests
         {
-           vector<int>::iterator jt = it->FoodDeliveryStartTime.begin();
-           for ( ; jt != it->FoodDeliveryStartTime.end(); ) 
+           vector<int>::iterator jt = currentNest->FoodDeliveryStartTime.begin();
+           for ( ; jt != currentNest->FoodDeliveryStartTime.end(); ) 
            {
                if (*jt + DeliveringTime < GetSpace().GetSimulationClock()/32) {
-                   jt = it->FoodDeliveryStartTime.erase(jt);
+                   jt = currentNest->FoodDeliveryStartTime.erase(jt);
                    for(int i=0; i< packSize; i++)
                    {
                        placementPosition.Set(TargetNest->GetLocation().GetX()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5), TargetNest->GetLocation().GetY()+RNG->Gaussian(TargetNest->GetNestRadius()/1.2, 0.5));
@@ -337,7 +343,7 @@ void MPFA_loop_functions::PreStep() {
                        }
                        TargetNest->FoodList.push_back(placementPosition);
                     }
-                    it->RobotReturnStartTime.push_back(GetSpace().GetSimulationClock()/32);
+                    currentNest->RobotReturnStartTime.push_back(GetSpace().GetSimulationClock()/32);
                } 
                else 
                {
@@ -345,32 +351,32 @@ void MPFA_loop_functions::PreStep() {
                }
                
            }
-       }
-       numDelivery = it->GetDeliveryRobot();
-       if(it->RobotReturnStartTime.size() > 0) //update the number of delivery robot in nest
-       {
-           vector<int>::iterator valt = it->RobotReturnStartTime.begin();
-           for ( ; valt != it->RobotReturnStartTime.end(); ) 
+        }
+        numDelivery = currentNest->GetDeliveryRobot();
+        if(currentNest->RobotReturnStartTime.size() > 0) //update the number of delivery robot in nest
+        {
+           vector<int>::iterator valt = currentNest->RobotReturnStartTime.begin();
+           for ( ; valt != currentNest->RobotReturnStartTime.end(); ) 
            {
                if (*valt + DeliveringTime < GetSpace().GetSimulationClock()/32) 
                {
-                  valt = it->RobotReturnStartTime.erase(valt);
+                  valt = currentNest->RobotReturnStartTime.erase(valt);
                   numDelivery++;
-                  it->SetDeliveryRobot(numDelivery);
+                  currentNest->SetDeliveryRobot(numDelivery);
                 }
                 else
                 {
                     ++valt;
                 }
             }
-       }
-       if(it->FoodList.size() >= packSize && it->GetNestIdx()!=0 && numDelivery>0)//Check whether food need to be delivered
-       {
-            it->FoodList.erase(it->FoodList.begin(), it->FoodList.begin()+packSize);
+        }
+        if(currentNest->FoodList.size() >= packSize && currentNest->GetNestIdx()!=0 && numDelivery>0)//Check whether food need to be delivered
+        {
+            currentNest->FoodList.erase(currentNest->FoodList.begin(), currentNest->FoodList.begin()+packSize);
             numDelivery--;
-            it->SetDeliveryRobot(numDelivery);
-            it->FoodDeliveryStartTime.push_back(GetSpace().GetSimulationClock()/32);
-       }
+            currentNest->SetDeliveryRobot(numDelivery);
+            currentNest->FoodDeliveryStartTime.push_back(GetSpace().GetSimulationClock()/32);
+        }
     }
 
 }

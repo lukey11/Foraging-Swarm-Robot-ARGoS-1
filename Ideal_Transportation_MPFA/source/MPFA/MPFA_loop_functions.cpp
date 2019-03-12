@@ -195,7 +195,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     Nest* currentNest;
     Nest* TargetNest;
     size_t numDelivery =0;
-        
+    size_t maxDelivery = 0;
+    size_t totalDelivery =0;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
@@ -207,29 +208,39 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         
         distance = (TargetNest->GetLocation() - currentNest->GetLocation()).Length();
         //argos::LOG<<"distance="<<distance<<endl;
-        revLevel = level - it->second.GetLevel();
+        revLevel = level - currentNest->GetLevel();
         if(VaryCapacityFlag){//vary capacity
             currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
             currentNest->SetDeliveryRobot(4);
         }
         else{
             currentNest->SetDeliveryCapacity(initCapcity);
-            numDelivery = round((forageRate*2*distance)/RobotDeliverySpeed);
+            numDelivery = ceil((forageRate*2*distance*pow(numBranch, revLevel))/RobotDeliverySpeed);
+            //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", revLevel="<<revLevel<< ", numDelivery="<<numDelivery<<endl;
+            maxDelivery = round(distance/1.01);
+            if(numDelivery > maxDelivery)
+            {
+                 numDelivery = maxDelivery;   
+            }
             if(numDelivery ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot
+                totalDelivery++;
+                //argos::LOG<<"num=1"<<endl;
             }
             else
             {
                 currentNest->SetDeliveryRobot(numDelivery);
+                totalDelivery += numDelivery;
+                //argos::LOG<<"num="<<numDelivery <<endl;
             } 
         }
         currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
         currentNest->SetNestRadius(revLevel, NestRadius);
-        //it->second.SetNestRadius(NestRadius, ArenaWidth, Nests.size());
         CapacityDataOutput<<currentNest->GetDeliveryCapacity()<<" ";
     }
-            
+    argos::LOG<<"totalDelivery="<<totalDelivery<<endl;
+    argos::LOG<<"total robots="<<totalDelivery+Num_robots<<endl;
 	CapacityDataOutput<<"\n";
     CapacityDataOutput.close();
         
