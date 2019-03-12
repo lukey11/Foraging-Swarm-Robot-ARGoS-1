@@ -174,7 +174,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     Real basicWidth = 1.0;
     if(VaryForwardSpeedFlag == 1)
     {
-        if(abs(Nests[0].GetLocation().GetX()) < -1)
+        if(Nests[0].GetLocation().GetX() < -1)
         {
             RobotDeliverySpeed *= pow(ArenaWidth*2/basicWidth, 1/3.0);
         }
@@ -453,7 +453,7 @@ void MPFA_loop_functions::PostExperiment() {
         varySpeed << VaryForwardSpeedFlag;
         
         ostringstream quardArena;
-        if(abs(Nests[0].GetLocation().GetX())>=1){ //the central nest is not in the center, this is a quard arena
+        if(Nests[0].GetLocation().GetX() < -1){ //the central nest is not in the center, this is a quard arena
              quardArena << 1;
          }
          else{

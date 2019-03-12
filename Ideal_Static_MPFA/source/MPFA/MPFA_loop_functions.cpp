@@ -92,7 +92,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 
     ArenaWidth = ArenaSize[0];
     
-    
+    argos::LOG<<"ArenaWidth="<<ArenaWidth<<endl;
     
     string PosStrRegionNest;
     size_t numNestsInPreviousLevels =0, level=-1; 
@@ -179,28 +179,32 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
     
     size_t TotalDeliveryRobots=0;
-    map<int, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {32, 584}, {10, 16}, {20, 80}, {40, 336}, {80, 1360}};
-    map<int, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 840}};
+    map<int, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {64, 146}, {10, 16}, {20, 80}, {40, 84}, {80, 340}};
+    map<int, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 210}};
     
     
     Real basicWidth = 1.0;
+    int ActualArenaWidth = ArenaWidth;
+    //argos::LOG<<"Nests[0].GetLocation().GetX()="<<Nests[0].GetLocation().GetX()<<endl;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
+    
     if(VaryForwardSpeedFlag == 1)
     {
-        TotalDeliveryRobots = TotalDeliveryRobotVary[ArenaWidth];
-        if(abs(Nests[0].GetLocation().GetX()) < -1)//quad arena
-        {
-            RobotDeliverySpeed *= pow(ArenaWidth*2/basicWidth, 1/3.0); //meter per second
-        }
-        else
-        {
-            RobotDeliverySpeed *= pow(ArenaWidth/basicWidth, 1/3.0);
-        }
+        RobotDeliverySpeed *= pow(ActualArenaWidth/basicWidth, 1/3.0); //meter per second
+        TotalDeliveryRobots = TotalDeliveryRobotVary[ActualArenaWidth];
     }
     else
     {
-        TotalDeliveryRobots = TotalDeliveryRobotConst[ArenaWidth];
+        TotalDeliveryRobots = TotalDeliveryRobotConst[ActualArenaWidth];
     }
-    //argos::LOG<<"TotalDeliveryRobots="<<TotalDeliveryRobots<<endl;
+    
+    //argos::LOG<<"ActualArenaWidth="<<ActualArenaWidth<<endl;
+    
+    
+    argos::LOG<<"TotalDeliveryRobots="<<TotalDeliveryRobots<<endl;
     argos::Real forageRate = 110/1800.0;
     argos::Real total_distance=0;
     Nest* currentNest;
@@ -215,16 +219,18 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         currentNest = &(it->second);
         distance = currentNest->GetLocation().Length();
         argos::LOG<<"distance="<<distance<<endl;
-        
-        if(VaryCapacityFlag){//vary capacity
-            currentNest->SetDeliveryRobot(4);
+        if(total_distance != 0)
+        {
+            numRobot = round((distance/total_distance)*TotalDeliveryRobots);
         }
-        else{
-            if(total_distance != 0)
-            {
-                numRobot = round((distance/total_distance)*TotalDeliveryRobots);
-            }
-            
+        //argos::LOG<<"numRobot="<<numRobot<<endl;
+        /*if(VaryCapacityFlag){//vary capacity
+            currentNest->SetDeliveryRobot(4);
+            argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<4<<endl;
+            total_delivery += 4;
+        }
+        else
+        {*/
             if(numRobot ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot
@@ -238,7 +244,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
                 //argos::LOG<<"id="<<currentNest->GetNestIdx()<<" ,num="<<numRobot<<endl;
             } 
         
-        }
+        //}
         currentNest->SetDeliveringTime(distance/RobotDeliverySpeed);
     }
     argos::LOG<<"total_delivery="<<total_delivery<<endl;

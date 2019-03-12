@@ -332,7 +332,7 @@ void MPFA_loop_functions::PostExperiment() {
         varySpeed << VaryForwardSpeedFlag;
         
         ostringstream quardArena;
-        if(abs(Nests[0].GetLocation().GetX())>=1){ //the central nest is not in the center, this is a quard arena
+        if(Nests[0].GetLocation().GetX() < -1){ //the central nest is not in the center, this is a quard arena
              quardArena << 1;
          }
          else{

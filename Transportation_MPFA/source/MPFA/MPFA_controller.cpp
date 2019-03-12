@@ -218,7 +218,7 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     
     if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
-        if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
+        if(lf->Nests[0].GetLocation().GetX() < -1)
         {
             RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
         }
