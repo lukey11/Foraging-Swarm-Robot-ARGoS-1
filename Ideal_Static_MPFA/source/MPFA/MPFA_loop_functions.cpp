@@ -92,7 +92,6 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 
     ArenaWidth = ArenaSize[0];
     
-    argos::LOG<<"ArenaWidth="<<ArenaWidth<<endl;
     
     string PosStrRegionNest;
     size_t numNestsInPreviousLevels =0, level=-1; 
@@ -112,13 +111,23 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
      float regionWidth = ArenaWidth/sqrt((Nests.size()-1));
      argos::LOG<<"regionWidth="<<regionWidth<<endl;
      level = log(Nests.size()-1)/log(4);
-     if(abs(Nests[0].GetLocation().GetX())< -1)
+     if(Nests[0].GetLocation().GetX()< -1)
      {
          level++;
          }
-    argos::LOG<< "level="<<level<<endl;         
+    argos::LOG<< "level="<<level<<endl;    
+    
+    ActualArenaWidth = ArenaWidth;
+    //argos::LOG<<"Nests[0].GetLocation().GetX()="<<Nests[0].GetLocation().GetX()<<endl;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
+    
+    argos::LOG<<"ArenaWidth="<<ActualArenaWidth<<endl;
+    
          ostringstream arena_width;
-    arena_width << GetSpace().GetArenaSize()[0];
+    arena_width << ActualArenaWidth;
          
     string header = "./results/Ideal_MPFA_" +arena_width.str()+"by"+arena_width.str()+"_";
     
@@ -127,13 +136,16 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 4;
+    int unitCapacity = 1;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
+    argos::LOG<<"unitDist="<<unitDist<<endl;
+    
     for(map<int, Nest>::iterator it= Nests.begin(); it!= Nests.end(); it++)
     {
         distance = sqrt(it->second.GetLocation().SquareLength());
 	    if(VaryCapacityFlag){//vary capacity
-            capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
+            capacity = unitCapacity*round(distance/unitDist);// is the diagonal distance of a region
+            argos::LOG<<"capacity="<<capacity<<endl;
         }
         else{
             capacity = unitCapacity;
@@ -142,7 +154,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
         argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
-	    it->second.SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
+	    it->second.SetNestRadius(level, NestRadius, ActualArenaWidth, Nests.size());
     }
     argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 	CapacityDataOutput<<"\n";
@@ -179,17 +191,12 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
     
     size_t TotalDeliveryRobots=0;
-    map<int, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {64, 146}, {10, 16}, {20, 80}, {40, 84}, {80, 340}};
-    map<int, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 210}};
+    map<float, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {64, 146}, {10, 16}, {20, 80}, {40, 84}, {80, 340}};
+    map<float, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 210}};
     
     
     Real basicWidth = 1.0;
-    int ActualArenaWidth = ArenaWidth;
-    //argos::LOG<<"Nests[0].GetLocation().GetX()="<<Nests[0].GetLocation().GetX()<<endl;
-    if(Nests[0].GetLocation().GetX() < -1)//quad arena
-    {
-        ActualArenaWidth = ArenaWidth*2;
-    }
+    
     
     if(VaryForwardSpeedFlag == 1)
     {
@@ -436,7 +443,7 @@ void MPFA_loop_functions::PostExperiment() {
         num_robots <<  Num_robots;
    
         ostringstream arena_width;
-        arena_width << ArenaWidth;
+        arena_width << ActualArenaWidth;
          
          
         ostringstream varySpeed;

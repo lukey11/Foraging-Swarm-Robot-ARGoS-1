@@ -11,8 +11,7 @@ class Random_Argos:
 
 if __name__ == "__main__":
     #system = 'linux' if platform.system() == 'Linux' else 'mac'
-    #files = ['02_20_19_only_deliverying_vary_speed_2over3_scaling/no_delivery_Random_MPFA_r4_d1_tag1_1by1.xml', '02_20_19_only_deliverying_vary_speed_2over3_scaling/no_delivery_Random_MPFA_r64_d17_tag64_8by8.xml', '02_20_19_only_deliverying_vary_speed_2over3_scaling/no_delivery_Random_MPFA_r2004_d257_tag4096_64by64_mapTo_r256_d65_tag1024_32by32.xml', '02_20_19_only_deliverying_vary_speed_2over3_scaling/Random_MPFA_r4_d1_tag1_1by1.xml', '02_20_19_only_deliverying_vary_speed_2over3_scaling/Random_MPFA_r84_d17_tag64_8by8.xml', '02_20_19_only_deliverying_vary_speed_2over3_scaling/Random_MPFA_r2004_d257_tag4096_64by64_mapTo_r349_d65_tag1024_32by32.xml']
-    files = []
+    files = ['03_10_19_vary_speed_2over3_scaling/Random_MPFA_r4_d1_tag1_1by1.xml', '03_10_19_vary_speed_2over3_scaling/Random_MPFA_r92_d17_tag64_8by8.xml', '03_10_19_vary_speed_2over3_scaling/Random_MPFA_r1864_d257_tag4096_64by64_mapTo_r466_d65_tag1024_32by32.xml']
     run_count = 20
     for file in files:
         print file

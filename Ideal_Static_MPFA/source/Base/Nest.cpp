@@ -54,7 +54,7 @@ void Nest::SetNestRadius(int level, Real radius, float ArenaWidth, size_t nestNu
         else
         {
             //NestRadius = radius * (ArenaWidth/10.0);
-	    NestRadius = sqrt(level+1) * radius;
+	    NestRadius = sqrt(level) * radius;
             }
         //NestRadius = radius * (1+log(nestNum-1)/log(4));
         //NestRadius = radius * (regionWidth/4.0) * (1+log(nestNum-1)/log(4));

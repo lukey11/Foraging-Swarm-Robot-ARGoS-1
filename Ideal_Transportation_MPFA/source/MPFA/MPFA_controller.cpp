@@ -195,13 +195,13 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     
     if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
-        if(lf->Nests[0].GetLocation().GetX() < -1)
-        {
-            RobotForwardSpeed *= pow(lf->ArenaWidth*2/basicWidth, 1/3.0);
-        }
-        else{
-            RobotForwardSpeed *= pow(lf->ArenaWidth/basicWidth, 1/3.0);
-        }
+        //if(lf->Nests[0].GetLocation().GetX() < -1)
+        //{
+        //    RobotForwardSpeed *= pow(lf->ArenaWidth*2/basicWidth, 1/3.0);
+        //}
+        //else{
+            RobotForwardSpeed *= pow(lf->ActualArenaWidth/basicWidth, 1/3.0);
+        //}
     }
 	// Initialize the SiteFidelityPosition
     SiteFidelityPosition = CVector2(0,0); //qilu 07/26/2016

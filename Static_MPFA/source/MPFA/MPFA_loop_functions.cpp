@@ -117,24 +117,31 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          level++;
          }
     argos::LOG<< "level="<<level<<endl;         
+    
+    ActualArenaWidth = ArenaWidth;
+    //argos::LOG<<"Nests[0].GetLocation().GetX()="<<Nests[0].GetLocation().GetX()<<endl;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
+    argos::LOG<<"ArenaWidth="<<ActualArenaWidth<<endl;
          ostringstream arena_width;
-    arena_width << GetSpace().GetArenaSize()[0];
+    arena_width << ActualArenaWidth;
          
     string header = "./results/MPFA_" +arena_width.str()+"by"+arena_width.str()+"_";
     
-    size_t initCapcity = 4;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
 
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 4;
+    int unitCapacity = 1;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
     for(map<int, Nest>::iterator it= Nests.begin(); it!= Nests.end(); it++)
     {
         distance = sqrt(it->second.GetLocation().SquareLength());
 	    if(VaryCapacityFlag){//vary capacity
-            capacity = unitCapacity/4.0*round(distance/unitDist);// is the diagonal distance of a region
+            capacity = unitCapacity*round(distance/unitDist);// is the diagonal distance of a region
         }
         else{
             capacity = unitCapacity;
@@ -143,7 +150,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
         argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
-	    it->second.SetNestRadius(level, NestRadius, ArenaWidth, Nests.size());
+	    it->second.SetNestRadius(level, NestRadius, ActualArenaWidth, Nests.size());
     }
     argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 	CapacityDataOutput<<"\n";
@@ -174,7 +181,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
           if(c2.GetId().compare(0, 1, "D")==0){ //check wether there are delivering robots or not 
               DeliveryFlag = 1;
           }
-	    }
+    }
     SetFoodDistribution();
   
  ForageList.clear(); //qilu 09/13/2016

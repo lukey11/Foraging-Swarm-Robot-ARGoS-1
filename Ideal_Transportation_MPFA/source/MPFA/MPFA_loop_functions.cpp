@@ -139,7 +139,15 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
            }//end if
          }// end if
      }//end for
-     
+    ActualArenaWidth = ArenaWidth;
+    //argos::LOG<<"Nests[0].GetLocation().GetX()="<<Nests[0].GetLocation().GetX()<<endl;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
+    
+    argos::LOG<<"ArenaWidth="<<ActualArenaWidth<<endl;
+
     //set capacity for delivery robots
     size_t revLevel =0;
     if(!BacktrackDelivery){
@@ -172,18 +180,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	}
     
     Real basicWidth = 1.0;
-    int ActualArenaWidth = ArenaWidth;
-    if(Nests[0].GetLocation().GetX() < -1)//quad arena
-    {
-        ActualArenaWidth = ArenaWidth*2;
-    }
     if(VaryForwardSpeedFlag == 1)
     {
 	RobotDeliverySpeed *= pow(ActualArenaWidth/basicWidth, 1/3.0);
     }
     
     ostringstream arena_width;
-    arena_width << GetSpace().GetArenaSize()[0];
+    arena_width << ActualArenaWidth;
          
     string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
@@ -211,7 +214,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         if(VaryCapacityFlag){//vary capacity
             if(currentNest->GetNestIdx() != 0)
             {
-              currentNest->SetDeliveryCapacity(initCapcity/4.0*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+              currentNest->SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
               currentNest->SetDeliveryRobot(4);
               totalDelivery += 4;
               //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", num="<<4 <<endl;
@@ -451,7 +454,7 @@ void MPFA_loop_functions::PostExperiment() {
         num_robots <<  Num_robots;
          
         ostringstream arena_width;
-        arena_width << ArenaWidth;
+        arena_width << ActualArenaWidth;
         
 	ostringstream varySpeed;
         varySpeed << VaryForwardSpeedFlag;

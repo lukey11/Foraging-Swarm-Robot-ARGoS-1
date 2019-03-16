@@ -203,15 +203,15 @@ void MPFA_controller::SetLoopFunctions(MPFA_loop_functions* lf) {
     //the speed is arena size power to 1/6 or is arena width power to 1/3
     if(lf->VaryForwardSpeedFlag == 1 && controllerID.compare(0, 1, "D")==0)
     {
-        if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
-        {
-            RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
+        //if(abs(lf->Nests[0].GetLocation().GetX()) < -1)
+        //{
+            //RobotForwardSpeed *= pow((lf->ArenaWidth*2/basicWidth), 1/3.0);
             //argos::LOG<<"1.quard RobotForwardSpeed="<<RobotForwardSpeed<<endl;
-        }
-        else{
-            RobotForwardSpeed *= pow((lf->ArenaWidth/basicWidth), 1/3.0);
+        //}
+        //else{
+            RobotForwardSpeed *= pow((lf->ActualArenaWidth/basicWidth), 1/3.0);
             //argos::LOG<<"2. full RobotForwardSpeed="<<RobotForwardSpeed<<endl;
-        }
+        //}
     }
 
 	// Initialize the SiteFidelityPosition

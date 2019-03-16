@@ -82,7 +82,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="1" 
 <distribute>
 <position max="-5, -5, 0.0" method="uniform" min="-15.5, -15.5, 0.0"/>
 <orientation mean="0, 0, 0" method="gaussian" std_dev="360, 0, 0"/>
-<entity max_trials="100" quantity="359">
+<entity max_trials="100" quantity="210">
 <foot-bot id="F0-"><controller config="CPFA"/></foot-bot>
 </entity>
 </distribute>
@@ -105,7 +105,7 @@ NestRadius="0.20" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="1" 
   <!-- ****************** -->
 
 
- <visualization>
+<!-- <visualization>
 
 <qt-opengl>
       <camera>
