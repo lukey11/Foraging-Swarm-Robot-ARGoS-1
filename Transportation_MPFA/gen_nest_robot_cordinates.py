@@ -155,7 +155,7 @@ for xy in results[-1]:
     total_robot += 4+quantity
 
 print "foraging_robot=", foraging_robot
-print "delierying_robot=", delierying_robot
+print "deliverying_robot=", delierying_robot
 print "total robot =", total_robot
 print total_robot == delierying_robot+foraging_robot
 coord_info.close() 
