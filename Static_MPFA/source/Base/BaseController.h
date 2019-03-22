@@ -61,9 +61,12 @@ class BaseController : public argos::CCI_Controller {
 		argos::CRadians NestAngleTolerance;
 		argos::Real TargetDistanceTolerance;
 		argos::Real SearchStepSize;
+        
 
 		argos::CRange<argos::Real> ForageRangeX;
 		argos::CRange<argos::Real> ForageRangeY;
+		argos::CRange<argos::Real>   RegionRangeX;
+		argos::CRange<argos::Real>   RegionRangeY;
 		argos::CRange<argos::Real> GoStraightAngleRangeInDegrees;
 
 		//  base controller movement parameters

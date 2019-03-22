@@ -64,16 +64,16 @@ argos::CVector2 BaseController::GetPosition() {
 
 	// Add noise to the current position unless travelling to the nest
 	// Make the noise proportional to the distance to the target
-	/*
-	if (!heading_to_nest)
+	
+	/*if (!heading_to_nest)
 	{
 		argos::Real noise_x = RNG->Gaussian(PositionNoiseStdev);
 		argos::Real noise_y = RNG->Gaussian(PositionNoiseStdev);
 
 		x += noise_x;
 		y += noise_y;
-	}
-	*/
+	}*/
+	
 
 	return argos::CVector2(x, y);
 }
@@ -86,17 +86,8 @@ void BaseController::SetTarget(argos::CVector2 t) {
 
 	argos::Real x(t.GetX()), y(t.GetY());
 
-	//if(x > ForageRangeX.GetMax()) x = ForageRangeX.GetMax();
-	//else if(x < ForageRangeX.GetMin()) x = ForageRangeX.GetMin();
-	
-	//if(y > ForageRangeY.GetMax()) y = ForageRangeY.GetMax();
-	//else if(y < ForageRangeY.GetMin()) y = ForageRangeY.GetMin();
-	
-	//argos::LOG << "<<Updating Target Position>>" << std::endl;
-
-	//argos::LOG << "x: "<< x << std::endl;
-	//argos::LOG << "y:" << y << std::endl;
-
+	//argos::LOG << "original target = ["<< x <<", " << y<< "]"<< std::endl;
+	//argos::LOG<<"heading_to_nest="<<heading_to_nest<<endl;
 	if (!heading_to_nest) {
 		argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
 		argos::Real noise_x = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
@@ -104,13 +95,11 @@ void BaseController::SetTarget(argos::CVector2 t) {
 		
 		x += noise_x;
 		y += noise_y;
+        //argos::LOG << "targets with noise: ["<< x <<", "<< y<<"]"<< std::endl;
 
-		//argos::LOG << "Not Heading to Nest " << std::endl;
-		//argos::LOG << "Noise x: "<< noise_x << std::endl;
-		//argos::LOG << "Noise y:" << noise_y << std::endl;
-	} else {
-		//argos::LOG << "Heading to Nest " << std::endl;
-	}
+	} /*else {
+		argos::LOG << "Heading to original target=["<<x<<", "<<y<< "]"<< std::endl;
+	}*/
 
 	if(y > ForageRangeY.GetMax() || y < ForageRangeY.GetMin() ||
 			x > ForageRangeX.GetMax() || x < ForageRangeX.GetMin()) {
@@ -123,10 +112,9 @@ void BaseController::SetTarget(argos::CVector2 t) {
 	//argos::LOG << "New Target y:" << y << std::endl;
 
 	TargetPosition = argos::CVector2(x, y);
-	argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
+	//argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
+	//argos::LOG<<"TargetPosition="<<TargetPosition<<endl;
 	
-	//argos::LOG << "Distance: " << distanceToTarget << std::endl;
-	//argos::LOG << "<<New Target Set>>" << std::endl;
 }
 
 void BaseController::SetStartPosition(argos::CVector3 sp) {
@@ -153,11 +141,11 @@ void BaseController::SetNextMovement() {
 	// Allow the searcher to treat movement to the nest
 	// differently than other movement
 	if (heading_to_nest) {
-		DistTol = NestDistanceTolerance;
+        DistTol = NestDistanceTolerance;
 		AngleTol = NestAngleTolerance;
 	}
 	else {
-		DistTol = TargetDistanceTolerance;
+        DistTol = TargetDistanceTolerance;
 		AngleTol = TargetAngleTolerance;
 	}
  
@@ -174,25 +162,19 @@ void BaseController::SetNextMovement() {
 		//cout << "TargetAngleTolerance: " << TargetAngleTolerance << endl;
 		//cout << "TargetDistanceTolerance: " << TargetDistanceTolerance << endl;
 
-
-		if(!IsAtTarget()) {
+        if(!IsAtTarget()) {
 			if(headingToTargetError > AngleTol) {
-				//cout << "SetNextMovement, Turn Left " << endl;
 				PushMovement(LEFT, -ToDegrees(headingToTargetError).GetValue());
 			} else if(headingToTargetError < -AngleTol) {
-				//cout << "SetNextMovement, Turn Right " << endl;
 				PushMovement(RIGHT, ToDegrees(headingToTargetError).GetValue());
 			} else {
-				//cout << "SetNextMovement, Move Forward " << endl;
 				PushMovement(FORWARD, distanceToTarget);
 			}
 		} else {
 			PushMovement(STOP, 0.0);
-			//cout << "SetNextMovement, stop " << endl;
 		}
 	} else {
 		PopMovement();
-		//cout << "SetNextMovement, pop " << endl;
 	}
 }
 
@@ -203,48 +185,36 @@ void BaseController::SetTargetAngleDistance(argos::Real newAngleToTurnInDegrees)
 	
 	argos::Real s = 0.105 * newAngleToTurnInDegrees;
  TicksToWaitWhileMoving = std::ceil((SimulationTicksPerSecond() * s) / RobotRotationSpeed);
- //argos::LOG<<"Angle dist: TicksToWaitWhileMoving="<<TicksToWaitWhileMoving<<endl;
 }
 
 void BaseController::SetTargetTravelDistance(argos::Real newTargetDistance) {
 	// convert meters into cm
 	argos::Real d = newTargetDistance * 100.0;
 	TicksToWaitWhileMoving = std::ceil((SimulationTicksPerSecond() * d) / RobotForwardSpeed);
-	//argos::LOG<<"Target dist: TicksToWaitWhileMoving="<<TicksToWaitWhileMoving<<endl;
 }
 
 void BaseController::SetLeftTurn(argos::Real newAngleToTurnInDegrees) {
-	//argos::LOG << "in set left: "<< CurrentMovementState << std::endl;
-	//argos::LOG <<"newAngleToTurnInDegrees="<<newAngleToTurnInDegrees<<endl;
 	if(newAngleToTurnInDegrees > 0.0) {
 		SetTargetAngleDistance(newAngleToTurnInDegrees);
 		CurrentMovementState = LEFT;
-		//argos::LOG << "CurrentMovementState = LEFT" << std::endl;
 	} else if(newAngleToTurnInDegrees < 0.0) {
 		SetTargetAngleDistance(-newAngleToTurnInDegrees);
 		CurrentMovementState = RIGHT;  
-		//argos::LOG << "CurrentMovementState = RIGHT" << std::endl;
 	} else {
 		Stop();
-		//argos::LOG << "CurrentMovementState = STOP" << std::endl;
 	}
 	
 }
 
 void BaseController::SetRightTurn(argos::Real newAngleToTurnInDegrees) {
-	//argos::LOG << "in set right: "<< CurrentMovementState << std::endl;
-	//argos::LOG <<"newAngleToTurnInDegrees="<<newAngleToTurnInDegrees<<endl;
 	if(newAngleToTurnInDegrees > 0.0) {
 		SetTargetAngleDistance(newAngleToTurnInDegrees);
 		CurrentMovementState = RIGHT;
-		//argos::LOG << "CurrentMovementState = RIGHT" << std::endl;
 	} else if(newAngleToTurnInDegrees < 0.0) {
 		SetTargetAngleDistance(-newAngleToTurnInDegrees);
 		CurrentMovementState = LEFT;
-		//argos::LOG << "CurrentMovementState = LEFT" << std::endl;
 	} else {
 		Stop();
-		//argos::LOG << "CurrentMovementState = STOP" << std::endl;
 	}
 	
 }
@@ -323,25 +293,19 @@ unsigned int BaseController::GetCollisionTime(){
 bool BaseController::CollisionDetection() {
 
 	argos::CVector2 collisionVector = GetCollisionVector();
-        //LOG<<"collisionVector="<<collisionVector<<endl;
 	
 	argos::Real collisionAngle = ToDegrees(collisionVector.Angle()).GetValue();
-	//LOG<<"get angle="<<collisionAngle<<endl;
 	
-	//LOG<<"range="<<GoStraightAngleRangeInDegrees.WithinMinBoundIncludedMaxBoundIncluded(collisionAngle)<<endl;
-	//LOG<<"vector length="<<collisionVector.Length()<<endl;
         bool isCollisionDetected = false;
         if(GoStraightAngleRangeInDegrees.WithinMinBoundIncludedMaxBoundIncluded(collisionAngle) && collisionVector.Length() > 0.0) {
 	 
 		Stop();
 		 isCollisionDetected = true;
 		 collision_counter++;
-		 //LOG<<"collision_counter="<<collision_counter<<endl;
    
 		while(MovementStack.size() > 0) MovementStack.pop();
 
 		PushMovement(FORWARD, SearchStepSize);
-        //argos::LOG << "collisionAngle=" << collisionAngle << std::endl;
 		if(collisionAngle <= 0.0)  {
 			
 			SetLeftTurn(collisionAngle); //qilu 10/26/2016
@@ -350,7 +314,6 @@ bool BaseController::CollisionDetection() {
 		}
 		Real randomNumber = RNG->Uniform(CRange<Real>(0.5, 1.0));//qilu 10/23/2016
 		collisionDelay = SimulationTick() + (size_t)(randomNumber*SimulationTicksPerSecond());//qilu 10/26/2016
-	//LOG<<"collisionDelay="<<collisionDelay<<endl;
         	}
 
 	return isCollisionDetected;
@@ -364,8 +327,6 @@ argos::CVector2 BaseController::GetCollisionVector() {
 	argos::CVector2 collisionVector;
 
 	for(size_t i = 0; i < proximityReadings.size(); ++i) {
-		//argos::LOG<<"get vector="<<argos::CVector2(proximityReadings[i].Value, proximityReadings[i].Angle)<<endl;
-		//argos::LOG<<"get angle="<<ToDegrees(proximityReadings[i].Angle).GetValue()<<endl;
 		
 		collisionVector += argos::CVector2(proximityReadings[i].Value, proximityReadings[i].Angle);
 	}
@@ -386,9 +347,6 @@ void BaseController::Move() {
 	if(Wait() == true) return;
 
 	collisionFlag = CollisionDetection();
- //double randomNumber = RNG->Uniform(argos::CRange<double>(0.0, 1.0));//qilu 09/24/2016
-        //argos::LOG << "collisionFlag="<<collisionFlag<<std::endl;
-        //argos::LOG << "CurrentMovementState="<<CurrentMovementState<<std::endl;
 	/* move based on the movement state flag */
 	switch(CurrentMovementState) {
 
@@ -404,7 +362,6 @@ void BaseController::Move() {
 		case LEFT: {
 			if((TicksToWaitWhileMoving--) <= 0.0) {
 				Stop();
-				//argos::LOG << "LEFT -> stop\n";
 			} else if(collisionDelay< SimulationTick() || collisionFlag){
 				//argos::LOG << "LEFT\n";
 				wheelActuator->SetLinearVelocity(-RobotRotationSpeed, RobotRotationSpeed);
@@ -430,7 +387,6 @@ void BaseController::Move() {
 		case FORWARD: {
 			if((TicksToWaitWhileMoving--) <= 0.0) {
 				Stop();
-				//argos::LOG << "Forward -> stop\n";
 			} else {
 			//argos::LOG << "FORWARD\n";
 				wheelActuator->SetLinearVelocity(RobotForwardSpeed, RobotForwardSpeed);             
@@ -442,7 +398,6 @@ void BaseController::Move() {
 		case BACK: {
 			if((TicksToWaitWhileMoving--) <= 0.0) {
 				Stop();
-				//argos::LOG << "Back -> stop\n";
 			} else {
 			//argos::LOG << "BACK\n";
 				wheelActuator->SetLinearVelocity(-RobotForwardSpeed, -RobotForwardSpeed);
@@ -505,9 +460,10 @@ bool BaseController::IsAtTarget()
 	}
 
 	argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
+    //argos::LOG << "IsAtTarget: DistanceTolerance: " << DistTol << endl;
+    //argos::LOG << "IsAtTarget: Distance to Target: " << distanceToTarget << endl;
+	//argos:LOG<<"IsAtTarget: TargetPosition="<<TargetPosition<< "at target="<<int(distanceToTarget < DistTol)<<endl;
 
-	//argos::LOG << "IsAtTarget: Distance to Target: " << distanceToTarget << endl;
-	//argos::LOG << "IsAtTarget: TargetDistanceTolerance: " << DistTol << endl;
 
 	return (distanceToTarget < DistTol) ? (true) : (false);
 }

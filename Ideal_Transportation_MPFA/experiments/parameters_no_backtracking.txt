@@ -1,0 +1,3 @@
+XMLBlock settings
+Files Random_MPFA_r2_d1_tag64_5by5 Random_MPFA_r16_d4_tag256_10by10 Random_MPFA_r72_d16_tag1024_20by20 Random_MPFA_r296_d64_tag4096_40by40 Random_MPFA_r1192_d256_tag16384_80by80
+BacktrackDelivery 0

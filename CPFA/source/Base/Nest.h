@@ -24,7 +24,6 @@ class Nest {
         map<string, size_t> DensityOnFidelity; //qilu 09/11/2016
         vector<CVector2> FoodList;
         size_t num_collected_tags;
-        CVector2 NewLocation;
         size_t visited_time_point_in_minute;
         /* constructor function */
 		
@@ -32,7 +31,9 @@ class Nest {
         CVector2		GetLocation();
         void		SetLocation();
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void     UpdateNestLocation(); //qilu 09/10/2016
+        /*void        SetNestRadius(int level, Real radius);
+        argos::Real GetNestRadius();
+        argos::Real GetNestRadiusSquared(); */
         void  SetNestIdx(size_t idx);
         size_t  GetNestIdx();
         

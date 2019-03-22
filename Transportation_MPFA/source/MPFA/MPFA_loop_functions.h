@@ -5,7 +5,6 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/simulator/entity/floor_entity.h>
 #include <source/MPFA/MPFA_controller.h>
-//#include <argos3/plugins/simulator/entities/cylinder_entity.h>
 
 using namespace argos;
 
@@ -27,6 +26,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		void PostStep();
 		bool IsExperimentFinished();
 		void PostExperiment();
+		
 		argos::CColor GetFloorColor(const argos::CVector2 &c_pos_on_floor);
 
 		// GA Functions
@@ -34,7 +34,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		/* Configures the robot controller from the genome */
 		void ConfigureFromGenome(Real* pf_genome);
 		/* Calculates the performance of the robot in a trial */
-		Real Score();
+		int Score();
 	
 		/**
 		 * Returns the current trial.
@@ -56,6 +56,8 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		std::vector<argos::CColor>   TargetRayColorList;
 
 		unsigned int getNumberOfRobots();
+		unsigned int getNumberOfDepots();
+        void increaseNumDistributedFoodByOne();
 		double getProbabilityOfSwitchingToSearching();
 		double getProbabilityOfReturningToNest();
 		double getUninformedSearchVariation();
@@ -66,7 +68,7 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 
 	protected:
 
-		void setScore(double s);
+		void setScore(unsigned int s);
 
 		argos::CRandom::CRNG* RNG;
                 size_t NumDistributedFood; //qilu 11/10/2016
@@ -87,14 +89,17 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		size_t PowerlawFoodUnitCount;
 		size_t NumberOfClusters;
 		size_t ClusterWidthX;
-		size_t ClusterLengthY;
+		size_t ClusterWidthY;
 		size_t PowerRank;
-                size_t ArenaWidth;
+        float ArenaWidth;
+	        float ActualArenaWidth;
                 size_t SimTime;
                 Real curr_time_in_minutes;
                 Real last_time_in_minutes;
                 int Nest_travel_time_in_ticks;
                 size_t Num_robots;
+                size_t BacktrackDelivery;
+                size_t numBranch;
   
 		/* MPFA variables */
 		argos::Real ProbabilityOfSwitchingToSearching;
@@ -109,18 +114,20 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		argos::Real FoodRadius;
 		argos::Real FoodRadiusSquared;
 		argos::Real NestRadius;
-		argos::Real NestRadiusSquared;
+		//argos::Real NestRadiusSquared;
 		argos::Real NestElevation;
 		argos::Real SearchRadiusSquared;
 
+        size_t VaryForwardSpeedFlag;
+        size_t VaryCapacityFlag;
+        size_t DeliveryFlag = 0;
+	
   argos::Real NestPosition_0; //qilu 09/06/2016
   argos::Real NestPosition_1;
   argos::Real NestPosition_2;
   argos::Real NestPosition_3;
 
-  //vector<CCylinderEntity> Cylinders; //qilu 10/18/2016
 
-  
 		/* list variables for food & pheromones */
 		std::vector<argos::CVector2> FoodList;
 		std::vector<argos::CColor>   FoodColoringList;
@@ -138,9 +145,8 @@ class MPFA_loop_functions : public argos::CLoopFunctions
         size_t lastNumCollectedFood; //qilu 08/19
         size_t currNumCollectedFood; //qilu 08/19
     
-      
-  std::vector<Nest> Nests; //qilu 09/06
-  //std::vector<> DepotIDs;
+  //std::vector<Nest> Nests; //qilu 09/06
+  map<int,Nest> Nests; 
   vector<size_t>			ForageList; //qilu 09/13
 		//argos::CVector2 NestPosition;
   //std::vector<argos::CVector2> NestPositions; //qilu 07/26/2016
@@ -159,9 +165,8 @@ class MPFA_loop_functions : public argos::CLoopFunctions
 		bool IsCollidingWithFood(argos::CVector2 p);
   bool IsCollidingWithNest(argos::CVector2 p, argos::Real radius); //qilu 07/26/2016 for nest
   bool IsCollidingWithFood(argos::CVector2 p, argos::Real radius);//qilu 07/26/2016 for nest
-  void CreateNest(argos::CVector2 position); //qilu 07/26/2016 
-		double score;
-		int PrintFinalScore;
+  int score;
+  int PrintFinalScore;
 };
 
 #endif /* MPFA_LOOP_FUNCTIONS_H */

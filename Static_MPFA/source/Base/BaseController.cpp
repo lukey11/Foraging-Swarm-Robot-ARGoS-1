@@ -34,7 +34,10 @@ BaseController::BaseController() :
 	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
 	ForageRangeX.Set(-rangeX, rangeX);
 	ForageRangeY.Set(-rangeY, rangeY);
-	GoStraightAngleRangeInDegrees.Set(-37.5, 37.5);
+	RegionRangeX.Set(-2.5+0.085, 2.5-0.085);
+	RegionRangeY.Set(-2.5+0.085, 2.5-0.085);
+	//GoStraightAngleRangeInDegrees.Set(-37.5, 37.5);//this range is too small for robots avoiding with boxes.
+	GoStraightAngleRangeInDegrees.Set(-80, 80);
 }
 
 argos::CRadians BaseController::GetHeading() {
@@ -95,6 +98,8 @@ void BaseController::SetTarget(argos::CVector2 t) {
 	//argos::LOG << "y:" << y << std::endl;
 
 	if (!heading_to_nest) {
+    //if(!heading_to_nest && GetId().compare(0, 1, "D")!=0){
+        //argos::LOG<<"GetId()="<<GetId()<<endl;
 		argos::Real distanceToTarget = (TargetPosition - GetPosition()).Length();
 		argos::Real noise_x = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
 		argos::Real noise_y = RNG->Gaussian(DestinationNoiseStdev*distanceToTarget);
@@ -174,13 +179,10 @@ void BaseController::SetNextMovement() {
 
 		if(!IsAtTarget()) {
 			if(headingToTargetError > AngleTol) {
-				//cout << "Turn Left " << endl;
 				PushMovement(LEFT, -ToDegrees(headingToTargetError).GetValue());
 			} else if(headingToTargetError < -AngleTol) {
-				//cout << "Turn Right " << endl;
 				PushMovement(RIGHT, ToDegrees(headingToTargetError).GetValue());
 			} else {
-				//cout << "Move Forward " << endl;
 				PushMovement(FORWARD, distanceToTarget);
 			}
 		} else {
@@ -313,20 +315,17 @@ bool BaseController::CollisionDetection() {
 		Stop();
 		 isCollisionDetected = true;
 		 collision_counter++;
-                 //LOG<<"Collision..."<<endl;
    
 		while(MovementStack.size() > 0) MovementStack.pop();
 
 		PushMovement(FORWARD, SearchStepSize);
 
 		if(collisionAngle <= 0.0)  {
-			//argos::LOG << collisionAngle << std::endl << collisionVector << std::endl << std::endl;
 			SetLeftTurn(collisionAngle); //qilu 09/24/2016
 		} else {
-			//argos::LOG << collisionAngle << std::endl << collisionVector << std::endl << std::endl;
 			SetRightTurn(collisionAngle); //qilu 09/24/2016
 		}
-		Real randomNumber = RNG->Uniform(CRange<Real>(0.0, 1.0));
+		Real randomNumber = RNG->Uniform(CRange<Real>(0.5, 1.0));
         collisionDelay = SimulationTick() + (size_t)(randomNumber*SimulationTicksPerSecond());//qilu 10/26/2016
 	}
 
@@ -361,7 +360,6 @@ void BaseController::Move() {
 	if(Wait() == true) return;
 
 	collisionFlag = CollisionDetection();
- //double randomNumber = RNG->Uniform(argos::CRange<double>(0.0, 1.0));//qilu 09/24/2016
  
 	/* move based on the movement state flag */
 	switch(CurrentMovementState) {
@@ -378,10 +376,6 @@ void BaseController::Move() {
 		case LEFT: {
 			if((TicksToWaitWhileMoving--) <= 0.0) {
 				Stop();
-			/*} else {
-				//argos::LOG << "LEFT\n";
-				wheelActuator->SetLinearVelocity(-RobotRotationSpeed, RobotRotationSpeed);
-			}*/
 			 }else if(collisionDelay< SimulationTick() || collisionFlag){
 				//argos::LOG << "LEFT\n";
 				wheelActuator->SetLinearVelocity(-RobotRotationSpeed, RobotRotationSpeed);
@@ -394,10 +388,7 @@ void BaseController::Move() {
 		case RIGHT: {
 			if((TicksToWaitWhileMoving--) <= 0.0) {
 				Stop();
-			/*} else {
-				//argos::LOG << "RIGHT\n";
-				wheelActuator->SetLinearVelocity(RobotRotationSpeed, -RobotRotationSpeed);
-			}*/
+				//argos::LOG << "RIGHT->stop\n";
 			} else if(collisionDelay< SimulationTick()|| collisionFlag){
 				//argos::LOG << "RIGHT\n";
 				wheelActuator->SetLinearVelocity(RobotRotationSpeed, -RobotRotationSpeed);

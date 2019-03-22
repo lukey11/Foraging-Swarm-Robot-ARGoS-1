@@ -18,8 +18,7 @@
     FidelityList.clear();
     DensityOnFidelity.clear(); //qilu 09/11/2016
     FoodList.clear(); //qilu 09/07/2016
-    NewLocation = location; //qilu 09/19/2016
-    num_collected_tags=0;
+    //num_collected_tags=0;
     visited_time_point_in_minute=0;
     nest_idx=-1;
 }
@@ -42,49 +41,62 @@ void Nest::SetLocation(CVector2 newLocation) {
     nestLocation = newLocation;
 }
 
+void Nest::SetNestRadius(int level, Real radius, float ArenaWidth, size_t nestNum){
+    if(GetNestIdx() == 0 && nestNum > 1)
+    {
+        if(ArenaWidth <= 10){
+            NestRadius = radius;
+        }
+        else
+        {
+            //NestRadius = radius * (ArenaWidth/10.0);
+	    NestRadius = sqrt(level) * radius;
+            }
+        //NestRadius = radius * (1+log(nestNum-1)/log(4));
+        //NestRadius = radius * (regionWidth/4.0) * (1+log(nestNum-1)/log(4));
+        //NestRadius = pow(2, 1+log(nestNum-1)/log(4)) * radius;
+	//argos::LOG<<"nest id="<<GetNestIdx()<<", radius="<< NestRadius <<endl;
+    }
+    else
+    {
+        NestRadius = radius;
+        //NestRadius = radius*regionWidth/4.0;
+    }
+    //argos::LOG<<"nest id="<<GetNestIdx()<<", NestRadius="<<NestRadius<<endl;
+    NestRadiusSquared = NestRadius*NestRadius;
+        
+}
+
+argos::Real Nest::GetNestRadiusSquared(){
+    
+    return NestRadiusSquared;
+    }
+
+argos::Real Nest::GetNestRadius(){
+    
+    return NestRadius;
+    }
 void Nest:: SetNestIdx(size_t idx){
      nest_idx = idx;
  }
- 
+  
+void Nest::SetDeliveryCapacity(size_t c)
+{
+    capacity = c;
+	
+	}
+     
+size_t Nest::GetDeliveryCapacity()
+{
+    return capacity;
+}
+	   
 size_t Nest:: GetNestIdx(){
      return nest_idx;
  } 
 
 
-void Nest::UpdateNestLocation(){ //qilu 09/10/2016
-    CVector2 Sum_locations = CVector2(0.0, 0.0);
-    CVector2 placementPosition;
-    size_t Num_points = 0;
-    CVector2 offset;
-
-    for(size_t i =0; i<PheromoneList.size(); i++){
-//        Sum_locations += PheromoneList[i].GetLocation() * PheromoneList[i].GetResourceDensity();
-//        Num_points += PheromoneList[i].GetResourceDensity();
-        Sum_locations += PheromoneList[i].location * PheromoneList[i].ResourceDensity;
-        Num_points += PheromoneList[i].ResourceDensity;
-        }
-
-    for(map<string, size_t>::iterator it= DensityOnFidelity.begin(); it!=DensityOnFidelity.end(); ++it){
-        Sum_locations += FidelityList[it->first] * it->second;
-        Num_points += it->second;
-    }
-
-    //if (FoodList.size() !=0)
-    /*for (size_t i=0; i<FoodList.size(); i++) {
-        Sum_locations += FoodList[i];
-        Num_points ++;
-    }*/
-    NewLocation = Sum_locations / Num_points;
-    offset = (NewLocation - GetLocation()).Normalize();
-    NewLocation -= offset*0.25;
-     
-    for(size_t i=0; i<PheromoneList.size(); i++){
-        if ((NewLocation-PheromoneList[i].location).SquareLength()<=0.25){
-            NewLocation -= offset*0.25;               
-         } 
-     }
-     if((GetLocation() - NewLocation).SquareLength() < 0.25){
-         NewLocation = GetLocation();//qilu 09/25/2016 Do not update to a new location if the new location is too close to current location
-     }
-}
-        
+size_t Nest:: GetCollectedTagNum(){
+     return FoodList.size();
+ } 
+ 

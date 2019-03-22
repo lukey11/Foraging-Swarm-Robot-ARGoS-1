@@ -5,13 +5,14 @@
 #include <source/Base/Pheromone.h>
 #include <source/Base/Nest.h> //qilu 09/06
 #include <source/MPFA/MPFA_loop_functions.h>
+#include <argos3/core/simulator/entity/floor_entity.h>
 /* Definition of the LEDs actuator */
 #include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 
 using namespace std;
 using namespace argos;
 
-static unsigned int num_targets_collected = 0;
+static unsigned int total_targets_collected = 0;
 
 class MPFA_loop_functions;
 
@@ -30,16 +31,16 @@ class MPFA_controller : public BaseController {
 		bool IsUsingSiteFidelity();
 		bool IsInTheNest();
         bool IsInTargetNest();
-        //bool IsInStartLocation();
 		Real FoodDistanceTolerance;
+        //size_t QuardArena;
 
 		void SetLoopFunctions(MPFA_loop_functions* lf);
   void SetClosestNest();//qilu 07/26/2016
-  //void SetClosestDepot();
   
   size_t     GetSearchingTime();//qilu 09/26/2016
-  size_t      GetTravelingTime();//qilu 09/26/2016
-  string      GetStatus();//qilu 09/26/2016
+  size_t     GetTravelingTime();//qilu 09/26/2016
+  string     GetStatus();//qilu 09/26/2016
+  size_t     GetNumHeldFood();
   //void        AddTravelingTime(size_t remainderTime);//qilu 09/26/2016
   //void        AddSearchingTime(size_t remainderTime);//qilu 09/26/2016
   size_t      startTime;//qilu 09/26/2016
@@ -67,6 +68,7 @@ class MPFA_controller : public BaseController {
 
 		bool isInformed;
 		bool isHoldingFood;
+		size_t numHeldFood;
 		bool isUsingSiteFidelity;
 		bool isGivingUpSearch;
   
@@ -86,7 +88,7 @@ class MPFA_controller : public BaseController {
 			SURVEYING = 3,
 			DEPOT_IDLING = 4,
 			DEPOT_DELIVERING = 5,
-			DEPOT_RETURNING = 6,
+			DEPOT_RETURNING = 6
 		} MPFA_state;
 
 		/* iAnt MPFA state functions */
@@ -99,7 +101,6 @@ class MPFA_controller : public BaseController {
 		void Idling();
 		void DepotReturning();
 		
-		void SetDeliveringDestination();
 
 		/* MPFA helper functions */
 		void SetRandomSearchLocation();

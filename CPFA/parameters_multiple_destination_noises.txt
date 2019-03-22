@@ -1,0 +1,3 @@
+XMLBlock settings
+Files Random_CPFA_r296_tag4096_40by40
+DestinationNoiseStdev 0.5 1 1.5 2 2.5 3

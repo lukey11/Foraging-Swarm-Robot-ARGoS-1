@@ -24,33 +24,40 @@ class Nest {
         map<string, size_t> DensityOnFidelity; //qilu 09/11/2016
         vector<CVector2> FoodList;
         size_t num_collected_tags;
-        CVector2 NewLocation;
         size_t visited_time_point_in_minute;
-        size_t travel_flag;
-        size_t region_flag;
-        argos::Real NestRadius;
         
+        argos::Real NestRadius;
+        argos::Real NestRadiusSquared; //qilu 12/2018
+		
         /* constructor function */
 		
 		      /* public helper functions */
-        CVector2		GetLocation();
-        CVector2     GetDepartLocation();
+        CVector2	GetLocation();
         void		SetLocation();
-        void		SetDepartLocation(CVector2 location);
         void		SetLocation(CVector2 newLocation); //qilu 09/11/2016
-        void     UpdateNestLocation(); //qilu 09/10/2016
+        void      SetNestRadius(int level, Real radius);
+        argos::Real GetNestRadius();
+        argos::Real GetNestRadiusSquared();
+        
         void  SetNestIdx(size_t idx);
+        void SetParentNestIdx_with_backtrack(size_t idx, size_t NumOfBranch, map<int, Nest> *Nests);
+        void SetParentNestIdx_no_backtrack(vector<Nest *> parents);
+        void SetLevel(size_t idx);
         void SetRegionFlag(int flag);
+        void SetDeliveryCapacity(size_t c);
+        size_t GetDeliveryCapacity();
         size_t  GetNestIdx();
+        size_t  GetParentNestIdx();
+        size_t GetLevel();
         int GetRegionFlag();
-        size_t GetCollectedTagNum();
-        int GetTravelFlag();
-        void SetTravelFlag(int flag);
+        //size_t GetCollectedTagNum();
 
 	private:
-	    CVector2 departLocation;
         CVector2 nestLocation;
         size_t  nest_idx;
+        size_t parent_nest_idx;
+        size_t level;
+        size_t capacity;
         
 };
 

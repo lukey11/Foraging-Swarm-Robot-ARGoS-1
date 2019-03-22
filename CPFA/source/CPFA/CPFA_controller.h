@@ -4,6 +4,8 @@
 #include <source/Base/BaseController.h>
 #include <source/Base/Pheromone.h>
 #include <source/CPFA/CPFA_loop_functions.h>
+/* Definition of the LEDs actuator */
+#include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 
 using namespace std;
 using namespace argos;
@@ -104,6 +106,8 @@ class CPFA_controller : public BaseController {
 		bool isUsingPheromone;
 
 		unsigned int survey_count;
+		/* Pointer to the LEDs actuator */
+        CCI_LEDsActuator* m_pcLEDs;
 };
 
 #endif /* CPFA_CONTROLLER_H */

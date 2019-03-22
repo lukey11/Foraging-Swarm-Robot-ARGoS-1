@@ -1,0 +1,5 @@
+# This is the evolved parameters for 5X5 arena with 64 randomly distributed cubes and 2 foraging robots.  
+10/30/2018
+ProbabilityOfReturningToNest,ProbabilityOfSwitchingToSearching,RateOfInformedSearchDecay,RateOfLayingPheromone,RateOfPheromoneDecay,RateOfSiteFidelity,UninformedSearchVariation,fitness,seed
+0.0147598869881,0.723128706375,0.205799848158,14.7027566005,0.0245057227138,14.1514206414,2.81939731297,64.100000000000009,3115661265
+

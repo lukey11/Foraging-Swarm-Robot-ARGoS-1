@@ -37,6 +37,8 @@ void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
 		//			     entity.GetId().c_str()); // text
 		
+			DrawText(CVector3(0.0, 0.0, 0.3),   // position
+            entity.GetId().c_str()); // text
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -48,7 +50,7 @@ void CPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFood();
 	DrawFidelity();
 	DrawPheromones();
-	//DrawNest();
+	DrawNest();
 
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
@@ -60,7 +62,7 @@ void CPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 void CPFA_qt_user_functions::DrawNest() {
 	/* 2d cartesian coordinates of the nest */
 	Real x_coordinate = loopFunctions.NestPosition.GetX();
-	Real y_coordinate = loopFunctions.NestPosition.GetX();
+	Real y_coordinate = loopFunctions.NestPosition.GetY();
 
 	/* required: leaving this 0.0 will draw the nest inside of the floor */
 	Real elevation = loopFunctions.NestElevation;
@@ -69,7 +71,8 @@ void CPFA_qt_user_functions::DrawNest() {
 	CVector3 nest_3d(x_coordinate, y_coordinate, elevation);
 
 	/* Draw the nest on the arena. */
-	DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::GRAY50);
+	//DrawCircle(nest_3d, CQuaternion(), loopFunctions.NestRadius, CColor::RED);
+    DrawCylinder(nest_3d, CQuaternion(), loopFunctions.NestRadius, 0.008, CColor::GREEN);
 }
 
 void CPFA_qt_user_functions::DrawFood() {
@@ -82,6 +85,13 @@ void CPFA_qt_user_functions::DrawFood() {
 		DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, loopFunctions.FoodColoringList[i]);
 	}
  
+	 //draw food in nests
+	 for (size_t i=0; i< loopFunctions.CollectedFoodList.size(); i++)
+	 { 
+	        x = loopFunctions.CollectedFoodList[i].GetX();
+	        y = loopFunctions.CollectedFoodList[i].GetY();
+	        DrawCylinder(CVector3(x, y, 0.002), CQuaternion(), loopFunctions.FoodRadius, 0.025, CColor::BLACK);
+	  } 
 }
 
 void CPFA_qt_user_functions::DrawFidelity() {

@@ -2,7 +2,7 @@
 #include <assert.h> 
 MPFA_loop_functions::MPFA_loop_functions() :
 	RNG(argos::CRandom::CreateRNG("argos")),
-        SimTime(0), //qilu 09/13/2016
+        SimTime(0),
 	MaxSimTime(3600 * GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick()),
         CollisionTime(0), 
         lastNumCollectedFood(0),
@@ -22,7 +22,7 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	PowerlawFoodUnitCount(256),
 	NumberOfClusters(4),
 	ClusterWidthX(8),
-	ClusterLengthY(8),
+	ClusterWidthY(8),
 	PowerRank(4),
 	ProbabilityOfSwitchingToSearching(0.0),
 	ProbabilityOfReturningToNest(0.0),
@@ -34,17 +34,19 @@ MPFA_loop_functions::MPFA_loop_functions() :
 	FoodRadius(0.05),
 	FoodRadiusSquared(0.0025),
 	NestRadius(0.25),
-	NestRadiusSquared(0.0625),
+	//NestRadiusSquared(0.0625),
 	NestElevation(0.01),
+    BacktrackDelivery(1),
 	// We are looking at a 4 by 4 square (3 targets + 2*1/2 target gaps)
 	SearchRadiusSquared((4.0 * FoodRadius) * (4.0 * FoodRadius)),
-	score(0),
         NumDistributedFood(0),
+	score(0),
+    DeliveryFlag(0),
 	PrintFinalScore(0)
 {}
 
-void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {	
- CVector2		NestPosition; //qilu 09/06
+void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
+    CVector2		NestPosition; //qilu 09/06
  
 	argos::CDegrees USV_InDegrees;
 	argos::TConfigurationNode MPFA_node = argos::GetNode(node, "MPFA");
@@ -67,6 +69,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 
 	argos::GetNodeAttribute(settings_node, "MaxSimCounter", MaxSimCounter);
 	argos::GetNodeAttribute(settings_node, "VariableFoodPlacement", VariableFoodPlacement);
+    argos::GetNodeAttribute(settings_node, "VaryForwardSpeedFlag", VaryForwardSpeedFlag);
+    argos::GetNodeAttribute(settings_node, "VaryCapacityFlag", VaryCapacityFlag);
 	argos::GetNodeAttribute(settings_node, "OutputData", OutputData);
 	argos::GetNodeAttribute(settings_node, "DrawIDs", DrawIDs);
 	argos::GetNodeAttribute(settings_node, "DrawTrails", DrawTrails);
@@ -76,52 +80,14 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(settings_node, "PowerlawFoodUnitCount", PowerlawFoodUnitCount);
 	argos::GetNodeAttribute(settings_node, "NumberOfClusters", NumberOfClusters);
 	argos::GetNodeAttribute(settings_node, "ClusterWidthX", ClusterWidthX);
-	argos::GetNodeAttribute(settings_node, "ClusterLengthY", ClusterLengthY);
+	argos::GetNodeAttribute(settings_node, "ClusterWidthY", ClusterWidthY);
     argos::GetNodeAttribute(settings_node, "FoodRadius", FoodRadius);
 	argos::GetNodeAttribute(settings_node, "NestRadius", NestRadius);
 	argos::GetNodeAttribute(settings_node, "NestElevation", NestElevation);
- 
- 
-    string PosStrRegionNest, PosStrDepot;
-    //string cylId;
-    for(int i=0; i<1024; i++)
-    {
-	    PosStrRegionNest = "NestPosition_"+ to_string(i);
-	    PosStrDepot = "DepotPosition_"+ to_string(i);
-	    
-	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
-	    {
-			argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
-			Nests.push_back(Nest(NestPosition));
-        	Nests[i].SetRegionFlag(1);
-        	
-		}
-		else if(argos::NodeAttributeExists(settings_node, PosStrDepot))
-	    {
-			argos::GetNodeAttribute(settings_node, PosStrDepot, NestPosition);
-			Nests.push_back(Nest(NestPosition));
-        	Nests[i].SetRegionFlag(0);
-		}
-        
-        Nests[i].SetNestIdx(i);
-        Nests[i].SetRadius(i);
-        //cylId = "cyl"+to_string(i);
-        //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
-    }
+    argos::GetNodeAttribute(settings_node, "BacktrackDelivery", BacktrackDelivery);
+    argos::GetNodeAttribute(settings_node, "NumOfBranches", numBranch);
     
-    
-    NestRadiusSquared = NestRadius*NestRadius;
-	FoodRadiusSquared = FoodRadius*FoodRadius;
-        //Number of distributed foods
-    if (FoodDistribution == 1){
-        NumDistributedFood = ClusterWidthX*ClusterLengthY*NumberOfClusters;
-    }
-    else{
-        NumDistributedFood = FoodItemCount;  
-    }
-
- 
-	// calculate the forage range and compensate for the robot's radius of 0.085m
+    // calculate the forage range and compensate for the robot's radius of 0.085m
 	argos::CVector3 ArenaSize = GetSpace().GetArenaSize();
 	argos::Real rangeX = (ArenaSize.GetX() / 2.0) - 0.085;
 	argos::Real rangeY = (ArenaSize.GetY() / 2.0) - 0.085;
@@ -129,52 +95,126 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	ForageRangeY.Set(-rangeY, rangeY);
 
     ArenaWidth = ArenaSize[0];
-	   // Send a pointer to this loop functions object to each controller.
-	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
-	   argos::CSpace::TMapPerType::iterator it;
-    Num_robots = footbots.size();
-	   for(it = footbots.begin(); it != footbots.end(); it++) {
-   	   	argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
-		BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
-	        MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
-                c2.SetLoopFunctions(this);
-	    }
+    
+    string PosStrRegionNest;
+    size_t numNestsInPreviousLevels =0, level=0; 
+    size_t levelDiff;    
+    for(int i=0; i<1024; i++)
+    {
+	    PosStrRegionNest = "NestPosition_"+ to_string(i);
+	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
+	    {
+		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
+                Nests[i] = Nest(NestPosition);
+        	Nests[i].SetNestIdx(i);
+               if(i==0)
+	       {
+		    numNestsInPreviousLevels++;
+		    Nests[i].SetLevel(level);
+	       level++;
+	       }
+	       else
+	       {
+               levelDiff = (i - numNestsInPreviousLevels)/pow(numBranch, level); 	
+               if(levelDiff == 1)
+               {
+                   numNestsInPreviousLevels += pow(numBranch, level);
+                   level++;
+                }
+	         Nests[i].SetLevel(level);
+	       }
+            
+           Nests[i].SetParentNestIdx_with_backtrack(i, numBranch, &Nests);
+           if(!BacktrackDelivery){
+               size_t parent_id = Nests[i].GetParentNestIdx();    
+               vector<Nest*> parentNests;
+               size_t gens = 1; //we only consider two generations of parents
+               parentNests.push_back(&Nests[parent_id]);
+               while (parent_id != 0 && gens < 2){
+                   parent_id = Nests[parent_id].GetParentNestIdx();
+                   parentNests.push_back(&Nests[parent_id]);
+                   gens++;
+                   }//end while
+               Nests[i].SetParentNestIdx_no_backtrack(parentNests); 
+           }//end if
+         }// end if
+     }//end for
      
-     /*CSpace::TMapPerType& theMap = GetSpace().GetEntitiesByType("box"); 
-     argos::CBoxEntity* box = any_cast<CBoxEntity*>(theMap["my_box"]); 
-     LOG<<box.GetId()<<endl;
-     */
-      /*argos::CSpace::TMapPerType& theCylinder = GetSpace().GetEntitiesByType("cylinder");
-      argos::CCylinderEntity* cylinder1 = any_cast<CCylinderEntity*>(theCylinder["cyl1"]);
-      
-      LOG<<cylinder1.GetId()<<endl; */ 
-    /*argos::CSpace::TMapPerType& cylinders = GetSpace().GetEntitiesByType("cylinder");
-    argos::CSpace::TMapPerType::iterator tt;
-    for(tt = cylinders.begin(); tt != cylinders.end(); tt++){
-        CCylinderEntity& cylinder = *argos::any_cast<CCylinderEntity*>(tt->second);
-		      LOG<<"cylinder.id = "<<tt.GetId()<<endl;
-     
-     }*/
-     
- 
-    SetFoodDistribution();
-   /* for(size_t i=0; i<Nests.size(); i++) MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(Nests[i].GetLocation().GetX(), Nests[i].GetLocation().GetY(),0), CQuaternion());
-    ForageList.clear(); //qilu 09/13/2016
- last_time_in_minutes=0; //qilu 09/13/2016
- Nest_travel_time_in_ticks=0;
- //CollisionTimeList.clear();//qilu 09/26/2016
- 
-}*/
-
-/*vector<CVector2> MPFA_loop_functions::UpdateCollectedFoodList(vector<CVector2> foodList){//qilu 09/12/2016
-    if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance )
-
-    for (size_t i=0; i<foodList.size(); i++) {
-        foodList[i]
-
+    //set capacity for delivery robots
+    size_t revLevel =0;
+    if(!BacktrackDelivery){
+        if(numBranch == 4){
+            numBranch = 3;
+            }
+        /*if(numBranch == 9){
+            numBranch = 5;
+           }*/
     }
-    return
-    */
+    if (Nests.size() == 1) level =0;
+    
+    Real basicWidth = 1.0;
+    int ActualArenaWidth = ArenaWidth;
+    if(Nests[0].GetLocation().GetX() < -1)//quad arena
+    {
+        ActualArenaWidth = ArenaWidth*2;
+    }
+    
+    ostringstream arena_width;
+    arena_width << GetSpace().GetArenaSize()[0];
+         
+    string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
+    
+    size_t initCapcity = 1;
+    ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
+    
+    for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+        revLevel = level - it->second.GetLevel();
+        //argos::LOG<<"revLevel="<<revLevel<<endl;
+        if(VaryCapacityFlag){//vary capacity
+            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+        }
+        else{
+            it->second.SetDeliveryCapacity(initCapcity);
+            }
+        it->second.SetNestRadius(revLevel, NestRadius);
+        //it->second.SetNestRadius(NestRadius, ArenaWidth, Nests.size());
+        CapacityDataOutput<<it->second.GetDeliveryCapacity()<<" ";
+    }
+            
+	CapacityDataOutput<<"\n";
+    CapacityDataOutput.close();
+        
+        	
+    //NestRadiusSquared = NestRadius*NestRadius;
+	FoodRadiusSquared = FoodRadius*FoodRadius;
+        //Number of distributed foods
+    if (FoodDistribution == 1){
+        NumDistributedFood = ClusterWidthX*ClusterWidthY*NumberOfClusters;
+    }
+    else{
+        NumDistributedFood = FoodItemCount;  
+    }
+
+ 
+    
+	// Send a pointer to this loop functions object to each controller.
+	argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
+	argos::CSpace::TMapPerType::iterator it;
+    Num_robots = footbots.size();
+    argos::LOG<<"Number of robots="<<Num_robots<<endl;
+    for(it = footbots.begin(); it != footbots.end(); it++) {
+   	    argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
+	    BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());
+	    MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
+        c2.SetLoopFunctions(this);
+        if(c2.GetId().compare(0, 1, "D")==0){ //check wether there are delivering robots or not 
+            DeliveryFlag = 1;
+        }
+	}
+    SetFoodDistribution();
+ ForageList.clear(); //qilu 09/13/2016
+ 	
+    last_time_in_minutes=0; //qilu 09/13/2016
 }
 
 
@@ -187,7 +227,7 @@ void MPFA_loop_functions::Reset() {
     GetSpace().GetFloorEntity().Reset();
     MaxSimCounter = SimCounter;
     SimCounter = 0;
-  score = 0.0;
+    score = 0;
    
     FoodList.clear();
     FoodColoringList.clear();
@@ -195,10 +235,10 @@ void MPFA_loop_functions::Reset() {
     TargetRayList.clear();
     
     SetFoodDistribution();
-    for(size_t i=0; i<Nests.size(); i++){ //qilu 09/06
-      Nests[i].FidelityList.clear();
-      Nests[i].DensityOnFidelity.clear(); //qilu 09/11/2016
-      Nests[i].PheromoneList.clear();
+    for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+      it->second.FidelityList.clear();
+      it->second.DensityOnFidelity.clear(); //qilu 09/11/2016
+      it->second.PheromoneList.clear();
       }
     
     argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
@@ -222,64 +262,17 @@ void MPFA_loop_functions::PreStep() {
         lastNumCollectedFood = currNumCollectedFood;
         last_time_in_minutes++;
     }
-    CVector2 offset, newLocation;
-    /*for(size_t i=0; i<Nests.size(); i++){   
-        if(Nests[i].GetTravelFlag() != 0){ //travel
-			//LOG<<"depart from...."<<Nests[i].GetLocation()<<endl;
-			
-			if((Nests[i].NewLocation - Nests[i].GetDepartLocation()).SquareLength()>0.005){
-		   	   offset = 0.005*(Nests[i].NewLocation - Nests[i].GetDepartLocation()).Normalize();
-               newLocation = Nests[i].GetDepartLocation()+offset;
-               Nests[i].SetDepartLocation(newLocation);
-               MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(newLocation.GetX(),newLocation.GetY(),0), CQuaternion());
-               Nest_travel_time_in_ticks++;
-				}
-			else if(Nests[i].GetTravelFlag() ==1){
-				//LOG<<"Travel back..."<<Nests[i].GetLocation()<<endl;
-		        Nests[i].NewLocation = Nests[i].GetLocation();
-		        Nests[i].SetTravelFlag(2);
-		        Nests[i].num_collected_tags=0;
-			}
-			else {
-				Nests[i].SetTravelFlag(0);
-				//LOG<<"set flag to 0..."<<endl;
-			} 
-		}
-		else if((Nests[i].NewLocation - Nests[i].GetLocation()).SquareLength()>0.005){ //depots do not travel to center
-			    //LOG<<"Flag="<<Nests[i].GetTravelFlag()<<endl;
-			    //LOG<<"Update location...."<<endl;
-			    offset = 0.005* (Nests[i].NewLocation - Nests[i].GetLocation()).Normalize();
-               newLocation = Nests[i].GetLocation()+offset;
-               Nests[i].SetLocation(newLocation);
-               MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(newLocation.GetX(),newLocation.GetY(),0), CQuaternion());
-               Nest_travel_time_in_ticks++;
-              
-        }
-        if (curr_time_in_minutes - Nests[i].visited_time_point_in_minute >=2){
-            Nests[i].NewLocation.Set(Nests[i].GetLocation().GetX()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)), Nests[i].GetLocation().GetY()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)));
-            while(IsOutOfArena(Nests[i].NewLocation, NestRadius)) 
-                Nests[i].NewLocation.Set(Nests[i].GetLocation().GetX()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)), Nests[i].GetLocation().GetY()+RNG->Uniform(CRange<argos::Real>(-5*NestRadius, 5*NestRadius)));
-             
-            Nests[i].visited_time_point_in_minute = curr_time_in_minutes;
-    }*/
-    /*if(GetSpace().GetSimulationClock() % 360 ==0)
-		for(size_t i=0; i<Nests.size(); i++){
-			LOG<<"random move "<<Nests[i].GetTravelFlag()<<endl;
-			if(Nests[i].GetTravelFlag()==0)
-			    MoveEntity(Cylinders[i].GetEmbodiedEntity(), CVector3(Nests[i].GetLocation().GetX(), Nests[i].GetLocation().GetY(),0), CQuaternion());
-		}
-	}*/
 
-	UpdatePheromoneList();
+    UpdatePheromoneList();
     if(GetSpace().GetSimulationClock() > ResourceDensityDelay) //update the sensed targets color to be black.
         for(size_t i = 0; i < FoodColoringList.size(); i++)
             FoodColoringList[i] = argos::CColor::BLACK; 	
   	
     if(FoodList.size() == 0) {
-        for(size_t i=0; i<Nests.size(); i++){
-            Nests[i].PheromoneList.clear();//qilu 09/11/16
-            Nests[i].FidelityList.clear();//qilu 09/11/16
-            Nests[i].DensityOnFidelity.clear(); //qilu 09/11/2016
+        for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+            it->second.PheromoneList.clear();//qilu 09/11/16
+            it->second.FidelityList.clear();//qilu 09/11/16
+            it->second.DensityOnFidelity.clear(); //qilu 09/11/2016
         }
         TargetRayList.clear();//qilu 07/13 
     }
@@ -287,11 +280,6 @@ void MPFA_loop_functions::PreStep() {
 
 void MPFA_loop_functions::PostStep() {
 	// nothing... yet...
- // Get a reference to the cylinder
-  // CCylinderEntity& cCyl1 =
-  // dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity("cyl1"));
-   // Move the cylinder to (1,2,0)
-  // MoveEntity(cCyl1.GetEmbodiedEntity(), CVector3(1,2,0), CQuaternion());
 }
 
 
@@ -301,8 +289,6 @@ bool MPFA_loop_functions::IsExperimentFinished() {
 	if(FoodList.size() == 0 || GetSpace().GetSimulationClock() >= MaxSimTime) {
 		isFinished = true;
 	}
-
-        //set to collected 88% food and then stop
         if(score >= NumDistributedFood){
 		isFinished = true;
 	}
@@ -311,7 +297,6 @@ bool MPFA_loop_functions::IsExperimentFinished() {
 	if(isFinished == true && MaxSimCounter > 1) {
 		size_t newSimCounter = SimCounter + 1;
 		size_t newMaxSimCounter = MaxSimCounter - 1;
-
 		PostExperiment();
 		Reset();
 
@@ -325,36 +310,54 @@ bool MPFA_loop_functions::IsExperimentFinished() {
 
 void MPFA_loop_functions::PostExperiment() {
 	  
-     printf("%f, %f, %lu\n", score, getSimTimeInSeconds(), RandomSeed);
+     printf("%d, %f, %lu\n", score, getSimTimeInSeconds(), RandomSeed);
        
                   
     if (PrintFinalScore == 1) {
-	 string type="";
+	 string type="", backtrack="";
          if (FoodDistribution == 0) type = "random";
         else if (FoodDistribution == 1) type = "cluster";
         else type = "powerlaw";
-
-         ostringstream num_tag_str;         
-         num_tag_str << NumDistributedFood; 
+         if(!BacktrackDelivery) backtrack = "no_backtrack";
+         else  backtrack = "with_backtrack";
+         
+         
+         ostringstream num_tag;         
+         num_tag << FoodItemCount;
 	 
 
-        ostringstream num_nests_str;
-        num_nests_str <<  Nests.size();
+        ostringstream num_nests;
+        num_nests <<  Nests.size();
     
-        ostringstream num_robots_str;
-        num_robots_str <<  Num_robots;
-   
-        ostringstream arena_width_str;
-        arena_width_str << ArenaWidth;
+        ostringstream num_robots;
+        num_robots <<  Num_robots;
          
-        string header = "results/"+type+"_MPFA_transport_n"+num_nests_str.str()+"_r"+num_robots_str.str()+"_tag"+num_tag_str.str()+"_"+arena_width_str.str()+"by"+arena_width_str.str()+"_";
+        ostringstream arena_width;
+        arena_width << ActualArenaWidth;
         
-        Real total_travel_time=0;
-        Real total_search_time=0;
-        ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
+	ostringstream varySpeed;
+        varySpeed << VaryForwardSpeedFlag;
         
+        ostringstream quardArena;
+        if(Nests[0].GetLocation().GetX() < -1){ //the central nest is not in the center, this is a quard arena
+             quardArena << 1;
+         }
+         else{
+             quardArena << 0;
+             }
+        
+        ostringstream delivery;
+        delivery << DeliveryFlag;
+        
+        string header = "./results/"+type+"_MPFA_transport_" + backtrack +"_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_vary_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
+        
+       /* Real total_travel_time=0;
+        Real total_search_time=0;
+        ofstream travelSearchTimeDataOutput((header+"TravelSearchTimeData.txt").c_str(), ios::app);
+        */
+        
         argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
          
         for(argos::CSpace::TMapPerType::iterator it = footbots.begin(); it != footbots.end(); it++) {
@@ -363,23 +366,17 @@ void MPFA_loop_functions::PostExperiment() {
             MPFA_controller& c2 = dynamic_cast<MPFA_controller&>(c);
             CollisionTime += c2.GetCollisionTime();
             
-            if(c2.GetStatus() == "SEARCHING"){
+            /*if(c2.GetStatus() == "SEARCHING"){
                 total_search_time += SimTime-c2.GetTravelingTime();
                 total_travel_time += c2.GetTravelingTime();
-	    }
+	        }
             else{
-		total_search_time += c2.GetSearchingTime();
-		total_travel_time += SimTime-c2.GetSearchingTime();
-            }
+		        total_search_time += c2.GetSearchingTime();
+		        total_travel_time += SimTime-c2.GetSearchingTime();
+            }*/
         }
-        travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
-        travelSearchTimeDataOutput.close();    
-        
-        
-        /*ofstream nestTravelTimeDataOutput((header+"NestTravelTimeData.txt").c_str(), ios::app);
-        nestTravelTimeDataOutput<<Nest_travel_time_in_ticks/ticks_per_second<<endl;
-        nestTravelTimeDataOutput.close();
-        */
+        //travelSearchTimeDataOutput<< total_travel_time/ticks_per_second<<", "<<total_search_time/ticks_per_second<<endl;
+        //travelSearchTimeDataOutput.close();
         
         ofstream dataOutput( (header+ "iAntTagData.txt").c_str(), ios::app);
         // output to file
@@ -387,15 +384,17 @@ void MPFA_loop_functions::PostExperiment() {
             dataOutput << "tags_collected, collisions_in_seconds, time_in_minutes, random_seed\n";
         }
     
-        dataOutput << Score() << ", "<<(CollisionTime-16*Score())/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
+        dataOutput << Score() << ", "<<CollisionTime/(2*ticks_per_second)<< ", "<< curr_time_in_minutes <<", "<<RandomSeed<<endl;
         dataOutput.close();
     
         ofstream forageDataOutput((header+"ForageData.txt").c_str(), ios::app);
-        if(ForageList.size()!=0) forageDataOutput<<"Forage: "<< ForageList[0];
-        for(size_t i=1; i< ForageList.size(); i++) forageDataOutput<<", "<<ForageList[i];
+        
+        for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+            forageDataOutput<<it->second.FoodList.size()<<" ";
+            }
         forageDataOutput<<"\n";
         forageDataOutput.close();
-        
+        Nests.clear();
       }  
 
 }
@@ -412,21 +411,17 @@ void MPFA_loop_functions::UpdatePheromoneList() {
 	std::vector<Pheromone> new_p_list; 
 
 	argos::Real t = GetSpace().GetSimulationClock() / GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
+         
+   for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){  
+	    for(size_t i = 0; i < it->second.PheromoneList.size(); i++) {
 
-	//ofstream log_output_stream;
-	//log_output_stream.open("time.txt", ios::app);
-	//log_output_stream << t << ", " << GetSpace().GetSimulationClock() << ", " << GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick() << endl;
-	//log_output_stream.close();
- for(size_t n=0; n<Nests.size();n++){
-	    for(size_t i = 0; i < Nests[n].PheromoneList.size(); i++) {
-
-		        //Nests[n].PheromoneList[i].Update(t);
-                Nests[n].PheromoneList[i].Update(getSimTimeInSeconds());//qilu 09/24/2016 let it decays in every second
-		        if(Nests[n].PheromoneList[i].IsActive()) {
-			          new_p_list.push_back(Nests[n].PheromoneList[i]);
+		        it->second.PheromoneList[i].Update(getSimTimeInSeconds());//qilu 09/24/2016 let it decays in every second
+		        if(it->second.PheromoneList[i].IsActive()) {
+			          new_p_list.push_back(it->second.PheromoneList[i]);
 		        }
       }
-     	Nests[n].PheromoneList = new_p_list;
+      it->second.PheromoneList.clear();
+      it->second.PheromoneList = new_p_list;
       new_p_list.clear();//qilu 09/08/2016
  }
 }
@@ -493,10 +488,10 @@ void MPFA_loop_functions::GaussianFoodDistribution() {
 void MPFA_loop_functions::ClusterFoodDistribution() {
     FoodList.clear();
     FoodColoringList.clear();
-	assert(FoodItemCount = NumberOfClusters*ClusterWidthX*ClusterWidthY);
+	assert(FoodItemCount == NumberOfClusters*ClusterWidthX*ClusterWidthY);
 	
 	argos::Real     foodOffset  = 3.0 * FoodRadius;
-	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterLengthY;
+	size_t          foodToPlace = NumberOfClusters * ClusterWidthX * ClusterWidthY;
 	size_t          foodPlaced = 0;
 	argos::CVector2 placementPosition;
 
@@ -505,26 +500,13 @@ void MPFA_loop_functions::ClusterFoodDistribution() {
 	for(size_t i = 0; i < NumberOfClusters; i++) {
 		placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 
-		while(IsOutOfBounds(placementPosition, ClusterLengthY, ClusterWidthX)) {
+		while(IsOutOfBounds(placementPosition, ClusterWidthY, ClusterWidthX)) {
 			placementPosition.Set(RNG->Uniform(ForageRangeX), RNG->Uniform(ForageRangeY));
 		}
 
-		for(size_t j = 0; j < ClusterLengthY; j++) {
+		for(size_t j = 0; j < ClusterWidthY; j++) {
 			for(size_t k = 0; k < ClusterWidthX; k++) {
 				foodPlaced++;
-				/*
-				#include <argos3/plugins/simulator/entities/box_entity.h>
-
-				string label("my_box_");
-				label.push_back('0' + foodPlaced++);
-
-				CBoxEntity *b = new CBoxEntity(label,
-					CVector3(placementPosition.GetX(),
-					placementPosition.GetY(), 0.0), CQuaternion(), true,
-					CVector3(0.1, 0.1, 0.001), 1.0);
-				AddEntity(*b);
-				*/
-
 				FoodList.push_back(placementPosition);
 				FoodColoringList.push_back(argos::CColor::BLACK);
 				placementPosition.SetX(placementPosition.GetX() + foodOffset);
@@ -595,7 +577,7 @@ void MPFA_loop_functions::PowerLawFoodDistribution() {
             otherClusterCount = DistributedCount / PowerRank + 1;
         singleClusterCount = otherClusterCount - modDiff;
     }
-    //-----Wayne: End of PowerRank and food per PowerRank group
+    //End of PowerRank and food per PowerRank group
     
 	for(size_t i = 0; i < PowerRank; i++) {
 		powerLawClusters.push_back(powerLawLength * powerLawLength);
@@ -651,22 +633,6 @@ void MPFA_loop_functions::PowerLawFoodDistribution() {
     }
     assert(TotalDistributedFood == FoodItemCount);
 }
-
-void MPFA_loop_functions::CreateNest(argos::CVector2 position){ //qilu 07/26/2016
-     Real     x_coordinate = position.GetX();
-     Real     y_coordinate = position.GetY();
-     size_t  num_trail=0;    
-     argos::CRange<argos::Real>   RangeX;
-     RangeX.Set(x_coordinate - NestRadius, x_coordinate + NestRadius);
-     argos::CRange<argos::Real>   RangeY;
-     RangeY.Set(y_coordinate - NestRadius, y_coordinate + NestRadius);
-     while(IsOutOfBounds(position, NestRadius) && num_trail<20){
-             position.Set(RNG->Uniform(RangeX), RNG->Uniform(RangeY));
-             num_trail++;
-      }
-      Nests.push_back(Nest(position));
- }
- 
  
 bool MPFA_loop_functions::IsOutOfArena(argos::CVector2 p){
   argos::Real x = p.GetX();
@@ -752,8 +718,8 @@ bool MPFA_loop_functions::IsCollidingWithNest(argos::CVector2 p, argos::Real rad
 	argos::Real NRPB_squared = nestRadiusPlusBuffer * nestRadiusPlusBuffer;
  if(Nests.size()==0) return false; //qilu 07/26/2016
  
- for(size_t i=0; i < Nests.size(); i++){ //qilu 07/26/2016
-      if( (p - Nests[i].GetLocation()).SquareLength() < NRPB_squared) return true;
+ for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+          if( (p - it->second.GetLocation()).SquareLength() < NRPB_squared) return true;
   }
     return false;
  }
@@ -764,8 +730,9 @@ bool MPFA_loop_functions::IsCollidingWithNest(argos::CVector2 p) {
 
  if(Nests.size()==0) return false; //qilu 07/26/2016
 	//return ((p - NestPosition).SquareLength() < NRPB_squared);
- for(size_t i=0; i < Nests.size(); i++){ //qilu 07/26/2016
-      if( (p - Nests[i].GetLocation()).SquareLength() < NRPB_squared) return true;
+ 
+ for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
+     if( (p - it->second.GetLocation()).SquareLength() < NRPB_squared) return true;
   }
   return false;
 }
@@ -794,6 +761,12 @@ bool MPFA_loop_functions::IsCollidingWithFood(argos::CVector2 p) {
 unsigned int MPFA_loop_functions::getNumberOfRobots() {
 	return GetSpace().GetEntitiesByType("foot-bot").size();
 }
+
+unsigned int MPFA_loop_functions::getNumberOfDepots() {
+	return Nests.size();
+}
+
+
 
 double MPFA_loop_functions::getProbabilityOfSwitchingToSearching() {
 	return ProbabilityOfSwitchingToSearching;
@@ -825,7 +798,7 @@ double MPFA_loop_functions::getRateOfPheromoneDecay() {
 }
 
 argos::Real MPFA_loop_functions::getSimTimeInSeconds() {
-	int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
+	unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
 	float sim_time = GetSpace().GetSimulationClock();
 	return sim_time/ticks_per_second;
 }
@@ -833,17 +806,20 @@ argos::Real MPFA_loop_functions::getSimTimeInSeconds() {
 void MPFA_loop_functions::SetTrial(unsigned int v) {
 }
 
-void MPFA_loop_functions::setScore(double s) {
+void MPFA_loop_functions::setScore(unsigned int s) {
 	score = s;
-	if (score >= FoodItemCount) {
+    if (score >= NumDistributedFood) {
 		PostExperiment();
 	}
 }
 
-double MPFA_loop_functions::Score() {	
+int MPFA_loop_functions::Score() {	
 	return score;
 }
 
+void MPFA_loop_functions::increaseNumDistributedFoodByOne(){
+    NumDistributedFood++;
+}
 void MPFA_loop_functions::ConfigureFromGenome(Real* g)
 {
 	// Assign genome generated by the GA to the appropriate internal variables.
