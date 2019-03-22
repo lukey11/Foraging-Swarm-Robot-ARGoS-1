@@ -461,7 +461,7 @@ void MPFA_loop_functions::PostExperiment() {
         delivery << DeliveryFlag;
         
         
-        string header = "./results/"+type+"_Ideal_static_MPFA_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_delivery_" + delivery.str()+"_constant_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
+        string header = "./results/"+type+"_Ideal_static_MPFA_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_delivery_" + delivery.str()+"_vary_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
        /* Real total_travel_time=0;

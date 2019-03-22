@@ -190,7 +190,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          
     string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
-    size_t initCapcity = 4;
+    size_t initCapcity = 1;
     argos::Real forageRate = 110/1800.0;
     argos::Real distance;
     int parent_idx;
@@ -470,7 +470,7 @@ void MPFA_loop_functions::PostExperiment() {
         ostringstream delivery;
         delivery << DeliveryFlag;
         
-        string header = "./results/"+type+"_Ideal_MPFA_transport_" + backtrack +"_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_constant_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
+        string header = "./results/"+type+"_Ideal_MPFA_transport_" + backtrack +"_n"+num_nests.str()+"_r"+num_robots.str()+"_tag"+num_tag.str()+"_"+arena_width.str()+"by"+arena_width.str()+"_vary_speed_"+ varySpeed.str()+"_quard_arena_" + quardArena.str() +"_";
         
         unsigned int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
         
