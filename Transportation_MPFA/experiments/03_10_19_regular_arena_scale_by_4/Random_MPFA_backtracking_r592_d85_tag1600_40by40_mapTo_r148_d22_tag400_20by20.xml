@@ -425,7 +425,7 @@ NestPosition_36="-7.5, -7.5"
   <!-- * Visualization * -->
   <!-- ****************** -->
 
-<!-- <visualization>
+ <visualization>
 
 <qt-opengl>
       <camera>

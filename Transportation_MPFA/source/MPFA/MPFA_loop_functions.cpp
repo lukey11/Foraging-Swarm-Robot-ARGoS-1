@@ -153,12 +153,11 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     if (Nests.size() == 1) level =0;
     
     Real basicWidth = 1.0;
-    int ActualArenaWidth = ArenaWidth;
+    ActualArenaWidth = ArenaWidth;
     if(Nests[0].GetLocation().GetX() < -1)//quad arena
     {
         ActualArenaWidth = ArenaWidth*2;
     }
-    
     ostringstream arena_width;
     arena_width << GetSpace().GetArenaSize()[0];
          
