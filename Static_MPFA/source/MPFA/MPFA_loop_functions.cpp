@@ -135,7 +135,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 1;
+    //int unitCapacity = 1;
+    int unitCapacity = 4;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
     for(map<int, Nest>::iterator it= Nests.begin(); it!= Nests.end(); it++)
     {

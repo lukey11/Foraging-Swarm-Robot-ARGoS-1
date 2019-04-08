@@ -190,14 +190,16 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          
     string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
-    size_t initCapcity = 1;
+    //size_t initCapcity = 1;
+    size_t initCapcity = 4;
+    
     argos::Real forageRate = 110/1800.0;
     argos::Real distance;
     int parent_idx;
     Nest* currentNest;
     Nest* TargetNest;
     size_t numDelivery =0;
-    size_t maxDelivery = 0;
+    //size_t maxDelivery = 0;
     size_t totalDelivery =0;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
@@ -222,13 +224,13 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         }
         else{
             currentNest->SetDeliveryCapacity(initCapcity);
-            numDelivery = ceil((forageRate*2*distance*pow(numBranch, revLevel))/RobotDeliverySpeed);
+            numDelivery = round((forageRate*2*distance*pow(numBranch, revLevel))/(initCapcity*RobotDeliverySpeed));
             //argos::LOG<<"idx="<<currentNest->GetNestIdx()<<", revLevel="<<revLevel<< ", numDelivery="<<numDelivery<<endl;
-            maxDelivery = round(distance/1.01);
+            /*maxDelivery = round(distance/1.01);
             if(numDelivery > maxDelivery)
             {
                  numDelivery = maxDelivery;   
-            }
+            }*/
             if(numDelivery ==0 && currentNest->GetNestIdx() != 0)
             {
                 currentNest->SetDeliveryRobot(1); //at least one delivery robot

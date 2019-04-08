@@ -163,7 +163,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
          
     string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
-    size_t initCapcity = 1;
+    //size_t initCapcity = 1;
+    size_t initCapcity = 4;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){

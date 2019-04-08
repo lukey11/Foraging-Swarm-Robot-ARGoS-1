@@ -18,7 +18,7 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width =16
+arena_width =64
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
@@ -27,11 +27,13 @@ min_x, min_y = -max_x, -max_y;
 ############################################################
 #gaps = [32, 16, 8]
 #gaps = [4,2]
-#gaps = [32, 16, 8,4]
-gaps = [8, 4]
+gaps = [32, 16, 8,4]
+#gaps = [8, 4]
+#gaps = [2]
 varyCapacity = 0 #0:constant capacity; 1:vary capacity
-varySpeed = 0
-quad = 0
+capacity = 2
+varySpeed = 1
+quad = 1
 
 if quad:
     shift =arena_width/4.0
@@ -81,53 +83,58 @@ delierying_robot =0
 foraging_robot =0
 
 
-idx =0
-level = len(gaps)
-
-for coords in results[:-1]:
-    print "idx=", idx
-    for xy in coords:
-	print " nest location =[",xy[0],", ",xy[1], "]"
-	if(varyCapacity):
-	    quantity = 4
-	else:
-            distance = np.sqrt(2*(gaps[idx]/2.0)**2)
-            print "distance=", distance
-            quantity = math.ceil((forageRate*2*distance*branch**(level-idx-1))/speed)
-            print "measured quantity=", quantity
-            maxQuantity = round(distance/1.01)
-            print "maxQuantity=", maxQuantity 
-            if quantity > maxQuantity:
-                quantity = maxQuantity
-    
-        print "quantity", quantity
-        delierying_robot += quantity
-        total_robot += quantity
-	coord_info.write("<distribute>\n")
-        #coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
-        coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
-        coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
-        coord_info.write("<entity max_trials=\"100\" quantity=\"" +str(int(quantity)) +"\">\n")
-        coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
-        coord_info.write("</entity>\n")
-        coord_info.write("</distribute>\n\n")
-        count += 1  
-    idx += 1    
 
 if(varyCapacity):
     quantity = 4
 else:
-    print "nest location =[",xy[0],", ",xy[1], "]"
+    #print "nest location =[",xy[0],", ",xy[1], "]"
     distance = np.sqrt(2*(gaps[-1]/2.0)**2)
     print "distance=", distance
     #print "unit=", unit
     print (forageRate*2*distance)/speed
     #quantity = math.ceil((forageRate*2*distance)/speed)
-    quantity = math.ceil((forageRate*2*distance)/speed)
-    print "quantity", quantity
+    quantity = round((forageRate*2*distance)/(speed*capacity))
+    #quantity = (forageRate*2*distance)/speed
+    #print "2. delivery quantity", quantity
     if quantity == 0:
         quantity = 1
-print "quantity", quantity
+print "# of region delivery robot", quantity
+
+idx =1
+level = len(gaps)
+print "quantity=", quantity
+print "level=", level
+for coords in results[:-1]:
+    print "idx=", idx
+    for xy in coords:
+	print " nest location =[",xy[0],", ",xy[1], "]"
+	if(varyCapacity):
+	    quantity2 = 4
+	else:
+            #distance = np.sqrt(2*(gaps[idx]/2.0)**2)
+            #print "distance=", distance
+            #quantity = math.ceil((forageRate*2*distance*branch**(level-idx-1))/speed)
+            #quantity = (forageRate*2*distance*branch**(level-idx-1))/speed
+            quantity2 = quantity*((2*branch)**(level-idx)) 
+            print "measured quantity=", quantity2
+            #maxQuantity = round(distance/1.01)
+            #print "maxQuantity=", maxQuantity 
+            #if quantity > maxQuantity:
+            #    quantity = maxQuantity
+    
+        print "1. delivery quantity", quantity2
+        delierying_robot += quantity2
+        total_robot += quantity2
+	coord_info.write("<distribute>\n")
+        #coord_info.write("<position max=\"" + str(xy[0]+gaps[-1]/6.0)+ ", " + str(xy[1]+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-gaps[-1]/6.0)+ ", " + str(xy[1]-gaps[-1]/6.0) + ", 0.0\"/>\n")
+        coord_info.write("<position max=\"" + str(xy[0]-shift+gaps[-1]/6.0)+ ", " + str(xy[1]-shift+gaps[-1]/6.0) + ", 0.0\" method=\"uniform\" min=\"" + str(xy[0]-shift-gaps[-1]/6.0)+ ", " + str(xy[1]-shift-gaps[-1]/6.0) + ", 0.0\"/>\n")
+        coord_info.write("<orientation mean=\"0, 0, 0\" method=\"gaussian\" std_dev=\"360, 0, 0\"/>\n")
+        coord_info.write("<entity max_trials=\"100\" quantity=\"" +str(int(quantity2)) +"\">\n")
+        coord_info.write("<foot-bot id=\"D" + str(count)+ "-" + "\"><controller config=\"MPFA\"/></foot-bot>\n")
+        coord_info.write("</entity>\n")
+        coord_info.write("</distribute>\n\n")
+        count += 1  
+    idx += 1    
 
 # there are foraging and delivering robots in each region
 for xy in results[-1]:
