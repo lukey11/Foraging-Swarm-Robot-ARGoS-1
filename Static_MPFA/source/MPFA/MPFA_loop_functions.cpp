@@ -150,10 +150,10 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         it->second.SetDeliveryCapacity(capacity);
         CapacityDataOutput<<capacity<<" ";
         total_capacity += capacity;
-        argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
+        //argos::LOG<<"nest id="<<it->second.GetNestIdx()<<", loc="<<it->second.GetLocation() <<", c="<<capacity<<endl;
 	    it->second.SetNestRadius(level, NestRadius, ActualArenaWidth, Nests.size());
     }
-    argos::LOG<< "total_capacity="<<total_capacity<<endl;         
+    //argos::LOG<< "total_capacity="<<total_capacity<<endl;         
 	CapacityDataOutput<<"\n";
     CapacityDataOutput.close();
 		
@@ -172,7 +172,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	   argos::CSpace::TMapPerType& footbots = GetSpace().GetEntitiesByType("foot-bot");
 	   argos::CSpace::TMapPerType::iterator it;
     Num_robots = footbots.size();
-    argos::LOG<<"Number of robots="<<Num_robots<<endl;
+    //argos::LOG<<"Number of robots="<<Num_robots<<endl;
     for(it = footbots.begin(); it != footbots.end(); it++) {
    	   	  argos::CFootBotEntity& footBot = *argos::any_cast<argos::CFootBotEntity*>(it->second);
 		  BaseController& c = dynamic_cast<BaseController&>(footBot.GetControllableEntity().GetController());

@@ -171,7 +171,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
         revLevel = level - it->second.GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
         if(VaryCapacityFlag){//vary capacity
-            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch)*numBranch, revLevel));//initial capacity is 4
         }
         else{
             it->second.SetDeliveryCapacity(initCapcity);
