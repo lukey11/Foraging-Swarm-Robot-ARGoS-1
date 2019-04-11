@@ -40,8 +40,8 @@ void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
 		//			     entity.GetId().c_str()); // text
 		
-			DrawText(CVector3(0.0, 0.0, 0.3),   // position
-            entity.GetId().c_str()); // text
+			//DrawText(CVector3(0.0, 0.0, 0.3),   // position
+            //entity.GetId().c_str()); // text draw robot ID
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -54,7 +54,7 @@ void MPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFidelity();
 	DrawPheromones();
 	DrawNest();
-    //DrawBranches();
+    DrawBranches();
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
 
@@ -169,12 +169,6 @@ void MPFA_qt_user_functions::DrawPheromones() {
 }
 
 void MPFA_qt_user_functions::DrawTargetRays() {
-	//size_t tick = loopFunctions.GetSpace().GetSimulationClock();
-	//size_t tock = loopFunctions.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick() / 8;
-
-	//if(tock == 0) tock = 1;
-
-	//if(tick % tock == 0) {
 		for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) {
 			DrawRay(loopFunctions.TargetRayList[j], loopFunctions.TargetRayColorList[j]);
 		}

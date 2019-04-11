@@ -136,7 +136,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     //set capacity for delivery robots
     Real distance;
     int capacity, total_capacity=0; 
-    int unitCapacity = 1;
+    //int unitCapacity = 1;
+    int unitCapacity = 4;
     Real unitDist = sqrt(2*(pow(regionWidth/2.0, 2)));
     argos::LOG<<"unitDist="<<unitDist<<endl;
     
@@ -191,8 +192,8 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     }
     
     size_t TotalDeliveryRobots=0;
-    map<float, int> TotalDeliveryRobotConst = {{1, 0}, {4, 8}, {16, 72}, {64, 146}, {10, 16}, {20, 80}, {40, 84}, {80, 340}};
-    map<float, int> TotalDeliveryRobotVary {{1, 0}, {8, 28}, {32, 210}};
+    map<float, int> TotalDeliveryRobotConst = {{1, 0}, {4, 4}, {16, 48}, {64, 224}, {10, 16}, {20, 80}, {40, 84}, {80, 340}};
+    map<float, int> TotalDeliveryRobotVary {{1, 0}, {8, 48}, {32, 960}};
     
     
     Real basicWidth = 1.0;

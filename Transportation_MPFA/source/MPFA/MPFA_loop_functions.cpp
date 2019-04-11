@@ -153,25 +153,25 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     if (Nests.size() == 1) level =0;
     
     Real basicWidth = 1.0;
-    int ActualArenaWidth = ArenaWidth;
+    ActualArenaWidth = ArenaWidth;
     if(Nests[0].GetLocation().GetX() < -1)//quad arena
     {
         ActualArenaWidth = ArenaWidth*2;
     }
-    
     ostringstream arena_width;
     arena_width << GetSpace().GetArenaSize()[0];
          
     string header = "./results/MPFA_transport_" +arena_width.str()+"by"+arena_width.str()+"_";
     
-    size_t initCapcity = 1;
+    //size_t initCapcity = 1;
+    size_t initCapcity = 4;
     ofstream CapacityDataOutput((header+"CapacityData.txt").c_str(), ios::app);
     
     for(map<int, Nest>:: iterator it= Nests.begin(); it!= Nests.end(); it++){
         revLevel = level - it->second.GetLevel();
         //argos::LOG<<"revLevel="<<revLevel<<endl;
         if(VaryCapacityFlag){//vary capacity
-            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch), revLevel)*pow(numBranch, revLevel));//initial capacity is 4
+            it->second.SetDeliveryCapacity(initCapcity*pow(sqrt(numBranch)*numBranch, revLevel));//initial capacity is 4
         }
         else{
             it->second.SetDeliveryCapacity(initCapcity);
