@@ -37,8 +37,8 @@ void CPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
 		//			     entity.GetId().c_str()); // text
 		
-			DrawText(CVector3(0.0, 0.0, 0.3),   // position
-            entity.GetId().c_str()); // text
+			//DrawText(CVector3(0.0, 0.0, 0.3),   // position
+            //entity.GetId().c_str()); // text
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */

@@ -17,18 +17,18 @@ def sub_gen_coord(max_x,min_x, k):
     #print coordinates
     return coordinates
 
-arena_width = 64
+arena_width = 40
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
 
 #parameters
 ############################################################
-gaps = [4]
-varyCapacity = 0
-varySpeed = 1
-quad = 1
-delivery_robots =3840
+gaps = [5]
+varyCapacity = 1
+varySpeed = 0
+quad = 0
+delivery_robots =336
 if quad:
     shift =arena_width/4.0
 else:
@@ -73,7 +73,7 @@ print "forageRate=", forageRate
 #unit = np.sqrt(2*((gaps[-1]/2.0)**2))
 #unit = np.sqrt(2*((1/2.0)**2))
 
-delierying_robot =0
+deliverying_robot =0
 foraging_robot =0
 
 
@@ -98,17 +98,17 @@ for xy in results[-1]:
  
     print "nest location =[",xy[0],", ",xy[1], "]"
         
-    if varyCapacity:
-        quantity = 4
-    else:
-        distance = np.sqrt(xy[0]**2 + xy[1]**2)
-        print "distance=", distance
-        #print (forageRate*2*distance)/speed
-        print (distance/total_distance)*delivery_robots
-        #quantity = math.ceil((distance/total_distance)*delivery_robots)
-        quantity = round((distance/total_distance)*delivery_robots)
-        if quantity == 0:
-            quantity = 1    
+        #if varyCapacity:
+        #quantity = 4
+        #else:
+    distance = np.sqrt(xy[0]**2 + xy[1]**2)
+    print "distance=", distance
+    #print (forageRate*2*distance)/speed
+    print (distance/total_distance)*delivery_robots
+    #quantity = math.ceil((distance/total_distance)*delivery_robots)
+    quantity = round((distance/total_distance)*delivery_robots)
+    if quantity == 0:
+        quantity = 1
     print "quantity", quantity
     foraging_robot += 4
     
@@ -123,11 +123,11 @@ for xy in results[-1]:
     coord_info.write("</distribute>\n\n")
     count += 1  
     
-    delierying_robot += quantity
+    deliverying_robot += quantity
     total_robot += 4+quantity
 
 print "foraging_robot=", foraging_robot
-print "delierying_robot=", delierying_robot
+print "deliverying_robot=", deliverying_robot
 print "total robot =", total_robot
-print total_robot == delierying_robot+foraging_robot
+print total_robot == deliverying_robot+foraging_robot
 coord_info.close() 
