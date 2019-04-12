@@ -41,7 +41,11 @@ void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//			     entity.GetId().c_str()); // text
 		
 			//DrawText(CVector3(0.0, 0.0, 0.3),   // position
+<<<<<<< HEAD
             //entity.GetId().c_str()); // text
+=======
+            //entity.GetId().c_str()); // text display robot id
+>>>>>>> 12e91032469d9c0a50eda3689aab5140ec19442b
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -54,7 +58,7 @@ void MPFA_qt_user_functions::DrawOnArena(CFloorEntity& entity) {
 	DrawFidelity();
 	DrawPheromones();
 	DrawNest();
-    DrawBranches();
+        DrawBranches();
 	if(loopFunctions.DrawTargetRays == 1) DrawTargetRays();
 }
 

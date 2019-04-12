@@ -41,7 +41,7 @@ void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		//			     entity.GetId().c_str()); // text
 		
 			//DrawText(CVector3(0.0, 0.0, 0.3),   // position
-            //entity.GetId().c_str()); // text
+            //entity.GetId().c_str()); // text draw robot ID
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
@@ -169,12 +169,6 @@ void MPFA_qt_user_functions::DrawPheromones() {
 }
 
 void MPFA_qt_user_functions::DrawTargetRays() {
-	//size_t tick = loopFunctions.GetSpace().GetSimulationClock();
-	//size_t tock = loopFunctions.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick() / 8;
-
-	//if(tock == 0) tock = 1;
-
-	//if(tick % tock == 0) {
 		for(size_t j = 0; j < loopFunctions.TargetRayList.size(); j++) {
 			DrawRay(loopFunctions.TargetRayList[j], loopFunctions.TargetRayColorList[j]);
 		}
