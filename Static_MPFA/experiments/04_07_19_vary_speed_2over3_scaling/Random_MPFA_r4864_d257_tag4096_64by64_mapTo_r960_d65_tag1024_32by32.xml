@@ -1192,7 +1192,7 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
   <!-- ****************** -->
 
 
-<!-- <visualization>
+<!--<visualization>
 
 <qt-opengl>
       <camera>
@@ -1202,5 +1202,5 @@ VariableFoodPlacement="0" VaryCapacityFlag = "0" VaryForwardSpeedFlag = "1"/>
     </qt-opengl>
 
   </visualization>
--->
+
 </argos-configuration>

@@ -184,7 +184,9 @@ void MPFA_qt_user_functions::DrawBranches() {
 		x = loopFunctions.Nests[i].GetLocation().GetX(); 
         y = loopFunctions.Nests[i].GetLocation().GetY();
         
-        ray = CRay3(CVector3(x, y, 0.01), CVector3(0, 0, 0.01));
+        px = loopFunctions.Nests[0].GetLocation().GetX();
+        py = loopFunctions.Nests[0].GetLocation().GetY();
+        ray = CRay3(CVector3(x, y, 0.01), CVector3(px, py, 0.01));
 		RayList.push_back(ray);
 	}	
 	argos::CColor TrailColor = CColor::BLUE;
