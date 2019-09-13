@@ -18,7 +18,7 @@ def sub_gen_coord(max_x,min_x, k, b):
     #print coordinates
     return coordinates
 
-arena_width =64
+arena_width =40
 
 max_x, max_y = arena_width/2.0,  arena_width/2.0;
 min_x, min_y = -max_x, -max_y;
@@ -28,12 +28,12 @@ min_x, min_y = -max_x, -max_y;
 #gaps = [32, 16, 8]
 #gaps = [4,2]
 gaps = [32, 16, 8,4]
-#gaps = [8, 4]
+gaps = [20, 10, 5]
 #gaps = [2]
-varyCapacity = 0 #0:constant capacity; 1:vary capacity
-capacity = 2
-varySpeed = 1
-quad = 1
+varyCapacity = 1 #0:constant capacity; 1:vary capacity
+capacity = 4
+varySpeed = 0
+quad = 0
 
 if quad:
     shift =arena_width/4.0
