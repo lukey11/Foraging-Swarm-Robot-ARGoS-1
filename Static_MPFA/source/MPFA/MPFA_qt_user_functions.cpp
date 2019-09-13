@@ -29,19 +29,9 @@ void MPFA_qt_user_functions::DrawOnRobot(CFootBotEntity& entity) {
 		/* Set the text color */
 		CColor cColor(CColor::BLACK);
 		glColor3ub(cColor.GetRed(), cColor.GetGreen(), cColor.GetBlue());
-
-		/* The position of the text is expressed wrt the reference point of the footbot
-		 * For a foot-bot, the reference point is the center of its base.
-		 * See also the description in
-		 * $ argos3 -q foot-bot
-		 */
 		
-		// Disable for now
-		//GetOpenGLWidget().renderText(0.0, 0.0, 0.5,             // position
-		//			     entity.GetId().c_str()); // text
-		
-			//DrawText(CVector3(0.0, 0.0, 0.3),   // position
-            //entity.GetId().c_str()); // text draw robot ID
+        DrawText(CVector3(0.0, 0.0, 0.3),   // position
+        entity.GetId().c_str()); // text draw robot ID
 		/* Restore face culling */
 		glEnable(GL_CULL_FACE);
 		/* Restore lighting */
