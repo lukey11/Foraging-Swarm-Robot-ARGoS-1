@@ -1,10 +1,8 @@
-# CPFA-ARGoS and MPFA-ARGoS with static/dynamic depots
+#MPFA-ARGoS with static/dynamic depots and MPFA with a hirarchical branching transportation network 
 
-ARGoS (Autonomous Robots Go Swarming) is a multi-physics robot simulator. CPFA-ARGoS and MPFA-ARGoS is an extension to ARGoS that implements the central-place foraging and multiple-place foraging algorithm (CPFA and MPFA) and provides a mechanism for performing experiments with iAnts.
+MPFA_H: The MPFA with a hirarchical branching transportation network. See the video https://youtu.be/tgSTCz264cU 
 
-CPFA: The central-place foraging algorithm
-
-Dynamic_MPFA: The MPFA with dynamic depots. Depots moves based on the discovered local information.
+Dynamic_MPFA: The MPFA with dynamic depots. Depots moves based on the discovered local information. See the video https://www.youtube.com/watch?v=vu7QXRFIlj8&list=PLkjRv85y76xlLHEr0ekXVnVTy_z9TMZD4
 
 Static_MPFA: The MPFA with static depots. Depots are distributed uniformly and do not move. 
 
