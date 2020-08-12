@@ -61,7 +61,7 @@
              NestPosition_59="-17.5, -2.5" NestPosition_6="17.5, 2.5" NestPosition_60="-17.5, -7.5" 
              NestPosition_61="-12.1, -12.9" NestPosition_62="-12.5, -17.5" NestPosition_63="-17.5, -12.5" 
              NestPosition_64="-17.5, -17.5" NestPosition_7="12.9, 7.6" NestPosition_8="12.5, 2.5" 
-             NestPosition_9="7.5, 17.5" NestRadius="0.25" NumberOfClusters="64" OutputData="0" PowerlawFoodUnitCount="16384" VariableFoodPlacement="0"/>
+             NestPosition_9="7.5, 17.5" NestRadius="0.25" NumberOfClusters="64" OutputData="0" PowerlawFoodUnitCount="16384" VariableFoodPlacement="0" VaryForwardSpeedFlag = "0" VaryCapacityFlag = "1"/>
 
   </loop_functions>
 
