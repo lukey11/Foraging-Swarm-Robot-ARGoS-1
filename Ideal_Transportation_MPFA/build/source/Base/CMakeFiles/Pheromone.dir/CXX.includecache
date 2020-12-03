@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lukey15/Research/MPFA_ARGoS_repo/MPFA_ARGoS/Ideal_Transportation_MPFA/build/source/Base/Pheromone_automoc.cpp
+
+/home/lukey15/Research/MPFA_ARGoS_repo/MPFA_ARGoS/Ideal_Transportation_MPFA/source/Base/Pheromone.cpp
+Pheromone.h
+/home/lukey15/Research/MPFA_ARGoS_repo/MPFA_ARGoS/Ideal_Transportation_MPFA/source/Base/Pheromone.h
+
+/home/lukey15/Research/MPFA_ARGoS_repo/MPFA_ARGoS/Ideal_Transportation_MPFA/source/Base/Pheromone.h
+argos3/core/utility/math/vector2.h
+-
+

@@ -104,6 +104,7 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	    PosStrRegionNest = "NestPosition_"+ to_string(i);
 	    if(argos::NodeAttributeExists(settings_node, PosStrRegionNest))
 	    {
+<<<<<<< HEAD
 		argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
                 Nests[i] = Nest(NestPosition);
         	Nests[i].SetNestIdx(i);
@@ -157,6 +158,24 @@ void MPFA_loop_functions::Init(argos::TConfigurationNode &node) {
     if(Nests[0].GetLocation().GetX() < -1)//quad arena
     {
         ActualArenaWidth = ArenaWidth*2;
+=======
+			argos::GetNodeAttribute(settings_node, PosStrRegionNest, NestPosition);
+			Nests.push_back(Nest(NestPosition));
+        	Nests[i].SetRegionFlag(1);
+        	
+		}
+		else if(argos::NodeAttributeExists(settings_node, PosStrDepot))
+	    {
+			argos::GetNodeAttribute(settings_node, PosStrDepot, NestPosition);
+			Nests.push_back(Nest(NestPosition));
+        	Nests[i].SetRegionFlag(0);
+		}
+        
+        Nests[i].SetNestIdx(i);
+        //Nests[i].SetRadius(i);
+        //cylId = "cyl"+to_string(i);
+        //Cylinders.push_back(dynamic_cast<CCylinderEntity&>(GetSpace().GetEntity(cylId)));
+>>>>>>> development
     }
     ostringstream arena_width;
     arena_width << GetSpace().GetArenaSize()[0];
