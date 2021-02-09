@@ -452,11 +452,13 @@ size_t BaseController::SimulationTick() {
 }
 
 size_t BaseController::SimulationTicksPerSecond() {
-	return LF.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick();
+	//return LF.GetSimulator().GetPhysicsEngine("default").GetInverseSimulationClockTick();
+    return LF.GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();//qilu 02/06/2021 
 }
 
 argos::Real BaseController::SimulationSecondsPerTick() {
-	return LF.GetSimulator().GetPhysicsEngine("default").GetSimulationClockTick();
+	//return LF.GetSimulator().GetPhysicsEngine("default").GetSimulationClockTick();
+    return LF.GetSimulator().GetPhysicsEngine("dyn2d").GetSimulationClockTick();//qilu 02/06/2021
 }
 
 argos::Real BaseController::SimulationTimeInSeconds() {

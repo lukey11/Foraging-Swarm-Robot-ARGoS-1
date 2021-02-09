@@ -118,7 +118,7 @@ VaryForwardSpeedFlag = "0" NumOfBranches = "4"/>
 
 <qt-opengl>
       <camera>
-        <placement idx="0" position="0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
+        <placement idx="0" position="0,0,4.34" look_at="0,0,0" up="1,0,0" lens_focal_length="20"/>
       </camera>
       <user_functions label="CPFA_qt_user_functions"/>
     </qt-opengl>
