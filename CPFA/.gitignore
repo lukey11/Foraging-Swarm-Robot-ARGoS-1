@@ -5,5 +5,5 @@ results
 **/CMakeLists.txt.user*
 *.swp
 logs
-
+../.DS_Store
 .catkin_tools
