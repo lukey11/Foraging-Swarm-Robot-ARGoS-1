@@ -59,8 +59,6 @@ void CPFA_loop_functions::Init(argos::TConfigurationNode &node) {
 	argos::GetNodeAttribute(CPFA_node, "PrintFinalScore",                   PrintFinalScore);
 
 	UninformedSearchVariation = ToRadians(USV_InDegrees);
-	MaxSimTime *= GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick();
-	
 	argos::TConfigurationNode settings_node = argos::GetNode(node, "settings");
 	
 	argos::GetNodeAttribute(settings_node, "MaxSimTimeInSeconds", MaxSimTime);
@@ -596,8 +594,7 @@ double CPFA_loop_functions::getRateOfPheromoneDecay() {
 }
 
 argos::Real CPFA_loop_functions::getSimTimeInSeconds() {
-	//int ticks_per_second = GetSimulator().GetPhysicsEngine("Default").GetInverseSimulationClockTick();
-    int ticks_per_second = GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick(); //qilu 02/06/2021
+	int ticks_per_second = GetSimulator().GetPhysicsEngine("dyn2d").GetInverseSimulationClockTick(); //qilu 02/06/2021
 	float sim_time = GetSpace().GetSimulationClock();
 	return sim_time/ticks_per_second;
 }
