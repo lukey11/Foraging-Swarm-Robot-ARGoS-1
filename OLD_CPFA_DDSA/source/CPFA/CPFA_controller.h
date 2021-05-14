@@ -23,7 +23,6 @@ class CPFA_controller : public BaseController {
 		// CCI_Controller inheritence functions
 		void Init(argos::TConfigurationNode &node);
 		void ControlStep();
-		void ControlDDSAStep();
 		void Reset();
 
 		bool IsHoldingFood();
@@ -33,17 +32,6 @@ class CPFA_controller : public BaseController {
 		Real FoodDistanceTolerance;
 
 		void SetLoopFunctions(CPFA_loop_functions* lf);
-
-		// DDSA
-        void   GetPattern(string ith_Pattern);
-        void   SetRobotPath(string path);
-			size_t generatePattern(int N_circuits, int N_robots);
-			int    calcDistanceToTravel(int i_robot, int i_circuit, int N_robots, char direction);
-			void   writePatternToFile(vector<char>&, int N_robots);
-			void   addDirectionToPattern(char direction);
-			void   printPath(vector<char>&);
-			//void SetLoopFunctions(DSA_loop_functions* lf) { loopFunctions = lf; }
-			argos::Real SimTimeInSeconds();
   
   size_t     GetSearchingTime();//qilu 09/26/2016
   size_t      GetTravelingTime();//qilu 09/26/2016
@@ -69,15 +57,6 @@ class CPFA_controller : public BaseController {
 		vector<CRay3> myTrail;
 		CColor        TrailColor;
 
-
-		// DDSA
-		Real   ProbTargetDetection;
-        Real   SearcherGap;
-		size_t NumberOfRobots;
-        size_t NumberOfSpirals;
-		bool   ResetReturnPosition;
-		size_t stopTimeStep;
-
 		bool isInformed;
 		bool isHoldingFood;
 		bool isUsingSiteFidelity;
@@ -91,20 +70,18 @@ class CPFA_controller : public BaseController {
   size_t           travelingTime;//qilu 09/26
         
   
-		/* Robot state variable */
-		enum robot_state {
+		/* iAnt CPFA state variable */
+		enum CPFA_state {
 			DEPARTING = 0,
-			CPFA_SEARCHING = 1,
-			DDSA_SEARCHING = 2,
-			RETURN_TO_NEST = 3,
-			RETURN_TO_SEARCH = 4,
-			SURVEYING = 5
-		} robot_state;
+			SEARCHING = 1,
+			RETURNING = 2,
+			SURVEYING = 3
+		} CPFA_state;
 
-		/* Robot CPFA state functions */
+		/* iAnt CPFA state functions */
 		void CPFA();
 		void Departing();
-		void CPFA_Searching();
+		void Searching();
 		void Returning();
 		void Surveying();
 
@@ -131,37 +108,6 @@ class CPFA_controller : public BaseController {
 		unsigned int survey_count;
 		/* Pointer to the LEDs actuator */
         CCI_LEDsActuator* m_pcLEDs;
-
-		/* robot internal variables & statistics */
-        CVector2            ReturnPosition;
-        CVector2            ReturnPatternPosition;
-
-	CVector2            previous_target;
-	CVector2            newTarget;
-        CVector3            startPosition;
-        vector<char>        pattern;
-        vector<char>        tempPattern;
-        vector<string>      rPattern;
-        int                 levels;
-        bool                goingHome;
-        CRange<CRadians>    AngleToleranceInRadians;
-        CRange<CRadians>    Tolerance;
-        size_t              collisionDelay;
-	char direction_last;
-
-        /* movement functions */
-        CDegrees angleInDegrees;
-
-        void SetTargetN(char x);
-        void SetTargetS(char x);
-        void SetTargetE(char x);
-        void SetTargetW(char x);
-    
-        /* movement helper functions */
-        void GetTargets();
-        void CopyPatterntoTemp();
-        bool TargetHit();
-
 };
 
 #endif /* CPFA_CONTROLLER_H */

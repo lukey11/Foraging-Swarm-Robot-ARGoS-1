@@ -1,0 +1,147 @@
+<?xml version="1.0" ?><argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="0"/>
+    <experiment length="6000" random_seed="0" ticks_per_second="32"/>
+  </framework>
+
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+
+    <CPFA_controller id="CPFA" library="build/source/CPFA/libCPFA_controller">
+      <actuators>
+        <differential_steering implementation="default"/>
+        <leds implementation="default" medium="leds"/> 
+      </actuators>
+
+      <sensors>
+        <footbot_proximity implementation="default" show_rays="true"/>
+
+	<positioning implementation="default"/>	
+
+        <footbot_motor_ground implementation="rot_z_only"/>
+      </sensors>
+
+      <params>
+
+        <settings DestinationNoiseStdev="0.0" FoodDistanceTolerance="0.13" NestAngleTolerance="0.1" NestDistanceTolerance="0.05" PositionNoiseStdev="0.00" ResultsDirectoryPath="results/" RobotForwardSpeed="16.0" RobotRotationSpeed="8.0" SearchStepSize="0.08" TargetAngleTolerance="0.1" TargetDistanceTolerance="0.05"/>
+      </params>
+
+    </CPFA_controller>
+    
+  </controllers>
+
+  <loop_functions label="CPFA_loop_functions" library="build/source/CPFA/libCPFA_loop_functions">
+
+    <!-- evolvable parameters -->
+        <CPFA PrintFinalScore="1" ProbabilityOfReturningToNest="0.0147598869881" ProbabilityOfSwitchingToSearching="0.723128706375" RateOfInformedSearchDecay="0.205799848158" RateOfLayingPheromone="14.7027566005" RateOfPheromoneDecay="0.0245057227138" RateOfSiteFidelity="14.1514206414" UninformedSearchVariation="2.81939731297"/>
+
+         <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="4096" FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" NestElevation="0.001" NestRadius="1.0" NumberOfClusters="64" OutputData="0" PowerlawFoodUnitCount="4096" VariableFoodPlacement="0"/>
+
+  </loop_functions>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena center="0,0,0.5" size="40.0, 40.0, 1">
+
+    <floor id="floor" pixels_per_meter="10" source="loop_functions"/>
+    
+    <!-- Place four boxes in a square to delimit the arena -->
+    <box id="wall_north1" movable="false" size="40,0.05,0.5">
+      <body orientation="0,0,0" position="0,20,0"/>
+    </box> 
+    
+    
+    <box id="wall_south" movable="false" size="40,0.05,0.5">
+      <body orientation="0,0,0" position="0,-20,0"/>
+    </box>
+    
+    <box id="wall_east" movable="false" size="0.05,40,0.5">
+      <body orientation="0,0,0" position="20,0,0"/>
+    </box>
+    
+    
+    <box id="wall_west" movable="false" size="0.05, 40,0.5">
+      <body orientation="0,0,0" position="-20,0,0"/>
+    </box>
+    
+    
+   <!--Distribute foraging robots -->   
+   
+           <distribute>
+      <position center="3, 3, 0.0" distances="0.3, 0.3, 0.0" layout="11, 10, 1" method="grid"/>
+      <orientation method="constant" values="0.0, 0.0, 0.0"/>
+      <entity max_trials="100" quantity="106">
+        <foot-bot id="F0">
+          <controller config="CPFA"/>
+        </foot-bot>
+      </entity>
+    </distribute>
+
+           <distribute>
+      <position center="3, -3, 0.0" distances="0.3, 0.3, 0.0" layout="11, 10, 1" method="grid"/>
+      <orientation method="constant" values="0.0, 0.0, 0.0"/>
+      <entity max_trials="100" quantity="106">
+        <foot-bot id="F1">
+          <controller config="CPFA"/>
+        </foot-bot>
+      </entity>
+    </distribute>
+    
+               <distribute>
+      <position center="-3, 3, 0.0" distances="0.3, 0.3, 0.0" layout="11, 10, 1" method="grid"/>
+      <orientation method="constant" values="0.0, 0.0, 0.0"/>
+      <entity max_trials="100" quantity="106">
+        <foot-bot id="F2">
+          <controller config="CPFA"/>
+        </foot-bot>
+      </entity>
+    </distribute>
+    
+               <distribute>
+      <position center="-3, -3, 0.0" distances="0.3, 0.3, 0.0" layout="11, 10, 1" method="grid"/>
+      <orientation method="constant" values="0.0, 0.0, 0.0"/>
+      <entity max_trials="100" quantity="106">
+        <foot-bot id="F3">
+          <controller config="CPFA"/>
+        </foot-bot>
+      </entity>
+    </distribute>
+ 
+  
+  </arena> 
+    
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <dynamics2d id="dyn2d"/>
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media><led id="leds"/></media>
+  <!-- ****************** -->
+  <!-- * Visualization * -->
+  <!-- ****************** -->
+
+
+<!--  <visualization>
+
+<qt-opengl>
+      <camera>
+        <placement idx="0" position="  0, 0, 10" look_at="0, 0, 0" lens_focal_length="25"/>
+      </camera>
+      <user_functions label="CPFA_qt_user_functions"/>
+    </qt-opengl>
+
+  </visualization>
+-->
+</argos-configuration>

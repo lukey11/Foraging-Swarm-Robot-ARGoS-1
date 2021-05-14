@@ -2,13 +2,6 @@
 #include <unistd.h>
 
 CPFA_controller::CPFA_controller() :
-	// DDSA
-	NumberOfRobots(0),
-	NumberOfSpirals(0),
-	ResetReturnPosition(true),
-	stopTimeStep(0),
-
-	// Other
 	RNG(argos::CRandom::CreateRNG("argos")),
 	isInformed(false),
 	isHoldingFood(false),
@@ -17,7 +10,7 @@ CPFA_controller::CPFA_controller() :
 	ResourceDensity(0),
 	MaxTrailSize(50),
 	SearchTime(0),
-	robot_state(DEPARTING),
+	CPFA_state(DEPARTING),
 	LoopFunctions(NULL),
 	survey_count(0),
 	isUsingPheromone(0),
@@ -36,13 +29,6 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	proximitySensor = GetSensor<argos::CCI_FootBotProximitySensor>("footbot_proximity");
 	argos::TConfigurationNode settings = argos::GetNode(node, "settings");
 
-	// DDSA specific attributes
-	argos::GetNodeAttribute(settings, "NumberOfRobots",          NumberOfRobots);
-    argos::GetNodeAttribute(settings, "NumberOfSpirals",         NumberOfSpirals);
-    argos::GetNodeAttribute(settings, "SearcherGap",             SearcherGap);
-    argos::GetNodeAttribute(settings, "ProbTargetDetection",      ProbTargetDetection);
-
-	// Other attributes
 	argos::GetNodeAttribute(settings, "FoodDistanceTolerance",   FoodDistanceTolerance);
 	argos::GetNodeAttribute(settings, "TargetDistanceTolerance", TargetDistanceTolerance);
 	argos::GetNodeAttribute(settings, "NestDistanceTolerance", NestDistanceTolerance);
@@ -76,7 +62,7 @@ void CPFA_controller::ControlStep() {
 	// depart from nest after food drop off or simulation start
 	if (isHoldingFood) log_output_stream << "(Carrying) ";
 	
-	switch(robot_state)  {
+	switch(CPFA_state)  {
 		case DEPARTING:
 			if (isUsingSiteFidelity) {
 				log_output_stream << "DEPARTING (Fidelity): "
@@ -91,9 +77,9 @@ void CPFA_controller::ControlStep() {
 			}
 			break;
 		// after departing(), once conditions are met, begin searching()
-		case CPFA_SEARCHING:
-			if (isInformed) log_output_stream << "CPFA_SEARCHING: Informed" << endl;     
-			else log_output_stream << "CPFA_SEARCHING: UnInformed" << endl;
+		case SEARCHING:
+			if (isInformed) log_output_stream << "SEARCHING: Informed" << endl;     
+			else log_output_stream << "SEARCHING: UnInformed" << endl;
 			break;
 		// return to nest after food pick up or giving up searching()
 		case RETURNING:
@@ -160,7 +146,7 @@ bool CPFA_controller::IsUsingSiteFidelity() {
 
 void CPFA_controller::CPFA() {
 	
-	switch(robot_state) {
+	switch(CPFA_state) {
 		// depart from nest after food drop off or simulation start
 		case DEPARTING:
 			//argos::LOG << "DEPARTING" << std::endl;
@@ -168,15 +154,15 @@ void CPFA_controller::CPFA() {
 			Departing();
 			break;
 		// after departing(), once conditions are met, begin searching()
-		case CPFA_SEARCHING:
-			//argos::LOG << "CPFA_SEARCHING" << std::endl;
+		case SEARCHING:
+			//argos::LOG << "SEARCHING" << std::endl;
 			//SetIsHeadingToNest(false);
 			if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
-				CPFA_Searching();
+				Searching();
 			}
 			break;
 		// return to nest after food pick up or giving up searching()
-		case RETURN_TO_NEST:
+		case RETURNING:
 			//argos::LOG << "RETURNING" << std::endl;
 			//SetIsHeadingToNest(true);
 			Returning();
@@ -286,7 +272,7 @@ void CPFA_controller::Departing()
                  //LOG<<"Switch to search..."<<endl;
                  Stop();
                  SearchTime = 0;
-                 robot_state = CPFA_SEARCHING;
+                 CPFA_state = SEARCHING;
                  travelingTime+=SimulationTick()-startTime;//qilu 10/22
                  startTime = SimulationTick();//qilu 10/22
             
@@ -313,7 +299,7 @@ void CPFA_controller::Departing()
           //log_output_stream << "Reached waypoint: " << SiteFidelityPosition << endl;
         
           SearchTime = 0;
-          robot_state = CPFA_SEARCHING;
+          CPFA_state = SEARCHING;
           travelingTime+=SimulationTick()-startTime;//qilu 10/22
           startTime = SimulationTick();//qilu 10/22
 
@@ -328,7 +314,7 @@ void CPFA_controller::Departing()
 
 }
 
-void CPFA_controller::CPFA_Searching() {
+void CPFA_controller::Searching() {
  //LOG<<"Searching..."<<endl;
 	// "scan" for food only every half of a second
 	if((SimulationTick() % (SimulationTicksPerSecond() / 2)) == 0) {
@@ -354,7 +340,7 @@ void CPFA_controller::CPFA_Searching() {
 	     LoopFunctions->FidelityList.erase(controllerID);
              isUsingSiteFidelity = false; 
              updateFidelity = false; 
-             robot_state = RETURN_TO_NEST;
+             CPFA_state = RETURNING;
              searchingTime+=SimulationTick()-startTime;
              startTime = SimulationTick();
 
@@ -452,7 +438,7 @@ void CPFA_controller::CPFA_Searching() {
 	// Food has been found, change state to RETURNING and go to the nest
 	//else {
 	//	SetTarget(LoopFunctions->NestPosition);
-	//	robot_state = RETURNING;
+	//	CPFA_state = RETURNING;
 	//}
 }
 
@@ -480,7 +466,7 @@ void CPFA_controller::Surveying() {
 	else {
 		SetIsHeadingToNest(false); // Turn on error for this
 		SetTarget(LoopFunctions->NestPosition); 
-		robot_state = RETURN_TO_NEST;
+		CPFA_state = RETURNING;
 		survey_count = 0; // Reset
                 searchingTime+=SimulationTick()-startTime;//qilu 10/22
                 startTime = SimulationTick();//qilu 10/22
@@ -557,7 +543,7 @@ void CPFA_controller::Returning() {
       }
 
 	isGivingUpSearch = false;
-	robot_state = DEPARTING;   
+	CPFA_state = DEPARTING;   
         isHoldingFood = false; 
         travelingTime+=SimulationTick()-startTime;//qilu 10/22
         startTime = SimulationTick();//qilu 10/22
@@ -629,12 +615,12 @@ void CPFA_controller::SetHoldingFood() {
 		    std::vector<argos::CVector2> newFoodList;
 		    std::vector<argos::CColor> newFoodColoringList;
 		    size_t i = 0, j = 0;
-      //if(robot_state != RETURNING){
+      //if(CPFA_state != RETURNING){
 		         for(i = 0; i < LoopFunctions->FoodList.size(); i++) {
 			            if((GetPosition() - LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance ) {
 		          // We found food! Calculate the nearby food density.
 	        	             isHoldingFood = true;
-		                     robot_state = SURVEYING;
+		                     CPFA_state = SURVEYING;
 	        	             j = i + 1;
                                      searchingTime+=SimulationTick()-startTime;
                                      startTime = SimulationTick();
@@ -871,11 +857,11 @@ size_t CPFA_controller::GetTravelingTime(){//qilu 10/22
 }
 
 string CPFA_controller::GetStatus(){//qilu 10/22
-    //DEPARTING, CPFA_SEARCHING, DDSA_SEARCHING, RETURNING
-    if (robot_state == DEPARTING) return "DEPARTING";
-    else if (robot_state ==CPFA_SEARCHING)return "CPFA_SEARCHING";
-    else if (robot_state == RETURN_TO_NEST)return "RETURN_TO_NEST";
-    else if (robot_state == SURVEYING) return "SURVEYING";
+    //DEPARTING, SEARCHING, RETURNING
+    if (CPFA_state == DEPARTING) return "DEPARTING";
+    else if (CPFA_state ==SEARCHING)return "SEARCHING";
+    else if (CPFA_state == RETURNING)return "RETURNING";
+    else if (CPFA_state == SURVEYING) return "SURVEYING";
     //else if (MPFA_state == INACTIVE) return "INACTIVE";
     else return "SHUTDOWN";
     
@@ -921,393 +907,9 @@ void CPFA_controller::UpdateTargetRayList() {
 			}
 
 			LoopFunctions->TargetRayList.insert(LoopFunctions->TargetRayList.end(), MyTrail.begin(), MyTrail.end());
-			// LoopFunctions.TargetRayList.push_back(myTrail);
+			// loopFunctions.TargetRayList.push_back(myTrail);
 		}
 	}
 }
-
-// DDSA
-
-size_t CPFA_controller::generatePattern(int N_circuits, int N_robots)
-{
-    string ID = GetId();
-    string ID_number;
-
-    for(size_t i = 0; i < ID.size(); i++) {
-        if(ID[i] >= '0' && ID[i] <= '9') {
-            ID_number += ID[i];
-        }
-    }
-
-    size_t RobotNumber = stoi(ID_number);
-    vector<string> paths;
-    string ith_robot_path;
-
-    for (int i_robot = 1; i_robot <= N_robots; i_robot++)
-    {
-        // cout << "inside for 1" << endl;
-        for (int i_circuit = 0; i_circuit < N_circuits; i_circuit++)
-        {
-            int n_steps_north = calcDistanceToTravel(i_robot, i_circuit, N_robots, 'N');
-            for (int j = 0; j < n_steps_north; j++)
-            {
-                //ith_robot_path.push_back('N');
-                ith_robot_path += 'N';
-            }
-            
-            int n_steps_east = calcDistanceToTravel(i_robot, i_circuit, N_robots, 'E');
-            for (int j = 0; j < n_steps_east; j++)
-            {
-                //ith_robot_path.push_back('E');
-                ith_robot_path += 'E';
-            }
-
-            int n_steps_south = calcDistanceToTravel(i_robot, i_circuit, N_robots, 'S');
-            for (int j = 0; j < n_steps_south; j++)
-            {
-                //ith_robot_path.push_back('S');
-                ith_robot_path += 'S';
-            }
-
-            int n_steps_west = calcDistanceToTravel(i_robot, i_circuit, N_robots, 'W');
-            for (int j = 0; j < n_steps_west; j++)
-            {
-                //ith_robot_path.push_back('W');
-                ith_robot_path += 'W';
-            }
-
-        }
-
-        paths.push_back(ith_robot_path);
-        ith_robot_path.clear();
-    }
-
-    //pattern = ith_robot_path;
-    GetPattern(paths[RobotNumber]);
-
-    return RobotNumber;
-}
-
-int CPFA_controller::calcDistanceToTravel(int i_robot, int i_circuit, int N_robots, char direction)
-{
-    int i = i_robot;
-    int j = i_circuit;
-    int N = N_robots;
-    int n_steps  = 0;
-
-    if (direction == 'N' || direction == 'E')
-    {
-        if (j == 0)
-        {
-            n_steps = i;
-            return n_steps;
-        }
-        else if (j == 1)
-        {
-            n_steps = calcDistanceToTravel(i, j-1, N, direction) + i + N;
-            return n_steps;
-        }
-        else 
-        {
-            n_steps = calcDistanceToTravel(i, j-1, N, direction) + 2*N;
-            return n_steps;
-        }
-    }
-
-    else if (direction == 'S' || direction == 'W')
-    {
-        if (j == 0)
-        {
-            n_steps = calcDistanceToTravel(i, j , N, 'N') + i;
-            return n_steps;
-        }
-
-        else if (j > 0)
-        {
-            n_steps = calcDistanceToTravel(i, j, N, 'N') + N;
-            return n_steps;
-        }
-
-        else
-        {
-            cout << "Error direction" << direction << "is invalid" << endl;
-        }
-
-    }
-    return 0;
-}
-
-void CPFA_controller::printPath(vector<char>& path)
-{
-    cout << path.size() << endl;
-    for(int i = 0; i<path.size(); i++)
-    { 
-        cout << path.at(i) << endl;
-    }
-}
-
-void CPFA_controller::GetPattern(string ith_Pattern)
-{
-    copy(ith_Pattern.begin(),ith_Pattern.end(),back_inserter(tempPattern));
-    reverse(tempPattern.begin(), tempPattern.end());
-}
-
-// /*****
-//  *
-//  *****/
-void CPFA_controller::CopyPatterntoTemp() 
-{
-    copy(pattern.begin(),pattern.end(),back_inserter(tempPattern));
-    reverse(tempPattern.begin(),tempPattern.end());/* Reverses the tempPattern */
-}
-
-/*****
- * Primary control loop for this controller object. This function will execute
- * the DSA logic once per frame.
- *****/
-void CPFA_controller::ControlDDSAStep() 
-{
-
-  // To draw paths
-  if (robot_state == DDSA_SEARCHING)
-    {
-      CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
-      CVector3 target3d(previous_position.GetX(), previous_position.GetY(), 0.00);
-      CRay3 targetRay(target3d, position3d);
-      myTrail.push_back(targetRay);
-  
-      LoopFunctions->TargetRayList.push_back(targetRay);
-      LoopFunctions->TargetRayColorList.push_back(TrailColor);
-    }
-
-  //LOG << myTrail.size() << endl;
-  previous_position = GetPosition();
-
-  /* Continue in a sprial */
-  if( robot_state == DDSA_SEARCHING )
-    {
-      SetIsHeadingToNest(false);
-      //  argos::LOG << "SEARCHING" << std::endl;
-      SetHoldingFood();
-      if (IsHoldingFood())
-	{
-	  bool cpf = true; 
-	  if (cpf)
-	    {
-	      ReturnPosition = GetPosition();
-	      ReturnPatternPosition = GetTarget();
-	      robot_state = RETURN_TO_NEST;
-	    }
-	  else
-	    {
-	      num_targets_collected++;
-	      LoopFunctions->setScore(num_targets_collected);
-	      isHoldingFood = false;
-	    }
-
-	  return;
-	}
-      else
-	{
-	  GetTargets(); /* Initializes targets positions. */
-	}
-    } 
-  else if( robot_state == RETURN_TO_NEST) 
-    {
-      //argos::LOG << "RETURN_TO_NEST" << std::endl;
-      SetIsHeadingToNest(true);
-      // Check if we reached the nest. If so record that we dropped food off and go back to the spiral
-      if((GetPosition() - LoopFunctions->NestPosition).SquareLength() < LoopFunctions->NestRadiusSquared) 
-	{
-	  robot_state = RETURN_TO_SEARCH;
-	  SetIsHeadingToNest(false);
-	  SetTarget(ReturnPosition);
-
-	  if (isHoldingFood)
-	    {
-	      num_targets_collected++;
-	      LoopFunctions->setScore(num_targets_collected);
-	    }
-
-	  isHoldingFood = false;
-
-	  /*
-	  ofstream results_output_stream;
-	  results_output_stream.open(results_full_path, ios::app);
-	  results_output_stream << LoopFunctions->getSimTimeInSeconds() << ", " << ++num_targets_collected << ", " << "Col Count" << endl;	    
-	  results_output_stream.close();
-	  */
-	}
-      else
-	{
-	  SetIsHeadingToNest(true);
-	  SetTarget(LoopFunctions->NestPosition);
-	}
-    } 
-  else if( robot_state == RETURN_TO_SEARCH ) 
-    {
-      // argos::LOG << "RETURN_TO_SEARCH" << std::endl;
-      SetIsHeadingToNest(false);
-      
-
-      //argos::LOG << "Return Position:" << ReturnPosition << endl;
-      //argos::LOG << "Robot position:" << GetPosition() << endl;
-      //argos::LOG << "Target position:" << GetTarget() << endl;
-      //argos::LOG << "Distance:" << (GetPosition() - ReturnPosition).Length() << endl;
-      //argos::LOG << "Distance Tolerance:" << TargetDistanceTolerance << endl;
-      
-      // Check if we have reached the return position
-      if ( IsAtTarget() )
-	{
-	  //argos::LOG << "RETURN_TO_SEARCH: Pattern Point" << std::endl;
-	  SetIsHeadingToNest(false);
-	  SetTarget(ReturnPatternPosition);
-	  robot_state = DDSA_SEARCHING;
-	}
-    } 
-  
-  Move();
-}   
-
-/*****
- * Sets target North of the robot's current target.
- *****/
-void CPFA_controller::SetTargetN(char x)
-{
-    CVector2 position = GetTarget();
-    SetIsHeadingToNest(false);
-    SetTarget(CVector2(position.GetX()+SearcherGap,position.GetY()));
-}
-
-/*****
- * Sets target South of the robot's current target.
- *****/
-void CPFA_controller::SetTargetS(char x){
-    CVector2 position = GetTarget();
-    SetIsHeadingToNest(false);
-    SetTarget(CVector2(position.GetX()-SearcherGap,position.GetY()));
-}
-
-/*****
- * Sets target East of the robot's current target.
- *****/
-void CPFA_controller::SetTargetE(char x){
-   CVector2 position = GetTarget();
-   SetIsHeadingToNest(false);
-   SetTarget(CVector2(position.GetX(),position.GetY()-SearcherGap));
-}
-
-/*****
- * Sets target West of the robot's current target.
- *****/
-void CPFA_controller::SetTargetW(char x){
-    CVector2 position = GetTarget();
-    SetIsHeadingToNest(false);
-    SetTarget(CVector2(position.GetX(),position.GetY()+SearcherGap));
-}
-
-/*****
- * Helper function that reads vector <char> pattern
- * and sets the target's direction base on the 
- * char at the current vector index.
- *****/
- void CPFA_controller::GetTargets(){
-
-   /* If the robot hit target and the patter size >0
-       then find the next direction. */
-    if(TargetHit() == true && tempPattern.size() > 0) {
-      /* Finds the last direction of the pattern. */
-    direction_last = tempPattern[tempPattern.size() - 1]; 
-    	
-        switch(direction_last)
-        {
-            case 'N':
-                SetTargetN('N');
-                break;
-            case 'S':
-                SetTargetS('S');
-                break;
-            case 'E':
-                SetTargetE('E');
-                break;
-            case 'W':
-                SetTargetW('W');
-                break;
-	}
-
-	tempPattern.pop_back();
-    }
-    
-    else if(tempPattern.size() == 0) 
-      {
-    	Stop();
-      }
-}
-
-/*****
- * Returns a boolean based on weather the robot is with 0.01 
- * distance tolerance. Declares that the robot had reached 
- * current target.
- *****/
- bool CPFA_controller::TargetHit() {
-    CVector2 position = GetPosition() - GetTarget();
-    bool hit = false;
-     
-    if(position.SquareLength() < TargetDistanceTolerance){
-        hit = true;
-    }
-    return hit;
- }
-
-/*****
- * Check if the Robot is finding food. This is defined as the Robot being within
- * the distance tolerance of the position of a food item. If the Robot has found
- * food then the appropriate boolean flags are triggered.
- *****/
-/*void CPFA_controller::SetHoldingFood(){
-    if(IsHoldingFood() == false) 
-      {
-	if(rand()*1.0/RAND_MAX < ProbTargetDetection) {
-	
-        vector <CVector2> newFoodList; 
-        size_t i = 0;
-        for (i = 0; i < LoopFunctions->FoodList.size(); i++)
-	  {
-            if ((GetPosition()-LoopFunctions->FoodList[i]).SquareLength() < FoodDistanceTolerance && !isHoldingFood)
-	      {
-		isHoldingFood = true;
-	      } 
-	    else 
-	      {
-		newFoodList.push_back(LoopFunctions->FoodList[i]);
-	      }
-        } 
-        LoopFunctions->FoodList = newFoodList;
-      }
-      }
-
-}*/
-
-/*****
- * Is this Robot_controller holding food?
- *     true  = yes
- *     false = no
- *****/
-/*bool CPFA_controller::IsHoldingFood() {
-    return isHoldingFood;
-}*/
-/*****
- * After pressing the reset button in the GUI, this controller will be set to
- * default factory settings like at the start of a simulation.
- *****/
-/*void CPFA_controller::Reset() {
-    collisionDelay  = 0;
-    SetIsHeadingToNest(true);
-    SetTarget(LoopFunctions->NestPosition);
-    tempPattern.clear();
-    CopyPatterntoTemp();
-    generatePattern(NumberOfSpirals, NumberOfRobots);
-    
-}*/
 
 REGISTER_CONTROLLER(CPFA_controller, "CPFA_controller")
