@@ -118,9 +118,10 @@ void CPFA_controller::ControlStep() {
 
 	previous_position = GetPosition();
 
+	robot_state = DDSA_SEARCHING;
+
 	//UpdateTargetRayList();
-	CPFA();
-	Move();
+	ControlDDSAStep();
 }
 
 void CPFA_controller::Reset() {
@@ -1068,18 +1069,6 @@ void CPFA_controller::CopyPatterntoTemp()
 void CPFA_controller::ControlDDSAStep() 
 {
 
-  // To draw paths
-  if (robot_state == DDSA_SEARCHING)
-    {
-      CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
-      CVector3 target3d(previous_position.GetX(), previous_position.GetY(), 0.00);
-      CRay3 targetRay(target3d, position3d);
-      myTrail.push_back(targetRay);
-  
-      LoopFunctions->TargetRayList.push_back(targetRay);
-      LoopFunctions->TargetRayColorList.push_back(TrailColor);
-    }
-
   //LOG << myTrail.size() << endl;
   previous_position = GetPosition();
 
@@ -1112,7 +1101,7 @@ void CPFA_controller::ControlDDSAStep()
 	  GetTargets(); /* Initializes targets positions. */
 	}
     } 
-  else if( robot_state == RETURN_TO_NEST) 
+  else if(robot_state == RETURN_TO_NEST) 
     {
       //argos::LOG << "RETURN_TO_NEST" << std::endl;
       SetIsHeadingToNest(true);
