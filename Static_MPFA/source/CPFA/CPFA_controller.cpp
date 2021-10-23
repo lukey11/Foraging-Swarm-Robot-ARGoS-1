@@ -11,6 +11,7 @@ CPFA_controller::CPFA_controller() :
 	MaxTrailSize(50),
 	SearchTime(0),
 	MPFA_state(DEPARTING),
+	SIR_state(SUSCEPTIBLE),//HUI1008
 	LoopFunctions(NULL),
  ClosestNest(NULL), //qilu 09/07
 	survey_count(0),
@@ -19,6 +20,7 @@ CPFA_controller::CPFA_controller() :
  searchingTime(0),
  travelingTime(0),
 startTime(0),
+Infection_startTime(0),//hui 1008
  updateFidelity(false)
 {
 }
@@ -51,6 +53,10 @@ void CPFA_controller::Init(argos::TConfigurationNode &node) {
 	SetTarget(p);
 
  controllerID= GetId();//qilu 07/26/2016
+ if(controllerID=="CPFA_11"){//HUI1008
+ SIR_state=INFECTED;
+ }
+ 
 }
 
 void CPFA_controller::ControlStep() {
@@ -93,6 +99,20 @@ void CPFA_controller::ControlStep() {
 	*/
 
 	// Add line so we can draw the trail
+	if(SIR_state==INFECTED){
+		Infection_startTime++;
+		//std::cout<<"infected time is "<<Infection_startTime<<std::endl;
+		argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));//HUI 0927
+		double mtime=Infection_startTime*(-1)*0.00000003;//hui 1004
+		double probOfRecover=exp(mtime);
+		//std::cout<<probOfRecover<<std::endl;
+		if(randomNumber>probOfRecover){
+			SIR_state=RECOVERED;
+			//m_pcLEDs->SetAllColors(CColor::BLUE);
+			std::cout<<"oh recovered"<<std::endl;
+			std::cout<<"overall infected time is"<<Infection_startTime<<std::endl;//hui 1004
+		}
+	}
 
 	CVector3 position3d(GetPosition().GetX(), GetPosition().GetY(), 0.00);
 	CVector3 target3d(previous_position.GetX(), previous_position.GetY(), 0.00);
@@ -512,6 +532,18 @@ void CPFA_controller::Returning() {
                   argos::Real timeInSeconds = (argos::Real)(SimulationTick() / SimulationTicksPerSecond());
 	          Pheromone sharedPheromone(SiteFidelityPosition, TrailToShare, timeInSeconds, LoopFunctions->RateOfPheromoneDecay, ResourceDensity);
                   ClosestNest->PheromoneList.push_back(sharedPheromone);//qilu 09/08/2016
+                  //infect nest start here  hui1008
+                  //std::cout<<"oh Pheromone generated"<<std::endl;
+                  if(SIR_state==INFECTED&&ClosestNest->isInfected==false){
+                  	std::cout<<"oh yes come in affect nest"<<std::endl;
+                  	argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));
+                  	if(randomNumber>0.01){//hui 1007
+                  		ClosestNest->isInfected=true;
+                  		std::cout<<"infect next"<<std::endl;
+                  	}
+                  
+                  }
+                  
                   sharedPheromone.Deactivate(); // make sure this won't get re-added later...
               }
               TrailToShare.clear();
@@ -755,7 +787,13 @@ void CPFA_controller::SetFidelityList() {
 bool CPFA_controller::SetTargetPheromone() {
 	argos::Real maxStrength = 0.0, randomWeight = 0.0;
 	bool isPheromoneSet = false;
-
+	argos::Real randomNumber = RNG->Uniform(argos::CRange<argos::Real>(0.0, 1.0));//HUI 1008
+	if(ClosestNest->isInfected==true && randomNumber>0.5&&SIR_state==SUSCEPTIBLE){//HUI 1008
+		std::cout<<"opps this is a infected nest"<<std::endl;
+		SIR_state=INFECTED;
+		//m_pcLEDs->SetAllColors(CColor::RED);
+		
+	}
  if(ClosestNest->PheromoneList.size()==0) return isPheromoneSet; //qilu 09/08/2016 the case of no pheromone.
 	/* update the pheromone list and remove inactive pheromones */
 	// LoopFunctions->UpdatePheromoneList();

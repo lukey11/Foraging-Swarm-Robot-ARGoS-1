@@ -20,6 +20,7 @@ class Nest {
 		      Nest(CVector2 location);
 		       
 		      vector<Pheromone> PheromoneList;
+		      bool isInfected;//hui 1008
         map<string, argos::CVector2> FidelityList; //qilu 09/10/2016
         map<string, size_t> DensityOnFidelity; //qilu 09/11/2016
         vector<CVector2> FoodList;

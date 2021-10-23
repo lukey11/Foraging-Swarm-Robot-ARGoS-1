@@ -61,7 +61,7 @@
                     RateOfSiteFidelity                = "4.27"
                     RateOfLayingPheromone             = "1.75"
                     RateOfPheromoneDecay              = "0.13"
-		    PrintFinalScore = "0"
+		    PrintFinalScore = "1"
 		    />
 
          <settings

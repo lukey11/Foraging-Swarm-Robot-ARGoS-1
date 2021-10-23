@@ -39,7 +39,7 @@ class CPFA_controller : public BaseController {
   //void        AddTravelingTime(size_t remainderTime);//qilu 09/26/2016
   //void        AddSearchingTime(size_t remainderTime);//qilu 09/26/2016
   size_t      startTime;//qilu 09/26/2016
-        
+  int      Infection_startTime;//0930 hui    
 
 	private:
   Nest* ClosestNest; //qilu 07/26/2016
@@ -80,6 +80,13 @@ class CPFA_controller : public BaseController {
 			RETURNING = 2,
 			SURVEYING = 3
 		} MPFA_state;
+		
+		enum SIR_state {
+			SUSCEPTIBLE = 0,
+			INFECTED = 1,
+			RECOVERED = 2,
+			
+		} SIR_state;//HUI 1008
 
 		/* iAnt CPFA state functions */
 		void CPFA();

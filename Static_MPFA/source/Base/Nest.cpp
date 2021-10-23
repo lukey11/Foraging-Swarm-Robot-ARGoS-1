@@ -22,6 +22,7 @@
     num_collected_tags=0;
     visited_time_point_in_minute=0;
     nest_idx=-1;
+    isInfected=false;//hui 1008
 }
 
 /*****
