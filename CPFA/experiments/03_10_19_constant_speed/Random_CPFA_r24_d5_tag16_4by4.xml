@@ -103,7 +103,7 @@ NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="16"
   <!-- ****************** -->
 
 
-<!-- <visualization>
+<visualization>
 
 <qt-opengl>
       <camera>
@@ -113,5 +113,5 @@ NestRadius="0.19" NumberOfClusters="4" OutputData="0" PowerlawFoodUnitCount="16"
     </qt-opengl>
 
   </visualization>
--->
+
 </argos-configuration>
