@@ -44,7 +44,7 @@
          <settings ClusterWidthX="8" ClusterWidthY="8" DrawDensityRate="4" DrawIDs="1" 
 	 DrawTargetRays="0" DrawTrails="0" FoodDistribution="0" FoodItemCount="1" 
 	 FoodRadius="0.05" MaxSimCounter="1" MaxSimTimeInSeconds="1800" 
-	 NestElevation="0.001" NestPosition="0, 0" NestRadius="0.19" NumberOfClusters="4" OutputData="0" 
+	 NestElevation="0.001" NestPosition="0,0" NestRadius="0.19" NumberOfClusters="4" OutputData="0" 
 	 PowerlawFoodUnitCount="1" VariableFoodPlacement="0"/>
 
   </loop_functions>
