@@ -41,19 +41,6 @@ endif()
 # Set the path where CMake will find additional scripts.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
-<<<<<<< HEAD
-# Check for required libraries to compile code depending on Qt and OpenGL.
-#include(ARGoSCheckQTOpenGL)
-
-# Find the ARGoS package
-find_package(ARGoS REQUIRED)
-include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS})
-link_directories(${ARGOS_LIBRARY_DIR})
-link_libraries(${ARGOS_LDFLAGS})
-
-# Find the GSL package.
-#find_package(GSL REQUIRED)
-=======
 # Find the ARGoS package.
 find_package(ARGoS REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS})
@@ -70,7 +57,6 @@ link_libraries(${ARGOS_LDFLAGS})
 
 # Find the GSL package.
 # find_package(GSL REQUIRED)
->>>>>>> 41b68111a00aeb1444869cc2180ee25c8f9a345c
 
 # Find the LUA package.
 find_package(Lua REQUIRED)
